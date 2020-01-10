@@ -1,0 +1,13 @@
+#!/bin/bash -x
+# $Id: mk.tests,v 1.2 2019-02-07 14:23:23-08 - - $
+export PATH=$PATH:/afs/cats.ucsc.edu/courses/cmps112-wm/bin/
+checksource pmake >checksource.log 2>&1
+exec >check.log 2>&1
+PATH=$PATH:$(pwd)
+export PATH
+for dir in $(pwd)/test*
+do
+   cd $dir
+   pwd
+   sh mk.test
+done

@@ -1,0 +1,55 @@
+head	1.2;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.2
+date	2019.02.07.22.23.23;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2018.10.26.01.31.45;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@-
+@
+text
+@#!/bin/bash -x
+# $Id: mk.tests,v 1.1 2018-10-25 18:31:45-07 - - $
+export PATH=$PATH:/afs/cats.ucsc.edu/courses/cmps112-wm/bin/
+checksource pmake >checksource.log 2>&1
+exec >check.log 2>&1
+PATH=$PATH:$(pwd)
+export PATH
+for dir in $(pwd)/test*
+do
+   cd $dir
+   pwd
+   sh mk.test
+done
+@
+
+
+1.1
+log
+@-
+@
+text
+@d2 1
+a2 1
+# $Id: runchecks,v 1.5 2018-10-25 18:31:33-07 - - $
+d12 1
+a12 1
+   sh Check
+@

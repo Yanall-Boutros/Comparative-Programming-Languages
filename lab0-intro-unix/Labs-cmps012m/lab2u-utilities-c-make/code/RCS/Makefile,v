@@ -1,0 +1,44 @@
+head	1.1;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.1
+date	2015.01.13.23.48.01;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@-
+@
+text
+@# $Id: Makefile.lab2,v 1.1 2015-01-13 15:33:32-08 - - $
+
+SOURCES   = hello.c
+OBJECTS   = ${SOURCES:.c=.o}
+ALLSRCS   = ${SOURCES} Makefile
+EXECBIN   = hello
+
+GCC       = gcc -g -O0 -Wall -Wextra -std=gnu11
+
+all: ${EXECBIN}
+
+${EXECBIN}: ${OBJECTS}
+	${GCC} ${OBJECTS} -o ${EXECBIN}
+
+%.o : %.c
+	- checksource $<
+	cid + $<
+	${GCC} -c $< -o $@@
+
+test: ${EXECBIN}
+
+@

@@ -1,0 +1,78 @@
+head	1.2;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.2
+date	2020.01.03.02.08.33;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2019.12.12.00.16.42;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@-
+@
+text
+@
+Revised(6) Report on the Algorithmic Language Scheme.
+http://www.r6rs.org/
+
+Revised(5) Report on the Algorithmic Language Scheme.
+http://www.schemers.org/Documents/Standards/R5RS/
+
+Teach Yourself Scheme in Fixnum Days.
+Dorai Sitaram
+http://ds26gte.github.io/tyscheme/index.html
+
+MzScheme home page.
+http://racket-lang.org/
+
+The Scheme Programming Language, 2nd ed.
+R. Kent Dybvig.
+http://www.scheme.com/tspl2d/
+
+How to Design Programs, 2nd ed.
+Matthias Felleisen, Robert Findler, Matthew Flatt, Shriram Krishnamurthi.
+http://www.htdp.org/
+
+Schemers.org
+http://www.schemers.org/
+
+Structure and Interpretation of Computer Programs.
+Hal Abelson, Jerry Sussman, Julie Sussman.
+https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book.html
+
+Recursive Functions of Symbolic Expressions and their Computation
+by Machine, Part I.
+John McCarthy, CACM, April 1960.
+http://www-formal.stanford.edu/jmc/recursive.html
+
+$Id: README.text,v 1.1 2019-12-11 16:16:42-08 - - $
+@
+
+
+1.1
+log
+@-
+@
+text
+@d10 1
+a10 2
+http://www.ccs.neu.edu/home/dorai/t-y-scheme/t-y-scheme.html
+http://download.plt-scheme.org/doc/205/pdf/t-y-scheme.pdf
+d35 1
+a35 1
+$Id: README.text,v 1.12 2018-08-23 13:30:35-07 - - $
+@

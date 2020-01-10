@@ -1,0 +1,8 @@
+"test" depends on "hello"
+"clean" has no dependencies
+"all" depends on "hello"
+"main.o" depends on "main.c" "hello.h"
+"ci" depends on "Makefile" "main.c" "hello.c" "hello.h"
+"hello.o" depends on "hello.c" "hello.h"
+"spotless" depends on "clean"
+"hello" depends on "main.o" "hello.o"

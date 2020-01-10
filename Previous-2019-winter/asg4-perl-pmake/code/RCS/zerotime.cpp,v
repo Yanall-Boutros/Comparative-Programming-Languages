@@ -1,0 +1,33 @@
+head	1.1;
+access;
+symbols;
+locks;
+comment	@// @;
+
+
+1.1
+date	2018.11.07.02.51.47;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@-
+@
+text
+@// $Id: utime.cpp,v 1.2 2018-11-06 18:38:49-08 - - $
+
+#include <sys/types.h>
+#include <utime.h>
+
+int main (int, char** argv) {
+   struct utimbuf times {0, 0};
+   utime (argv[1], &times);
+}
+
+@

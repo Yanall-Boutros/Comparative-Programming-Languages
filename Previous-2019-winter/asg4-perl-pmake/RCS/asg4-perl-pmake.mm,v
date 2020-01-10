@@ -1,0 +1,1087 @@
+head	1.32;
+access;
+symbols;
+locks;
+comment	@.\" @;
+
+
+1.32
+date	2019.02.07.22.22.07;	author -;	state -;
+branches;
+next	1.31;
+
+1.31
+date	2018.11.07.04.21.23;	author -;	state -;
+branches;
+next	1.30;
+
+1.30
+date	2018.11.07.04.20.56;	author -;	state -;
+branches;
+next	1.29;
+
+1.29
+date	2018.11.02.23.58.52;	author -;	state -;
+branches;
+next	1.28;
+
+1.28
+date	2018.11.02.23.57.43;	author -;	state -;
+branches;
+next	1.27;
+
+1.27
+date	2018.11.02.23.56.22;	author -;	state -;
+branches;
+next	1.26;
+
+1.26
+date	2018.11.02.23.54.13;	author -;	state -;
+branches;
+next	1.25;
+
+1.25
+date	2018.11.02.23.53.36;	author -;	state -;
+branches;
+next	1.24;
+
+1.24
+date	2018.11.02.23.52.44;	author -;	state -;
+branches;
+next	1.23;
+
+1.23
+date	2018.11.02.23.52.26;	author -;	state -;
+branches;
+next	1.22;
+
+1.22
+date	2018.11.02.23.12.15;	author -;	state -;
+branches;
+next	1.21;
+
+1.21
+date	2018.11.02.23.10.25;	author -;	state -;
+branches;
+next	1.20;
+
+1.20
+date	2018.11.02.23.05.19;	author -;	state -;
+branches;
+next	1.19;
+
+1.19
+date	2018.11.02.23.04.45;	author -;	state -;
+branches;
+next	1.18;
+
+1.18
+date	2018.11.02.22.55.31;	author -;	state -;
+branches;
+next	1.17;
+
+1.17
+date	2018.10.26.01.36.25;	author -;	state -;
+branches;
+next	1.16;
+
+1.16
+date	2018.10.26.01.34.18;	author -;	state -;
+branches;
+next	1.15;
+
+1.15
+date	2018.10.26.01.33.41;	author -;	state -;
+branches;
+next	1.14;
+
+1.14
+date	2018.10.26.01.32.11;	author -;	state -;
+branches;
+next	1.13;
+
+1.13
+date	2018.10.26.01.29.20;	author -;	state -;
+branches;
+next	1.12;
+
+1.12
+date	2018.10.26.01.28.18;	author -;	state -;
+branches;
+next	1.11;
+
+1.11
+date	2018.10.26.01.27.42;	author -;	state -;
+branches;
+next	1.10;
+
+1.10
+date	2018.10.26.01.26.17;	author -;	state -;
+branches;
+next	1.9;
+
+1.9
+date	2018.10.26.01.25.54;	author -;	state -;
+branches;
+next	1.8;
+
+1.8
+date	2018.10.26.01.25.33;	author -;	state -;
+branches;
+next	1.7;
+
+1.7
+date	2018.10.26.01.24.52;	author -;	state -;
+branches;
+next	1.6;
+
+1.6
+date	2018.10.26.01.24.22;	author -;	state -;
+branches;
+next	1.5;
+
+1.5
+date	2018.10.26.01.23.30;	author -;	state -;
+branches;
+next	1.4;
+
+1.4
+date	2018.10.26.01.22.15;	author -;	state -;
+branches;
+next	1.3;
+
+1.3
+date	2018.10.26.01.19.48;	author -;	state -;
+branches;
+next	1.2;
+
+1.2
+date	2018.10.26.00.23.51;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2018.10.26.00.21.20;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.32
+log
+@-
+@
+text
+@.so Tmac.mm-etc
+.if t .Newcentury-fonts
+.INITR* \n[.F]
+.SIZE 12 14
+.TITLE CMPS-112 Winter\~2019 Program\~4 "Perl and Rapid Development"
+.RCS "$Id: asg4-perl-pmake.mm,v 1.31 2018-11-06 20:21:23-08 - - $"
+.PWD
+.URL
+.H 1 "Overview"
+Scripting is a style of programming whereby small programs 
+are developed rapidly.
+This is also sometimes called rapid prototyping.
+Perl is a language which supports this particular programming
+paradigm very well because it is a very powerful and interpreted
+language.
+There is no need to do the usual compile-run cycle, since
+the program is compiled every time it is run.
+.P
+The
+.V= make (1)
+utility determines automatically which pieces of a
+large program need to be recompiled, and issue the commands  to
+recompile them.
+This project will also enhance your knowledge of
+.V= make
+and
+.V= Makefile s,
+as presented in prerequisite courses.
+Every programmer should have a detailed knowledge of
+.V= make .
+.H 1 "An implementation of a subset of gmake"
+In this assignment, you will use Perl to write a replacement for
+a subset of
+.V= gmake .
+.SH=BVL
+.B=LI "NAME"
+pmake \[em] perl implementation of a subset of gmake
+.B=LI "SYNOPSIS"
+.V= pmake
+.=V \|[ -d ]
+.RI \|[ target ]
+.B=LI "DESCRIPTION"
+The
+.V= pmake
+utility executes a list of shell commands associated with each
+.IR target ,
+typically to create or update files of the same name.
+The
+.IR Makefile
+contains entries that describe how to bring a target up to date with
+respect to those on which it depends,
+which are called prerequisites.
+.B=LI "OPTIONS"
+.br
+The following options are supported.
+All options must precede all operands,
+and all options are scanned by 
+.V= Getopt::Std::getopts
+(perldoc).
+.VL \n(Pi
+.LI "\f[CB]-d\f[R]"
+Displays debugging information.
+Output is readable only to the implementor.
+.LE
+.B=LI "OPERANDS"
+The following operand is recognized.
+.VL \n(Pi
+.LI "\f[I]target\f[R]
+.br
+An attempt is made to build each target in sequence in the
+order they are given on the command line.
+If no target is specified, the first target in the
+Makefile is built.
+This is usually, but not necessarily, the target
+.V= all .
+.LE
+.B=LI "FILES"
+Reads the file called
+.V= Makefile
+in the current directory.
+If the file does not exist,
+.V= pmake
+exits with an error message.
+.B=LI "EXIT STATUS"
+.VL \n[Pi]
+.LI 0
+No errors were detected.
+.LI 1
+An error in the
+.V= Makefile
+was detected.
+Or if any subprocess returned a non-zero exit status
+or failed on a signal,
+and the command was not preceded by the minus sign
+.=V ( - )
+marker.
+.LE
+.br
+.ne 6
+.B=LI "MAKEFILE SYNTAX"
+.br
+Generally, whitespace delimits words,
+but in addition, punctuation is recognized as well.
+Each line of input is a comment, an empty line, a dependency,
+or a command.
+.VL \n[Pi]
+.LI \f[CB]#\fR
+Any line with begins with a hash, possibly preceded by whitespace
+(spaces and tabs) is ignored.
+Empty lines consisting only of whitespace are also ignored.
+.LI
+\f[I]macro\f[R]\|\f[CB]=\f[R]\|\f[I]value\f[R]
+.br
+Macro definitions are kept in a symbol (hash) table, 
+to be substituted later.
+.LI
+\fItarget\fR\|.\|.\|. \f[CB]:\fR \fIprerequisite\fR\|.\|.\|.
+.br
+Each target's time stamp is checked against the time stamps of
+each of the prerequisites.
+If the target or prerequisite contains a percent sign
+.=V ( % ),
+it is substituted consistently.
+If any target is obsolete, the following commands are executed.
+A target is obsolete if it is a file that is older than the 
+prerequisites or does not exist.
+A prerequisite is either a file or another target.
+If a file, its time stamp is checked.
+If not, the target to which is refers is made recursively.
+No target is made more than once.
+.LI \fIcommand\fR
+.br
+A command is any line for which the first character is a tab .
+The line is echoed to 
+.V= STDOUT
+before executing the command.
+The line is then passed to the
+.V= system
+function call for execution by the shell.
+The resulting exit status and signal is then tested.
+If either is non-zero, 
+.V= pmake
+exits at that point.
+.LI
+\f[CB]@@\fP \fIcommand\fR
+.br
+Behaves like
+.IR command ,
+except that the command is not echoed to
+.V= STDOUT
+before being executed.
+.LI
+\f[CB]-\fP \fIcommand\fR
+.br
+Behaves like
+.IR command ,
+except that a non-zero exit status or signal does not cause
+.V= pmake
+to exit at that point.
+.LE
+.B=LI MACROS
+Whenever a dollar sign appears in the input file,
+it represents a macro substitution.
+Macros are substituted from innermost to outermost braces.
+If a dollar sign is followed by any character except a left brace
+that one character is the macro name.
+Otherwise, the characters between the braces constitute the
+name of the macro.
+.nr Pi2 \n[Pi]*2
+.VL \n[Pi2]
+.LI \f[CB]\[Do]\[Do]\fR
+Represents the dollar sign itself.
+.LI \f[CB]\[Do]<\fR
+Represents the first file specified as a prerequisite.
+.LI \f[CB]\[Do]@@\fR
+Represents the first file specified as a target.
+.LI \f[CB]\[Do]{\fR\|.\|.\|.\|\f[CB]}\fR
+The contents of the braces are substituted with the value of the
+macro name, which may be multiple characters,
+not including a closing brace.
+.LE
+.LE
+.H 1 Commentary
+Here are some hints that will be useful in familiarizing yourself with
+Perl and how to perform certain kinds of coding.
+.ALX a ()
+.LI
+The directory
+.V= /afs/cats.ucsc.edu/courses/cmps112-wm/bin
+contains examples of Perl scripts.
+And the subdirectory
+.V= code/
+of this directory contains relevant code.
+.LI
+The function
+.V= system
+will pass a comment string to the shell and set the variable
+.V= \[Do]?
+to the
+.V= wait (2)
+return value.
+If the termination signal is 0 (bits 6...0),
+then the program exited normally and bits 15...8 contain the
+.V= exit (2)
+status returned by the program.
+Otherwise, bits 6...0 contain 
+the signal that caused the program to terminate,
+and bit 7 indicates whether or not core was dumped.
+The following code can be used to extract this information\(::
+.DS
+.VCODE* 1 "my \[Do]term_signal = \[Do]? & 0x7F;"
+.VCODE* 1 "my \[Do]core_dumped = \[Do]? & 0x80;"
+.VCODE* 1 "my \[Do]exit_status = (\[Do]? >> 8) & 0xFF;"
+.DE
+.LI
+A C++ program
+.V= code/sigtoperl.cpp
+prints out a description of all of the signals.
+The output is in 
+.V= code/perlsignals.out
+This output may be inserted into your Perl program.
+.LI
+Use the function
+.V= system
+to run the command.
+.V= \[Do]?
+is the
+.V= wait (2)
+exit status.
+The notation
+.V= wait (2)
+refers to the manual
+page in section 2 of the manual.
+The command may be read with the command
+.VTCODE* 1 "man -s 2 wait"
+.LI
+Keep all macros in a hash table.
+.br
+.ne 6
+.LI
+To extract the innermost macro substitution,
+the following pattern will avoid nested macros\(::
+.V= \[rs]\[Do]{[\(ha}]+} .
+Alternately, you may wish to parse macro lines into an AST
+matching braces.
+Remember that regular expressions don't handle matched structures
+but context free grammars do.
+.br
+.ne 5
+.LI
+Keep each target in a hash with the prerequisites and commands as a
+reference to a list.
+Hashes are used in Perl to represent structs.
+Thus, the following will point
+.V= \[Do]p
+at a struct with two fields\(::
+.DS
+.VCODE* 1 "\[Do]p = {FOO=> 3, BAR=> [1, 2, 3]}"
+.DE
+.LI
+The
+.V= stat
+function returns a list of file attributes.
+The modification time is the value of interest when comparing
+time stamps on files.
+See
+.V= perlfunc (1).
+.DS
+.VCODE* 1 "@@filestat = stat $filename;"
+.VCODE* 1 "my $mtime = $filestat[9];"
+.DE
+.LI
+Look at the subdirectories
+.V= .score/test*
+and see what 
+.V= gmake
+does with them.
+.LE
+.H 1 "What to submit"
+Submit one file, specifically called
+.V= pmake ,
+which has been
+.V= chmod ed
+to executable
+.=V ( +x ).
+The first line must be a hashbang for Perl.
+Also, use
+.V= strict
+and
+.V= warnings .
+Your name must come
+.E= after
+the hashbang line.
+Grading will be done by naming it as a shell script.
+Do not run it by typing the word
+.V= perl
+as the first word on the command line.
+The first few lines are\(::
+.DS
+.VCODE* 1 "#!/usr/bin/perl"
+.VTCODE* 1 "# " "Your name and username@@ucsc.edu"
+.VCODE* 1 "use strict;"
+.VCODE* 1 "use warnings;"
+.DE
+.P
+If you are doing pair programming, 
+submit
+.V= PARTNER
+as required by the pair programming instructions in
+.V= cmps112-wm/Syllabus/pair-programming .
+.FINISH
+@
+
+
+1.31
+log
+@-
+@
+text
+@d5 2
+a6 2
+.TITLE CMPS-112 Fall\~2018 Program\~4 "Perl and Rapid Development"
+.RCS "$Id: asg4-perl-pmake.mm,v 1.30 2018-11-06 20:20:56-08 - - $"
+@
+
+
+1.30
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: asg4-perl-pmake.mm,v 1.29 2018-11-02 16:58:52-07 - - $"
+d29 2
+@
+
+
+1.29
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: asg4-perl-pmake.mm,v 1.28 2018-11-02 16:57:43-07 - - $"
+d18 11
+@
+
+
+1.28
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: asg4-perl-pmake.mm,v 1.27 2018-11-02 16:56:22-07 - - $"
+d178 3
+@
+
+
+1.27
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: asg4-perl-pmake.mm,v 1.26 2018-11-02 16:54:13-07 - - $"
+a152 1
+.=V ( { )
+d154 2
+a155 1
+Otherwise, the contents of the braces are replaced.
+@
+
+
+1.26
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: asg4-perl-pmake.mm,v 1.25 2018-11-02 16:53:36-07 - - $"
+d152 1
+a152 4
+If a dollar sign is followed by any character except a left
+parenthesis
+.=V ( ( )
+or left brace
+d155 1
+a155 1
+Otherwise, the contents of the parentheses or braces are replaced.
+@
+
+
+1.25
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: asg4-perl-pmake.mm,v 1.24 2018-11-02 16:52:44-07 - - $"
+d285 1
+@
+
+
+1.24
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: asg4-perl-pmake.mm,v 1.23 2018-11-02 16:52:26-07 - - $"
+a8 1
+.GETST* SIGTOPERL_OUTPUT1 Figure_SIGTOPERL_OUTPUT1
+a277 7
+.DS
+.VCODE* 1 "#!/usr/bin/perl"
+.VTCODE* 1 "# " "Your name and username@@ucsc.edu"
+.VCODE* 1 "use strict;"
+.VCODE* 1 "use warnings;"
+.DE
+.P
+d285 6
+@
+
+
+1.23
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: asg4-perl-pmake.mm,v 1.22 2018-11-02 16:12:15-07 - - $"
+a298 33
+.bp
+.DS L
+\&
+.B1
+.SP
+.ft CR
+.nf
+.eo
+.pso cat -nv sigtoperl.cpp | expand
+.ec
+.fi
+.ft R
+.SP
+.B2
+.FG "\f[CB]sigtoperl.cpp\f[P]" "" 0 SIGTOPERL_CPP
+.DE
+.bp
+.DS L
+\&
+.B1
+.SP
+.ft CR
+.nf
+.eo
+.pso cat -nv perlsignals.out | expand | grep -v Real-time
+.ec
+.fi
+.ft R
+.SP
+.B2
+.FG "Partial listing from \f[CB]perlsignals.out\f[P]" "" 0 \
+SIGTOPERL_OUTPUT1
+.DE
+@
+
+
+1.22
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: asg4-perl-pmake.mm,v 1.21 2018-11-02 16:10:25-07 - - $"
+a8 1
+.GETST* SIGTOPERL_CPP Figure_SIGTOPERL_CPP
+d204 6
+a209 11
+Figure \*[Figure_SIGTOPERL_CPP]
+shows a C++ program
+.=V ( sigtoperl.cpp )
+which prints out a description of all of the signals,
+some of the output of which
+.=V ( perlsignals.out )
+on this machine is shown in 
+Figure \*[Figure_SIGTOPERL_OUTPUT1].
+The complete output of this program
+may be inserted into your Perl
+program.
+@
+
+
+1.21
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: asg4-perl-pmake.mm,v 1.20 2018-11-02 16:05:19-07 - - $"
+d207 1
+a207 1
+.=V ( code/sigtoperl.c )
+@
+
+
+1.20
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: asg4-perl-pmake.mm,v 1.19 2018-11-02 16:04:45-07 - - $"
+d180 3
+a182 5
+Perl scripts that may be used as examples are in
+the directory
+.VTCODE* 1 /afs/cats.ucsc.edu/courses/cmps112-wm/bin
+which is a symlink to
+.VTCODE* 1 /afs/cats.ucsc.edu/courses/cmps104a-wm/bin/
+@
+
+
+1.19
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: asg4-perl-pmake.mm,v 1.18 2018-11-02 15:55:31-07 - - $"
+d65 1
+a72 1
+.LE
+@
+
+
+1.18
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: asg4-perl-pmake.mm,v 1.17 2018-10-25 18:36:25-07 - - $"
+a29 2
+.=V \|[ -f
+.IR Makefile ]
+d51 1
+a51 5
+Displays the reasons why
+.V= pmake
+chooses to rebuild a target.
+This option prints debug information,
+or nothing at all.
+a52 9
+.LI "\f[CB]-f\f[R]\|\f[I]Makefile\f[R]"
+.br
+Specifies the name of the
+.V= Makefile
+to use.
+If not specified,
+tries to use 
+.V= ./Makefile .
+If neither of those files exists, exits with an error message.
+d65 7
+@
+
+
+1.17
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: asg4-perl-pmake.mm,v 1.16 2018-10-25 18:34:18-07 - - $"
+a29 1
+.=V \|[ -n ]
+a58 3
+.LI "\f[CB]-n\f[R]"
+Non-execution mode.
+Prints commands, but does not execute them.
+@
+
+
+1.16
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: asg4-perl-pmake.mm,v 1.15 2018-10-25 18:33:41-07 - - $"
+d238 6
+@
+
+
+1.15
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: asg4-perl-pmake.mm,v 1.14 2018-10-25 18:32:11-07 - - $"
+d194 1
+a194 1
+.V= /afs/cats.ucsc.edu/courses/cmps112-wm/bin ,
+d196 1
+a196 1
+.V= /afs/cats.ucsc.edu/courses/cmps104a-wm/bin/ .
+@
+
+
+1.14
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: asg4-perl-pmake.mm,v 1.13 2018-10-25 18:29:20-07 - - $"
+d192 1
+a192 1
+There are a lot of Perl scripts that may be used as examples in
+d196 1
+a196 1
+.V= /afs/cats.ucsc.edu/courses/cmps012b-wm/bin .
+@
+
+
+1.13
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: asg4-perl-pmake.mm,v 1.12 2018-10-25 18:28:18-07 - - $"
+d300 1
+a300 3
+Your name and RCS
+.V= \[Do]Id\[Do]
+string must come
+@
+
+
+1.12
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: asg4-perl-pmake.mm,v 1.11 2018-10-25 18:27:42-07 - - $"
+d223 3
+a225 1
+some of the output of which on this machine is shown in 
+d229 1
+a229 3
+program
+(from
+.V= perlsignals.out ).
+@
+
+
+1.11
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: asg4-perl-pmake.mm,v 1.10 2018-10-25 18:26:17-07 - - $"
+a225 2
+(see the file
+.V= perlsignals.out )
+d227 3
+a229 1
+program.
+@
+
+
+1.10
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: asg4-perl-pmake.mm,v 1.9 2018-10-25 18:25:54-07 - - $"
+d225 4
+a228 1
+The complete output of this program may be inserted into your Perl
+a229 12
+.LI
+Do
+.E= not
+cut and paste from the text file or the pdf.
+If you use
+.V= vi ,
+you can insert it into your program with the command
+.DS
+.VCODE* 1 ".!./sigtoperl"
+.DE
+if the binary executable is in the current directory.
+Presumably other editors have similar facilities.
+@
+
+
+1.9
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: asg4-perl-pmake.mm,v 1.8 2018-10-25 18:25:33-07 - - $"
+d326 1
+a326 1
+.SP
+d342 1
+a342 1
+.SP
+@
+
+
+1.8
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: asg4-perl-pmake.mm,v 1.7 2018-10-25 18:24:52-07 - - $"
+d326 1
+d342 1
+@
+
+
+1.7
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: asg4-perl-pmake.mm,v 1.6 2018-10-25 18:24:22-07 - - $"
+d324 1
+d339 1
+@
+
+
+1.6
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: asg4-perl-pmake.mm,v 1.5 2018-10-25 18:23:30-07 - - $"
+d324 1
+a324 1
+.DF L
+d338 1
+a338 1
+.DF L
+@
+
+
+1.5
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: asg4-perl-pmake.mm,v 1.4 2018-10-25 18:22:15-07 - - $"
+a186 29
+.DF L
+.B1
+.SP
+.ft CR
+.nf
+.eo
+.pso cat -nv sigtoperl.cpp | expand
+.ec
+.fi
+.ft R
+.SP
+.B2
+.FG "\f[CB]sigtoperl.cpp\f[P]" "" 0 SIGTOPERL_CPP
+.DE
+.DF L
+.B1
+.SP
+.ft CR
+.nf
+.eo
+.pso cat -nv perlsignals.out | expand | grep -v Real-time
+.ec
+.fi
+.ft R
+.SP
+.B2
+.FG "Partial listing from \f[CB]perlsignals.out\f[P]" "" 0 \
+SIGTOPERL_OUTPUT1
+.DE
+d324 29
+@
+
+
+1.4
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: asg4-perl-pmake.mm,v 1.3 2018-10-25 18:19:48-07 - - $"
+d213 2
+a214 1
+.FG "Partial output from \f[CB]sigtoperl\f[P]" "" 0 SIGTOPERL_OUTPUT1
+@
+
+
+1.3
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: asg4-perl-pmake.mm,v 1.2 2018-10-25 17:23:51-07 - - $"
+d207 1
+a207 1
+.pso cat -nv perlsignals.out | expand 
+@
+
+
+1.2
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: asg4-perl-pmake.mm,v 1.1 2018-10-25 17:21:20-07 - - $"
+d9 1
+a9 1
+.GETST* SIGTOPERL_C Figure_SIGTOPERL_C
+d193 1
+a193 1
+.pso cat -nv sigtoperl.c | expand
+d199 1
+a199 1
+.FG "\f[CB]sigtoperl.c\f[P]" "" 0 SIGTOPERL_C
+d207 1
+a207 1
+.pso sigtoperl | cat -nv | expand | grep -v Real-time
+d247 2
+a248 2
+Figure \*[Figure_SIGTOPERL_C]
+shows a C program
+@
+
+
+1.1
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: asg4-perl-cxiimake.mm,v 1.3 2018-10-18 13:49:31-07 - - $"
+d26 1
+a26 1
+cxiimake \[em] perl implementation of a subset of gmake
+d28 1
+a28 1
+.V= cxiimake
+d36 1
+a36 1
+.V= cxiimake
+d55 1
+a55 1
+.V= cxiimake
+d143 1
+a143 1
+.V= cxiimake
+d159 1
+a159 1
+.V= cxiimake
+d320 1
+a320 1
+.V= cxiimake ,
+@

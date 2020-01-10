@@ -1,0 +1,33 @@
+head	1.1;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.1
+date	2019.03.13.21.09.03;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@-
+@
+text
+@% $Id$
+
+remainder( Float, Modulus, Quotient, Remainder) :-
+   Quotient is truncate( Float / Modulus),
+   Remainder is Float - Quotient * Modulus.
+
+remainder( 93.468, 60, Q, R).
+
+remainder( 18.62849, 60, Q, R).
+
+@

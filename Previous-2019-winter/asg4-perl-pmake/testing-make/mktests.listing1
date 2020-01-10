@@ -1,0 +1,48 @@
+::::::::::::::::::::::::::::::::
+./mk
+::::::::::::::::::::::::::::::::
+     1	#!/bin/sh
+     2	# $Id: mk,v 1.2 2018-11-06 18:04:21-08 - - $
+     3	
+     4	cid + $0 Makefile *.cpp
+     5	
+     6	for target in $(ls *.cpp | sed 's/\.cpp$//')
+     7	do
+     8	   echo ================ make $target ================
+     9	   make $target
+    10	   make $target.test
+    11	   echo make $target.test status: $?
+    12	done >mktests.output 2>&1
+    13	
+    14	catnv $0 Makefile $(which catnv) >mktests.listing1
+    15	catnv *.cpp mktests.output >mktests.listing2
+    16	mkpspdf Listing.ps mktests.listing?
+::::::::::::::::::::::::::::::::
+Makefile
+::::::::::::::::::::::::::::::::
+     1	# $Id: Makefile,v 1.2 2018-11-06 18:05:32-08 - - $
+     2	
+     3	%: %.c
+     4		cid + $<
+     5		g++ $< -o $@
+     6	
+     7	%.test:
+     8		$*
+     9	
+::::::::::::::::::::::::::::::::
+/afs/cats.ucsc.edu/courses/cmps104a-wm/bin/catnv
+::::::::::::::::::::::::::::::::
+     1	#!/bin/sh
+     2	# $Id: catnv,v 1.3 2015-05-28 17:45:06-07 - - $
+     3	#
+     4	# Concatenate multiple short files into a longer file with
+     5	# headers like more but use cat -nv for line numbers.
+     6	#
+     7	
+     8	for file in $*
+     9	do
+    10	   echo ::::::::::::::::::::::::::::::::
+    11	   echo $file
+    12	   echo ::::::::::::::::::::::::::::::::
+    13	   cat -nv $file
+    14	done

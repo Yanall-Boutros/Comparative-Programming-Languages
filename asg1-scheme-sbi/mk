@@ -1,0 +1,7 @@
+#!/bin/sh
+# $Id: mk,v 1.3 2020-01-03 15:45:07-08 - - $
+
+cid + $0 README.text sbi.scm .score/*.sbir
+txt2html README.text
+mkpspdf Listing.ps README.text sbi.scm .score/*.sbir
+

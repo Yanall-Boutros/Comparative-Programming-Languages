@@ -1,0 +1,26 @@
+head	1.1;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.1
+date	2018.11.07.02.53.34;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@-
+@
+text
+@#!/bin/sh
+cid $0
+mkpspdf pmake-Makefiles.ps .score/*/Makefile*
+@

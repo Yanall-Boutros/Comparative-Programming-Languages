@@ -1,0 +1,9 @@
+#!/bin/sh -x
+# $Id: Check,v 1.1 2011-03-24 17:23:13-07 - - $
+#
+# Make sure the program cid is in your path.
+#
+rm hello
+pmake spotless    >spotless.log 2>&1
+pmake ci          >ci.log 2>&1
+pmake all         >all.log 2>&1

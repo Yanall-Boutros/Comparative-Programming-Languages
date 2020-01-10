@@ -1,0 +1,8 @@
+#!/bin/sh
+# $Id: mk,v 1.2 2019-02-01 17:09:39-08 - - $
+cid $0 *.c testfile.in
+mkc *.c
+binarydump testfile.in >testbinary.out 2>&1
+hexadecimaldump testfile.in >testhexadecimal.out 2>&1
+mkpspdf Listing.src.ps *.c
+mkpspdf -N Listing.out.ps *.out

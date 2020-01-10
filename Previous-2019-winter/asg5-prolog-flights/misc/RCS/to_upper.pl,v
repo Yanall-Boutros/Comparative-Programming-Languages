@@ -1,0 +1,28 @@
+head	1.1;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.1
+date	2018.12.04.21.47.28;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@-
+@
+text
+@% $Id$
+to_upper( Lower, Upper) :-
+   atom_chars( Lower, Lowerlist),
+   maplist( lower_upper, Lowerlist, Upperlist),
+   atom_chars( Upper, Upperlist).
+@

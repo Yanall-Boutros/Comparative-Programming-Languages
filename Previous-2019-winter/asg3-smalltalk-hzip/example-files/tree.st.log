@@ -1,0 +1,8 @@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ mkc: starting tree.st
+checksource tree.st
+ident tree.st
+tree.st:
+     $Id: tree.st,v 1.2 2019-02-11 13:16:46-08 - - $
+mkc: tree.st is not a known program type
+rm -f
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ mkc: finished tree.st

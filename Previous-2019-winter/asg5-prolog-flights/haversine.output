@@ -1,0 +1,34 @@
+COMMAND: haversine.perl lax sfo sjc nyc sfo sea
+
+ATL (Atlanta         )  33°39'N( 33.65°,0.5873)  84°25'W( 84.42°,1.4733)
+BOS (Boston-Logan    )  42°22'N( 42.37°,0.7394)  71° 2'W( 71.03°,1.2398)
+CHI (Chicago         )  42° 0'N( 42.00°,0.7330)  87°53'W( 87.88°,1.5339)
+DEN (Denver-Stapleton)  39°45'N( 39.75°,0.6938) 104°52'W(104.87°,1.8303)
+DFW (Dallas-Ft.Worth )  32°54'N( 32.90°,0.5742)  97° 2'W( 97.03°,1.6936)
+LAX (Los Angeles     )  33°56'N( 33.93°,0.5922) 118°24'W(118.40°,2.0665)
+MIA (Miami           )  25°49'N( 25.82°,0.4506)  80°17'W( 80.28°,1.4012)
+NYC (New York City   )  40°46'N( 40.77°,0.7115)  73°59'W( 73.98°,1.2913)
+SEA (Seattle-Tacoma  )  47°27'N( 47.45°,0.8282) 122°18'W(122.30°,2.1345)
+SFO (San Francisco   )  37°37'N( 37.62°,0.6565) 122°23'W(122.38°,2.1360)
+SJC (San Jose        )  37°22'N( 37.37°,0.6522) 121°56'W(121.93°,2.1281)
+
+Earth radius:         3961.0 miles
+Earth circumference: 24887.7 miles
+Earth 1 degree arc:     69.1 miles
+Earth 1 minute arc:      1.2 miles
+Earth 1 radian arc:   3961.0 miles
+
+Distance:
+LAX (Los Angeles     )  33°56'N( 33.93°,0.5922) 118°24'W(118.40°,2.0665)
+SFO (San Francisco   )  37°37'N( 37.62°,0.6565) 122°23'W(122.38°,2.1360)
+339 miles
+
+Distance:
+SJC (San Jose        )  37°22'N( 37.37°,0.6522) 121°56'W(121.93°,2.1281)
+NYC (New York City   )  40°46'N( 40.77°,0.7115)  73°59'W( 73.98°,1.2913)
+2552 miles
+
+Distance:
+SFO (San Francisco   )  37°37'N( 37.62°,0.6565) 122°23'W(122.38°,2.1360)
+SEA (Seattle-Tacoma  )  47°27'N( 47.45°,0.8282) 122°18'W(122.30°,2.1345)
+680 miles

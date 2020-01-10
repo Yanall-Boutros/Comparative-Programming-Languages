@@ -1,0 +1,67 @@
+head	1.2;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.2
+date	2019.12.12.00.13.15;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2019.01.05.01.04.42;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@-
+@
+text
+@;;File: 12-let-dim.sb
+;;   1: # $Id: 12-let-dim.sb,v 1.2 2019-11-08 12:49:19-08 - - $
+;;   2: 
+;;   3: # Simple let without expressions.
+;;   4: 
+;;   5:         let i = 6
+;;   6:         print i
+;;   7:         dim a[10]
+;;   8:         let a[i] = 9
+;;   9:         print a[i]
+(
+(    1          )
+(    2          )
+(    3          )
+(    4          )
+(    5          (let i 6))
+(    6          (print i))
+(    7          (dim (asub a 10)))
+(    8          (let (asub a i) 9))
+(    9          (print (asub a i)))
+)
+@
+
+
+1.1
+log
+@-
+@
+text
+@d2 1
+a2 1
+;;   1: # $Id: 12-let-dim.sb,v 1.1 2019-01-02 15:13:50-08 - - $
+d6 5
+a10 5
+;;   5: 	let i = 6
+;;   6: 	print i
+;;   7: 	dim a[10]
+;;   8: 	let a[i] = 9
+;;   9: 	print a[i]
+@

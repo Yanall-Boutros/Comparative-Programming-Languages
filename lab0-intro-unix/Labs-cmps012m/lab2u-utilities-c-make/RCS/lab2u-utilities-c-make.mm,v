@@ -1,0 +1,1884 @@
+head	1.70;
+access;
+symbols;
+locks;
+comment	@.\" @;
+
+
+1.70
+date	2016.01.07.00.29.20;	author -;	state -;
+branches;
+next	1.69;
+
+1.69
+date	2016.01.07.00.22.08;	author -;	state -;
+branches;
+next	1.68;
+
+1.68
+date	2015.01.16.20.06.23;	author -;	state -;
+branches;
+next	1.67;
+
+1.67
+date	2015.01.14.23.50.10;	author -;	state -;
+branches;
+next	1.66;
+
+1.66
+date	2015.01.14.23.43.48;	author -;	state -;
+branches;
+next	1.65;
+
+1.65
+date	2015.01.14.23.37.21;	author -;	state -;
+branches;
+next	1.64;
+
+1.64
+date	2015.01.14.23.36.47;	author -;	state -;
+branches;
+next	1.63;
+
+1.63
+date	2015.01.14.23.36.21;	author -;	state -;
+branches;
+next	1.62;
+
+1.62
+date	2015.01.14.23.35.31;	author -;	state -;
+branches;
+next	1.61;
+
+1.61
+date	2015.01.14.23.35.01;	author -;	state -;
+branches;
+next	1.60;
+
+1.60
+date	2015.01.14.23.32.55;	author -;	state -;
+branches;
+next	1.59;
+
+1.59
+date	2015.01.14.23.30.26;	author -;	state -;
+branches;
+next	1.58;
+
+1.58
+date	2015.01.14.23.29.49;	author -;	state -;
+branches;
+next	1.57;
+
+1.57
+date	2015.01.14.23.28.33;	author -;	state -;
+branches;
+next	1.56;
+
+1.56
+date	2015.01.14.23.28.12;	author -;	state -;
+branches;
+next	1.55;
+
+1.55
+date	2015.01.14.23.26.09;	author -;	state -;
+branches;
+next	1.54;
+
+1.54
+date	2015.01.13.23.49.28;	author -;	state -;
+branches;
+next	1.53;
+
+1.53
+date	2015.01.13.23.48.46;	author -;	state -;
+branches;
+next	1.52;
+
+1.52
+date	2015.01.13.23.44.20;	author -;	state -;
+branches;
+next	1.51;
+
+1.51
+date	2015.01.13.23.43.47;	author -;	state -;
+branches;
+next	1.50;
+
+1.50
+date	2015.01.13.23.41.18;	author -;	state -;
+branches;
+next	1.49;
+
+1.49
+date	2015.01.13.23.41.01;	author -;	state -;
+branches;
+next	1.48;
+
+1.48
+date	2015.01.13.23.35.19;	author -;	state -;
+branches;
+next	1.47;
+
+1.47
+date	2015.01.13.23.32.07;	author -;	state -;
+branches;
+next	1.46;
+
+1.46
+date	2015.01.13.23.30.52;	author -;	state -;
+branches;
+next	1.45;
+
+1.45
+date	2015.01.13.23.29.07;	author -;	state -;
+branches;
+next	1.44;
+
+1.44
+date	2015.01.13.23.28.41;	author -;	state -;
+branches;
+next	1.43;
+
+1.43
+date	2015.01.13.23.27.09;	author -;	state -;
+branches;
+next	1.42;
+
+1.42
+date	2015.01.13.23.26.39;	author -;	state -;
+branches;
+next	1.41;
+
+1.41
+date	2015.01.13.23.19.18;	author -;	state -;
+branches;
+next	1.40;
+
+1.40
+date	2015.01.13.23.14.03;	author -;	state -;
+branches;
+next	1.39;
+
+1.39
+date	2015.01.13.23.09.19;	author -;	state -;
+branches;
+next	1.38;
+
+1.38
+date	2015.01.13.23.08.56;	author -;	state -;
+branches;
+next	1.37;
+
+1.37
+date	2015.01.13.23.08.20;	author -;	state -;
+branches;
+next	1.36;
+
+1.36
+date	2015.01.13.23.07.51;	author -;	state -;
+branches;
+next	1.35;
+
+1.35
+date	2015.01.13.23.07.16;	author -;	state -;
+branches;
+next	1.34;
+
+1.34
+date	2015.01.13.23.05.00;	author -;	state -;
+branches;
+next	1.33;
+
+1.33
+date	2015.01.13.23.04.27;	author -;	state -;
+branches;
+next	1.32;
+
+1.32
+date	2015.01.13.23.03.11;	author -;	state -;
+branches;
+next	1.31;
+
+1.31
+date	2015.01.13.22.42.54;	author -;	state -;
+branches;
+next	1.30;
+
+1.30
+date	2015.01.13.22.42.36;	author -;	state -;
+branches;
+next	1.29;
+
+1.29
+date	2015.01.13.22.41.55;	author -;	state -;
+branches;
+next	1.28;
+
+1.28
+date	2015.01.13.22.41.43;	author -;	state -;
+branches;
+next	1.27;
+
+1.27
+date	2015.01.13.22.41.24;	author -;	state -;
+branches;
+next	1.26;
+
+1.26
+date	2015.01.13.22.41.06;	author -;	state -;
+branches;
+next	1.25;
+
+1.25
+date	2015.01.13.22.40.54;	author -;	state -;
+branches;
+next	1.24;
+
+1.24
+date	2015.01.13.22.39.34;	author -;	state -;
+branches;
+next	1.23;
+
+1.23
+date	2015.01.13.22.39.18;	author -;	state -;
+branches;
+next	1.22;
+
+1.22
+date	2015.01.13.22.39.03;	author -;	state -;
+branches;
+next	1.21;
+
+1.21
+date	2015.01.13.22.38.10;	author -;	state -;
+branches;
+next	1.20;
+
+1.20
+date	2015.01.13.22.18.00;	author -;	state -;
+branches;
+next	1.19;
+
+1.19
+date	2015.01.13.22.16.05;	author -;	state -;
+branches;
+next	1.18;
+
+1.18
+date	2015.01.13.22.15.52;	author -;	state -;
+branches;
+next	1.17;
+
+1.17
+date	2015.01.13.22.14.58;	author -;	state -;
+branches;
+next	1.16;
+
+1.16
+date	2015.01.13.22.14.09;	author -;	state -;
+branches;
+next	1.15;
+
+1.15
+date	2015.01.13.22.12.29;	author -;	state -;
+branches;
+next	1.14;
+
+1.14
+date	2015.01.13.22.11.59;	author -;	state -;
+branches;
+next	1.13;
+
+1.13
+date	2015.01.13.22.11.43;	author -;	state -;
+branches;
+next	1.12;
+
+1.12
+date	2015.01.13.22.10.37;	author -;	state -;
+branches;
+next	1.11;
+
+1.11
+date	2015.01.13.22.10.01;	author -;	state -;
+branches;
+next	1.10;
+
+1.10
+date	2015.01.13.22.09.39;	author -;	state -;
+branches;
+next	1.9;
+
+1.9
+date	2015.01.13.22.07.55;	author -;	state -;
+branches;
+next	1.8;
+
+1.8
+date	2015.01.13.22.07.18;	author -;	state -;
+branches;
+next	1.7;
+
+1.7
+date	2015.01.13.22.06.55;	author -;	state -;
+branches;
+next	1.6;
+
+1.6
+date	2015.01.13.22.06.14;	author -;	state -;
+branches;
+next	1.5;
+
+1.5
+date	2015.01.13.22.04.03;	author -;	state -;
+branches;
+next	1.4;
+
+1.4
+date	2015.01.13.22.03.41;	author -;	state -;
+branches;
+next	1.3;
+
+1.3
+date	2015.01.13.22.01.25;	author -;	state -;
+branches;
+next	1.2;
+
+1.2
+date	2015.01.13.22.00.49;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2015.01.13.21.51.54;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.70
+log
+@-
+@
+text
+@.so Tmac.mm-etc
+.if t .Newcentury-fonts
+.INITR* \n[.F]
+.SIZE 12 14
+.TITLE CMPS-012M Winter\~2016 Lab\~2 "Utilities, C, make"
+.RCS \
+"$Id: lab2u-utilities-c-make.mm,v 1.69 2016-01-06 16:22:08-08 - - $"
+.PWD
+.URL
+.ds SUBQUARTER cmps012b-wm.w15
+.ds COURSEDIR /afs/cats.ucsc.edu/courses/cmps012b-wm
+.ds COURSEURL http://www2.ucsc.edu/courses/cmps012b-wm/:/
+.ds BINDIR \*[COURSEDIR]/bin
+.nr HISTORY 0 1
+.af HISTORY 01
+.de PROMPT
+.   TVCODE* 1 "bash-\\n+[HISTORY]\[Do] " "\\$*"
+..
+.de OUTPUT
+.   TVCODE* 1 "\\$*"
+..
+.de SUBMIT
+.   P
+.   nop Submit\(::
+.   V= "\\$*"
+..
+.EQ
+delim $$
+.EN
+.H 1 "Overview"
+In this lab you will continue being familiarized with Unix,
+looking at some utilities\(::
+.V= find (1),
+.V= grep (1),
+.V= man (1),
+.V= du (1),
+etc.
+We will also introduce the C language and the
+.V= make 
+utility.
+.H 1 "The \f[CB]man\fP(1) command"
+The
+.V= man (1)
+command can be used to read about any Unix command,
+C language function,
+or other Unix utility.
+When referenceing a man-page,
+following the name is a number in parentheses which identifies
+the chapter in question.
+Following are the sections and what they describe\(::
+.nr ALX*Li \n[Li]-1
+.LB 0 0 0 0 \0 0 0
+.LI
+(1) General commands
+.LI
+(2) System calls
+.LI
+(3) Library functions, covering in particular the C standard library
+.LI
+(4) Special files (usually devices found in \f[CB]/dev\fP) and drivers
+.LI
+(5) File formats and conventions
+.LI
+(6) Games and screensavers
+.LI
+(7) Miscellanea
+.LI
+(8) System administration commands and daemons
+.LE
+.H 1 "The \f[CB]find\fP(1) and \f[CB]grep\fP(1) commands"
+The
+.V= find (1)
+command can be used to find files in directory hierarchies
+according to various options.
+The general syntax is
+.br
+.nr VCODEN \n[VCODENWIDTH]u*1
+\h'\n[VCODEN]u'\f[CB]find\fP [\fIpath\fP\|.\|.\|.]
+[\fIoperand\fP\|.\|.\|.]
+.br
+The pathnames specified identify one or more directories.
+There are many operands, some of which are\(::
+.DS
+.TS
+allbox tab(|); l lw(349p).
+\f[CB]-name\fP \fIwildcard\fP|T{
+.fi
+Finds files according to the standard shell wildcard expressions,
+with case being significant.
+T}
+\f[CB]-iname\fP \fIwildcard\fP|T{
+.fi
+Finds files according to the standard shell wildcard expressions,
+with case not being significant.
+T}
+\f[CB]-mtime\fP \fIdays\fP|T{
+.fi
+Finds files according to the time stamp, measuread in days.
+For example 
+.V= +3
+means more than 3 days,
+.V= -3
+means less than 3 days,
+and 
+.V= 3
+means exactly 3 days.
+T}
+\f[CB]-size\fP \fIunits\fP|T{
+.fi
+Finds files according to their size.
+For example if the units are specified as
+.V= +200k ,
+any files larger than that will be found.
+T}
+.TE
+.DE
+.P
+The
+.V= grep (1)
+command is used to search a sequence of files,
+given a regular expression.
+As long as metacharaters are not used,
+it can be used to search for strings.
+Regular expressions are somewhat more complicated.
+.H 1 "Pipes"
+A pipe is a connection between the output of one process and the
+input of another process and can be used to connect processes
+together into a pipeline.
+For example,
+.V= ls (1)
+lists information about files,
+and
+.V= wc (1)
+prints the number of lines, words, and characters in its input.
+Therefore\(::
+.PROMPT ls | wc -l
+will count the number of (non-dot) files in your current directory.
+.PROMPT ls -la | grep 'Jan 13'
+will list the output of
+.V= ls
+for all files modified on January 13.
+.H 1 "Lab exercises"
+Each of the following items will require something to be
+submitted for credit in this lab.
+It is assumed that the previous lab has been completed.
+.ALX 1 ()
+.LI
+Read the man page for 
+.V= find (1)\(::
+.PROMPT man -s 1 find
+Then redirect the output into a file called
+.V= man.1.find ,
+and note that if you view it with an editor,
+you will see a lot of backspace characters represented as
+.=V `` \[ha]H ''
+characters.
+On a text terminal, this would overstrike to make some characters
+bold.
+Clean this up by using\(::
+.PROMPT vim man.1.find
+Then use the
+.V= vim
+line-mode command
+.VTCODE* 1 ":g/.\[ha]V\[ha]H/s///g"
+which will clean it up and make it readable as text.
+Note that
+.=V `` \[ha]V\[ha]H ''
+means type
+.=V `` vh ''
+while holding down the Control key.
+.SUBMIT man.1.find
+.LI
+Repeat this exercise for the
+.V= grep (1)
+command.
+.SUBMIT man.1.grep
+.LI
+Use the
+.V= find
+command to locate all PDF files in my 
+.V= Assignments/
+and
+.V= Labs-cmps012m/
+directories.
+.PROMPT find \[ti]/12b/[AL]* -name '*.pdf'
+Note that the first few operands are directories
+(expanded via wildcards)
+which specify directories,
+and the
+.V= -name
+operand specifies wildcards for the names of files to match.
+Redirect this into a file called
+.V= asgs-labs-found
+.SUBMIT asgs-labs-found
+.LI
+Use the
+.V= grep (1)
+command to search for the string
+.=V `` Submit: ''
+in all of the lab directories for all files with the suffix
+.V= \&.tt \(::
+.PROMPT grep Submit: lab*/*.tt
+Note that you have to
+.V= cd
+into the directory
+.V= Labs-cmps012m/
+for this to work.
+Redirect the output of this command into a file called
+.V= grepped-submits .
+Note that you can not create this file in the course directory,
+so you will have to specify a pathname which
+deposits this file in one of your directories.
+.SUBMIT grepped-submits
+.LI
+The
+.V= du (1)
+(disk usage)
+command performs a recursive traversal over all directories and
+prints out the amount of disk space taken by each directory.
+This is useful in finding out if you are using up too much disk space.
+The command
+.V= "fs lq"
+lists your disk quota.
+.PROMPT fs lq \[ti]
+.PROMPT du -k \[ti]/private/cmps012b
+Print out your current disk quota and disk usage for your 12B and 12M
+directories.
+(If you have named your 12B and 12M working directories something else,
+use the actual name if different from above.)
+The
+.V= -k
+option specifies that disk usage should be measured in K-bytes
+($ 1 K = 2 sup 10 = 1024 $).
+Redirect the output of both of these commands into a file called
+.V= disk-usage .
+.SUBMIT disk-usage
+.P
+Note that to append to the end of a file you use
+.V= >>
+instead of
+.V= > .
+For example,
+the following will create a file called
+.V= foo
+with your current working directory followed by the date\(::
+.br
+.ne 2
+.PROMPT pwd >foo
+.PROMPT date >>foo
+.LE
+.H 1 "Introduction to C"
+Copy the program
+.V= code/hello.c
+into your directory.
+Modify the program to conform to the specifications of
+.V= hello.java
+in the previous lab.
+.ALX 1 ()
+.LI
+The program argument
+.V= argc
+counts the number of command line arguments given to the program.
+.LI
+The program argument
+.V= argv
+is a pointer to an array of pointers to character string,
+where
+.V= argv[0]
+is the name of the program itself.
+.LI
+At the top of
+.V= main ,
+add an
+.V= int
+variable called
+.V= exit_status
+which is initialized to the value
+.V= EXIT_SUCCESS .
+.LI
+If there are no command line arguments, 
+.V= argc
+should have the value
+.V= 1 .
+If that is the case,
+print the message
+.VTCODE* 1 "Hello, World!"
+as is done in the starter code.
+.LI
+If not,
+print the message
+.VTCODE* 1 "Usage: hello"
+to
+.V= stderr .
+.V= fprintf (3)
+works like
+.V= printf (1),
+except that its first argument should be
+.V= stderr ,
+followed by the format.
+.LI
+The program name should not be hard-coded.
+instead use the expression
+.VTCODE* 1 "basename (argv[0])"
+which obtains the name of the program without the directory
+information.
+.LI
+In the case of failure,
+set
+.V= exit_status
+to 
+.V= EXIT_FAILURE ,
+and return that value as the value of the program.
+.LE
+.SUBMIT hello.c
+.H 1 "Introduction to \f[CB]make\fP"
+A
+.V= Makefile
+is used to build software from specifications.
+Copy
+.V= code/Makefile
+into your lab2 project directory and rename it to
+.V= Makefile .
+(Do not copy the file
+.V= Makefile
+in this directory.
+It builds the PDF from the groff sources.)
+.ALX 1 ()
+.LI
+The first line contains an RCS
+.V= \[Do]Id\[Do]
+header in a comment,
+which starts with
+.V= # ,
+not a double slash.
+.LI
+Then some variables are defined,
+with
+.V= OBJECTS
+being the same as
+.V= SOURCES ,
+except for the suffix.
+.LI
+Note the options given to
+.V= gcc ,
+which is used to compile C code.
+.LI
+Then there are dependencies which compile the source into object files,
+and link the object files into an executable binary.
+.LI
+By analogy we might consider object files to be similar to class files,
+and the executable image similar to a jar.
+Analogies only work so far then fail.
+.LI
+Add a target
+.V= test
+to the make file and put commands after it.
+Each command must be indented by one tab.
+The test should do the following\(::
+.ALX i ()
+.LI
+Run
+.V= hello
+and redirect its output to
+.V= test1.out ,
+its error to
+.V= test1.err ,
+then
+.E= "on the same line" ,
+redirect its exit status to
+.V= test1.status .
+Note that the
+.V= hello
+command and the
+.V= echo 
+command must be on the same line separated by a semi-colon.
+.LI
+Run
+.V= hello
+with an argument of
+.V= world
+and redirect its
+.V= stdout
+and
+.V= stderr
+as before but call the files
+.V= test2.out ,
+.V= test2.err ,
+and
+.V= test2.status .
+.LE
+.LI
+In a
+.V= Makefile ,
+the dollar sign always introduces a variable whose value is
+substituted.
+This can be done either with a single character variable name
+or multiple characters in braces.
+So, for example, 
+.V= \[Do]<
+.V= \[Do]@@
+and
+.V= \[Do]{FOOBAR}
+are all variables to be substituted.
+So
+.V= \[Do]?
+substitues the value of the variable
+.V= ? ,
+which, unless defined, is replaced by nothing.
+The variable
+.V= \[Do]\[Do]
+has the value of 
+.=V ` \[Do] ',
+so to send
+.V= \[Do]?
+to the shell,
+write
+.V= \[Do]\[Do]?
+in the
+.V= Makefile .
+.LE
+.SUBMIT Makefile
+.H 1 "Example \f[CB].bashrc\f[P]"
+An example
+.V= \&.bashrc
+file is also shown.
+This is just an example and there is nothing to submit
+for this paragraph.
+.DS
+\&
+.B1
+.SP
+.ft CR
+.nf
+.eo
+.pso cat -n code/hello.c | expand
+.ec
+.fi
+.ft R
+.SP
+.B2
+.FG "\f[CB]code/hello.c\fP" "" 0 ELIMCR_BASH
+.DE
+.DS
+\&
+.B1
+.SP
+.ft CR
+.nf
+.eo
+.pso cat -n code/Makefile| expand
+.ec
+.fi
+.ft R
+.SP
+.B2
+.FG "\f[CB]code/Makefile\fP" "" 0 ELIMCR_BASH
+.DE
+.DS
+\&
+.B1
+.SP
+.ft CR
+.nf
+.eo
+.pso cat -n example.bashrc | expand
+.ec
+.fi
+.ft R
+.SP
+.B2
+.FG "\f[CB]example.bashrc\fP" "" 0 ELIMCR_BASH
+.DE
+.FINISH
+@
+
+
+1.69
+log
+@-
+@
+text
+@d7 1
+a7 1
+"$Id: lab2u-utilities-c-make.mm,v 1.68 2015-01-16 12:06:23-08 - - $"
+d422 6
+d458 15
+@
+
+
+1.68
+log
+@-
+@
+text
+@d5 1
+a5 1
+.TITLE CMPS-012M Winter\~2015 Lab\~2 "Utilities, C, make"
+d7 1
+a7 1
+"$Id: lab2u-utilities-c-make.mm,v 1.67 2015-01-14 15:50:10-08 - - $"
+@
+
+
+1.67
+log
+@-
+@
+text
+@d7 1
+a7 1
+"$Id: lab2u-utilities-c-make.mm,v 1.66 2015-01-14 15:43:48-08 - - $"
+d391 29
+@
+
+
+1.66
+log
+@-
+@
+text
+@d7 1
+a7 1
+"$Id: lab2u-utilities-c-make.mm,v 1.65 2015-01-14 15:37:21-08 - - $"
+d125 17
+@
+
+
+1.65
+log
+@-
+@
+text
+@d7 1
+a7 1
+"$Id: lab2u-utilities-c-make.mm,v 1.64 2015-01-14 15:36:47-08 - - $"
+d298 1
+a298 1
+.H 1 "Introduction to \f[CB]make\fP(1)"
+@
+
+
+1.64
+log
+@-
+@
+text
+@d7 1
+a7 1
+"$Id: lab2u-utilities-c-make.mm,v 1.63 2015-01-14 15:36:21-08 - - $"
+d215 2
+a216 6
+option specifies that disk usage should be measured in K-bytes.
+.br
+.EQ
+1 K = 2 sup 10 = 1024 ,  1 M = 2 sup 20 = 1048576
+.EN
+.br
+@
+
+
+1.63
+log
+@-
+@
+text
+@d7 1
+a7 1
+"$Id: lab2u-utilities-c-make.mm,v 1.62 2015-01-14 15:35:31-08 - - $"
+d216 1
+d218 1
+a218 1
+$ 1 K = 2 sup 10 = 1024 ,  1 M = 2 sup 20 = 1048576 $.
+d220 1
+@
+
+
+1.62
+log
+@-
+@
+text
+@d7 1
+a7 1
+"$Id: lab2u-utilities-c-make.mm,v 1.61 2015-01-14 15:35:01-08 - - $"
+d215 4
+a218 2
+option specifies that disk usage should be measured in K-bytes
+($ 1 K = 2 sup 10 = 1024 $ and $ 1 M = 2 sup 20 = 1048576 $).
+@
+
+
+1.61
+log
+@-
+@
+text
+@d7 1
+a7 1
+"$Id: lab2u-utilities-c-make.mm,v 1.60 2015-01-14 15:32:55-08 - - $"
+d216 1
+a216 1
+($ 1 K == 2 sup 10 == 1024, 1 M == 2 sup 20 == 1048576 $).
+@
+
+
+1.60
+log
+@-
+@
+text
+@d7 1
+a7 1
+ZZ"$Id: lab2u-utilities-c-make.mm,v 1.59 2015-01-14 15:30:26-08 - - $"
+d27 3
+d216 1
+a216 1
+(1K == 1024).
+@
+
+
+1.59
+log
+@-
+@
+text
+@d7 1
+a7 1
+ZZ"$Id: lab2u-utilities-c-make.mm,v 1.58 2015-01-14 15:29:49-08 - - $"
+d205 1
+a205 1
+.PROMPT fs lq \[ti]/private/cmps012b
+d210 4
+@
+
+
+1.58
+log
+@-
+@
+text
+@d7 1
+a7 1
+ZZ"$Id: lab2u-utilities-c-make.mm,v 1.57 2015-01-14 15:28:33-08 - - $"
+d222 2
+@
+
+
+1.57
+log
+@-
+@
+text
+@d7 1
+a7 1
+ZZ"$Id: lab2u-utilities-c-make.mm,v 1.56 2015-01-14 15:28:12-08 - - $"
+d219 3
+a223 3
+will create a file called
+.V= foo
+with your current working directory followed by the date.
+@
+
+
+1.56
+log
+@-
+@
+text
+@d7 1
+a7 1
+ZZ"$Id: lab2u-utilities-c-make.mm,v 1.55 2015-01-14 15:26:09-08 - - $"
+d212 2
+a223 1
+.SUBMIT disk-usage
+@
+
+
+1.55
+log
+@-
+@
+text
+@d7 1
+a7 1
+ZZ"$Id: lab2u-utilities-c-make.mm,v 1.54 2015-01-13 15:49:28-08 - - $"
+d216 6
+@
+
+
+1.54
+log
+@-
+@
+text
+@d7 1
+a7 1
+ZZ"$Id: lab2u-utilities-c-make.mm,v 1.53 2015-01-13 15:48:46-08 - - $"
+d194 23
+@
+
+
+1.53
+log
+@-
+@
+text
+@d7 1
+a7 1
+ZZ"$Id: lab2u-utilities-c-make.mm,v 1.52 2015-01-13 15:44:20-08 - - $"
+d359 1
+a359 1
+.pso cat -n code/Makefile.lab2 | expand
+d365 1
+a365 1
+.FG "\f[CB]code/Makefile.lab2\fP" "" 0 ELIMCR_BASH
+@
+
+
+1.52
+log
+@-
+@
+text
+@d7 1
+a7 1
+ZZ"$Id: lab2u-utilities-c-make.mm,v 1.51 2015-01-13 15:43:47-08 - - $"
+d197 1
+a197 1
+.V= hello.c
+d264 1
+a264 1
+.V= Makefile.lab2
+d344 1
+a344 1
+.pso cat -n hello.c | expand
+d350 1
+a350 1
+.FG "\f[CB]hello.c\fP" "" 0 ELIMCR_BASH
+d359 1
+a359 1
+.pso cat -n Makefile.lab2 | expand
+d365 1
+a365 1
+.FG "\f[CB]Makefile.lab2\fP" "" 0 ELIMCR_BASH
+@
+
+
+1.51
+log
+@-
+@
+text
+@d5 1
+a5 1
+.TITLE CMPS-012M Winter\~2015 Lab\~2 "Shells, scripts, etc."
+d7 1
+a7 1
+ZZ"$Id: lab2u-utilities-c-make.mm,v 1.50 2015-01-13 15:41:18-08 - - $"
+@
+
+
+1.50
+log
+@-
+@
+text
+@d5 3
+a7 2
+.TITLE CMPS-012M Winter\~2015 Lab\~1 "Shells, scripts, etc."
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.49 2015-01-13 15:41:01-08 - - $"
+@
+
+
+1.49
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.48 2015-01-13 15:35:19-08 - - $"
+d335 1
+@
+
+
+1.48
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.47 2015-01-13 15:32:07-08 - - $"
+d271 63
+@
+
+
+1.47
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.46 2015-01-13 15:30:52-08 - - $"
+d258 14
+d287 15
+@
+
+
+1.46
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.45 2015-01-13 15:29:07-08 - - $"
+d203 11
+a256 1
+Submit the modified version\(::
+@
+
+
+1.45
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.44 2015-01-13 15:28:41-08 - - $"
+d145 5
+d218 1
+a218 1
+.=V `` "Hello, World!" ''
+d223 1
+a223 1
+.=V `` "Usage: hello" ''
+d235 1
+a235 1
+.V= basename\~(argv[0]) ,
+@
+
+
+1.44
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.43 2015-01-13 15:27:09-08 - - $"
+a187 1
+.LI
+@
+
+
+1.43
+log
+@-
+@
+text
+@a4 3
+.GETST* ELIMCR_BASH Figure_ELIMCR_BASH
+.GETHN* HELLO_JAVA Header_HELLO_JAVA
+.GETHN* MK_HELLO Header_MK_HELLO
+d6 1
+a6 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.42 2015-01-13 15:26:39-08 - - $"
+d193 4
+a196 1
+into your directory and modify it as follows\(::
+a207 5
+The program should be modified to conform to the specifications
+of
+.V= hello.java
+in the previous lab.
+.LI
+@
+
+
+1.42
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.41 2015-01-13 15:19:18-08 - - $"
+d247 2
+@
+
+
+1.41
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.40 2015-01-13 15:14:03-08 - - $"
+d193 54
+@
+
+
+1.40
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.39 2015-01-13 15:09:19-08 - - $"
+d193 15
+@
+
+
+1.39
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.38 2015-01-13 15:08:56-08 - - $"
+d116 8
+d173 19
+a191 1
+
+@
+
+
+1.38
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.37 2015-01-13 15:08:20-08 - - $"
+d87 1
+a87 2
+Finds files according to the standard shell wildcard expressions
+specified,
+d92 1
+a92 2
+Finds files according to the standard shell wildcard expressions
+specified,
+@
+
+
+1.37
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.36 2015-01-13 15:07:51-08 - - $"
+d84 1
+a84 1
+allbox tab(|); l lw(300p).
+@
+
+
+1.36
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.35 2015-01-13 15:07:16-08 - - $"
+d76 1
+a76 1
+.nr VCODEN \\n[VCODENWIDTH]u*1
+@
+
+
+1.35
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.34 2015-01-13 15:05:00-08 - - $"
+d84 1
+a84 1
+allbox tab(|); l l.
+@
+
+
+1.34
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.33 2015-01-13 15:04:27-08 - - $"
+d76 1
+@
+
+
+1.33
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.32 2015-01-13 15:03:11-08 - - $"
+d95 1
+@
+
+
+1.32
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.31 2015-01-13 14:42:54-08 - - $"
+d76 1
+a76 1
+\h'\\n[VCODEN]u'\f[CB]find\fP [\fIpath\fP\|.\|.\|.]
+d83 1
+a83 1
+tab(|); l l.
+d96 1
+d108 1
+@
+
+
+1.31
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.30 2015-01-13 14:42:36-08 - - $"
+d69 45
+d120 44
+@
+
+
+1.30
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.29 2015-01-13 14:41:55-08 - - $"
+d51 1
+a51 1
+.LB 0 0 0 0 \h'\n[ALX*Li]n' 0 0
+@
+
+
+1.29
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.28 2015-01-13 14:41:43-08 - - $"
+d51 1
+a51 1
+.LB 0 \n[ALX*Li] 0 0 \& 0 0
+@
+
+
+1.28
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.27 2015-01-13 14:41:24-08 - - $"
+d51 1
+a51 1
+.LB 0 0 \n[ALX*Li] 0 \& 0 0
+@
+
+
+1.27
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.26 2015-01-13 14:41:06-08 - - $"
+d51 1
+a51 1
+.LB 0 0 0 0 \& 0 0
+@
+
+
+1.26
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.25 2015-01-13 14:40:54-08 - - $"
+d51 1
+a51 1
+.LB 0 0 0 0 . 0 0
+@
+
+
+1.25
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.24 2015-01-13 14:39:34-08 - - $"
+d51 1
+a51 1
+.LB \n[ALX*Li] 0 0 0 . 0 0
+@
+
+
+1.24
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.23 2015-01-13 14:39:18-08 - - $"
+d51 1
+a51 1
+.LB \n[ALX*Li] 0 1 0 " " 0 0
+@
+
+
+1.23
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.22 2015-01-13 14:39:03-08 - - $"
+d51 1
+a51 1
+.LB \n[ALX*Li] 0 1 0 \^ 0 0
+@
+
+
+1.22
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.21 2015-01-13 14:38:10-08 - - $"
+d51 1
+a51 1
+.LB \n[ALX*Li] 0 1 0 \& 0 0
+@
+
+
+1.21
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.20 2015-01-13 14:18:00-08 - - $"
+d51 1
+a51 1
+.LB \n[ALX*Li] 0 1 0 \0 0 0
+@
+
+
+1.20
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.19 2015-01-13 14:16:05-08 - - $"
+d50 1
+a50 1
+.nr ALX*Li \\n[Li]-1
+@
+
+
+1.19
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.18 2015-01-13 14:15:52-08 - - $"
+d50 2
+a51 1
+.LB \n[Pi] 0 0 0 \0 0 0
+@
+
+
+1.18
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.17 2015-01-13 14:14:58-08 - - $"
+d50 1
+a50 1
+.LB \n[Pi] \n[Pi] 0 0 \0 0 0
+@
+
+
+1.17
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.16 2015-01-13 14:14:09-08 - - $"
+d50 1
+a50 1
+.LB 0 \n[Pi] 0 0 \& 0 0
+@
+
+
+1.16
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.15 2015-01-13 14:12:29-08 - - $"
+d50 1
+a50 1
+.LB \n[Pi] 0 0 0 \& 0 0
+@
+
+
+1.15
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.14 2015-01-13 14:11:59-08 - - $"
+d50 1
+a50 1
+.ALX "" 0 "" 0 0
+@
+
+
+1.14
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.13 2015-01-13 14:11:43-08 - - $"
+d50 1
+a50 1
+.BVL \n[Pi] "" 1
+@
+
+
+1.13
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.12 2015-01-13 14:10:37-08 - - $"
+d50 1
+a50 1
+.BVL \n[Pi] 0 1
+@
+
+
+1.12
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.11 2015-01-13 14:10:01-08 - - $"
+d50 2
+a51 3
+.br
+.nf
+.in +\n[Pi]n
+d53 1
+d55 1
+d57 1
+d59 1
+d61 1
+d63 1
+d65 1
+d67 1
+a67 3
+.fi
+.in -\n[Pi]n
+.br
+@
+
+
+1.11
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.10 2015-01-13 14:09:39-08 - - $"
+d52 1
+a52 1
+.in +\n[Pi]
+d62 1
+a62 1
+.in -\n[Pi]
+@
+
+
+1.10
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.9 2015-01-13 14:07:55-08 - - $"
+d52 1
+d62 1
+@
+
+
+1.9
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.8 2015-01-13 14:07:18-08 - - $"
+d50 12
+a61 18
+.ALX \[bu] 0 "" 0 0
+.LI
+(1)|General commands
+.LI
+(2)|System calls
+.LI
+(3)|Library functions, covering in particular the C standard library
+.LI
+(4)|Special files (usually devices found in \f[CB]/dev\fP) and drivers
+.LI
+(5)|File formats and conventions
+.LI
+(6)|Games and screensavers
+.LI
+(7)|Miscellanea
+.LI
+(8)|System administration commands and daemons
+.LE
+@
+
+
+1.8
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.7 2015-01-13 14:06:55-08 - - $"
+d50 1
+a50 1
+.BVL \nPi 0 1
+@
+
+
+1.7
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.6 2015-01-13 14:06:14-08 - - $"
+d50 1
+a50 1
+.BVL \nPi
+@
+
+
+1.6
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.5 2015-01-13 14:04:03-08 - - $"
+d50 1
+a50 1
+.ALX \[bu] 0 "" 0 0
+@
+
+
+1.5
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.4 2015-01-13 14:03:41-08 - - $"
+d50 2
+a51 3
+.DS
+.TS
+center tab(|); l1 l.
+d53 1
+d55 1
+d57 1
+d59 1
+d61 1
+d63 1
+d65 1
+d67 1
+a67 2
+.TE
+.DE
+@
+
+
+1.4
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.3 2015-01-13 14:01:25-08 - - $"
+a52 1
+Section |Description
+d60 1
+a60 1
+(8)|System administration commands and d\[ae]mons
+@
+
+
+1.3
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.2 2015-01-13 14:00:49-08 - - $"
+d57 1
+a57 1
+(4)|Special files (usually devices, those found in /dev) and drivers
+d61 1
+a61 1
+(8)|System administration commands and daemons
+@
+
+
+1.2
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab2u-utilities-c-make.mm,v 1.1 2015-01-13 13:51:54-08 - - $"
+d52 1
+a52 1
+tab(|); l l.
+@
+
+
+1.1
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.50 2015-01-08 18:54:56-08 - - $"
+d40 32
+@

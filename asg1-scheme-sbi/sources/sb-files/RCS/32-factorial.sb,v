@@ -1,0 +1,134 @@
+head	1.4;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.4
+date	2019.11.26.22.08.39;	author -;	state -;
+branches;
+next	1.3;
+
+1.3
+date	2019.11.08.20.49.19;	author -;	state -;
+branches;
+next	1.2;
+
+1.2
+date	2019.01.08.22.51.13;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2009.02.04.01.37.29;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@-
+@
+text
+@# $Id: 32-factorial.sb,v 1.3 2019-11-08 12:49:19-08 - - $
+#
+# Factorial.
+#
+read:   print "Factorial of:"
+        input x
+        # check the variable eof for a valid value or not.
+        if eof = 1 goto stop
+        if x != x goto error
+        if x < 0 goto error
+        goto letfac
+error:  print "Invalid input."
+        goto read
+
+#
+#
+#
+
+letfac: let factorial = 1
+        let itor = 2
+loop:   if itor > x goto prt
+        let factorial = factorial * itor
+        let itor = itor + 1
+        goto loop
+prt:    print "factorial(", x, ") = ", factorial
+        goto read
+
+#
+# end of file.
+#
+
+stop:   print "Program stopping."
+@
+
+
+1.3
+log
+@-
+@
+text
+@d1 1
+a1 1
+# $Id: 32-factorial.sb,v 1.1 2019-01-18 11:47:25-08 - - $
+d9 1
+a9 1
+        if x <> x goto error
+@
+
+
+1.2
+log
+@-
+@
+text
+@d1 1
+a1 1
+# $Id: 32-factorial.sb,v 1.1 2009-02-03 17:37:29-08 - - $
+d5 9
+a13 9
+read:	print "Factorial of:"
+	input x
+	# check the variable eof for a valid value or not.
+	if eof = 1 goto stop
+	if x <> x goto error
+	if x < 0 goto error
+	goto letfac
+error:	print "Invalid input."
+	goto read
+d19 8
+a26 8
+letfac:	let factorial = 1
+	let itor = 2
+loop:	if itor > x goto prt
+	let factorial = factorial * itor
+	let itor = itor + 1
+	goto loop
+prt:	print "factorial(", x, ") = ", factorial
+	goto read
+d32 1
+a32 1
+stop:	print "Program stopping."
+@
+
+
+1.1
+log
+@-
+@
+text
+@d1 1
+a1 1
+# $Id: 32-factorial.sb,v 1.1 2008-02-05 15:34:44-08 - - $
+d8 2
+a9 2
+	if inputcount = -1 goto stop
+	if inputcount = 0 goto error
+@

@@ -1,0 +1,6 @@
+#!/bin/sh -x
+# $Id: Check,v 1.1 2011-03-24 17:25:20-07 - - $
+rm hello
+pmake       >hello1.log 2>&1
+pmake hello >hello2.log 2>&1
+pmake bad   >bad.log 2>&1

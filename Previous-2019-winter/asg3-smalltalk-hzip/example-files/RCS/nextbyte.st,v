@@ -1,0 +1,48 @@
+head	1.2;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.2
+date	2019.02.11.23.22.21;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2019.02.11.23.22.01;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@-
+@
+text
+@#!/afs/cats.ucsc.edu/courses/cmps112-wm/usr/smalltalk/bin/gst -f
+"$Id: nextbyte.st,v 1.1 2019-02-11 15:22:01-08 - - $"
+
+[stdin atEnd] whileFalse: [
+   stdout << stdin nextByte << Character nl.
+]
+@
+
+
+1.1
+log
+@-
+@
+text
+@d2 1
+a2 1
+"$Id$"
+d5 1
+a5 1
+   stdout << stdin nextByte.
+@

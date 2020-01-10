@@ -1,0 +1,60 @@
+head	1.2;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.2
+date	2019.12.12.00.13.15;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2018.09.27.21.31.36;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@-
+@
+text
+@;;File: 21-let-if.sb
+;;   1: # $Id: 21-let-if.sb,v 1.2 2019-11-08 12:49:19-08 - - $
+;;   2: #
+;;   3:         let i = 1
+;;   4: loop:   print i
+;;   5:         let i = i + 1
+;;   6:         if i <= 10 goto loop
+(
+(    1          )
+(    2          )
+(    3          (let i 1))
+(    4 loop     (print i))
+(    5          (let i (+ i 1)))
+(    6          (if (<= i 10) loop))
+)
+@
+
+
+1.1
+log
+@-
+@
+text
+@d2 1
+a2 1
+;;   1: # $Id: 21-let-if.sbir,v 1.1 2017-08-21 17:29:41-07 - - $
+d4 4
+a7 4
+;;   3: 	let i = 1
+;;   4: loop:	print i
+;;   5: 	let i = i + 1
+;;   6: 	if i <= 10 goto loop
+@

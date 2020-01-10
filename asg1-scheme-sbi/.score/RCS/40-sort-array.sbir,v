@@ -1,0 +1,353 @@
+head	1.4;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.4
+date	2019.12.12.00.13.15;	author -;	state -;
+branches;
+next	1.3;
+
+1.3
+date	2019.01.09.01.27.02;	author -;	state -;
+branches;
+next	1.2;
+
+1.2
+date	2019.01.05.01.04.42;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2018.09.27.21.31.36;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@-
+@
+text
+@;;File: 40-sort-array.sb
+;;   1: # $Id: 40-sort-array.sb,v 1.7 2019-11-26 14:08:39-08 - - $
+;;   2: #
+;;   3: # sort numbers
+;;   4: #
+;;   5: # Input is a sequence of numbers ending with end of file.
+;;   6: # User is assumed to have not more than 100 numbers.
+;;   7: # Note that nan != nan, other was x = x for all x that is not nan.
+;;   8: #
+;;   9:         let size = 100
+;;  10:         dim a[size]
+;;  11:         let max = 0
+;;  12: read:   input x
+;;  13:         if eof != 0 goto eof
+;;  14:         if x != x goto error
+;;  15:         let a[max] = x
+;;  16:         let max = max + 1
+;;  17:         if max < size goto read
+;;  18: eof:
+;;  19:         print ""
+;;  20:         print "unsorted"
+;;  21:         let i = 0
+;;  22: prtlp:  print "a[", i, "]=", a[i]
+;;  23:         let i = i + 1
+;;  24:         if i < max goto prtlp
+;;  25:         if i < 1 goto sorted
+;;  26: 
+;;  27:         let i = max - 1
+;;  28: outer:  let j = 0 
+;;  29: inner:  if a[j] <= a[j + 1] goto noswap
+;;  30:         let t = a[j]
+;;  31:         let a[j] = a[j+1]
+;;  32:         let a[j+1]=t
+;;  33: noswap: let j = j + 1
+;;  34:         if j <= i - 1 goto inner
+;;  35:         let i = i - 1
+;;  36:         if i > 0 goto outer
+;;  37: 
+;;  38: sorted: print ""
+;;  39:         print "sorted"
+;;  40:         let i = 0
+;;  41: sortlp: print "a[", i, "]=", a[i]
+;;  42:         let i = i + 1
+;;  43:         if i < max goto sortlp
+;;  44:         goto stop
+;;  45: error:  print "Invalid input"
+;;  46: stop:
+(
+(    1          )
+(    2          )
+(    3          )
+(    4          )
+(    5          )
+(    6          )
+(    7          )
+(    8          )
+(    9          (let size 100))
+(   10          (dim (asub a size)))
+(   11          (let max 0))
+(   12 read     (input x))
+(   13          (if (!= eof 0) eof))
+(   14          (if (!= x x) error))
+(   15          (let (asub a max) x))
+(   16          (let max (+ max 1)))
+(   17          (if (< max size) read))
+(   18 eof      )
+(   19          (print ""))
+(   20          (print "unsorted"))
+(   21          (let i 0))
+(   22 prtlp    (print "a[" i "]=" (asub a i)))
+(   23          (let i (+ i 1)))
+(   24          (if (< i max) prtlp))
+(   25          (if (< i 1) sorted))
+(   26          )
+(   27          (let i (- max 1)))
+(   28 outer    (let j 0))
+(   29 inner    (if (<= (asub a j) (asub a (+ j 1))) noswap))
+(   30          (let t (asub a j)))
+(   31          (let (asub a j) (asub a (+ j 1))))
+(   32          (let (asub a (+ j 1)) t))
+(   33 noswap   (let j (+ j 1)))
+(   34          (if (<= j (- i 1)) inner))
+(   35          (let i (- i 1)))
+(   36          (if (> i 0) outer))
+(   37          )
+(   38 sorted   (print ""))
+(   39          (print "sorted"))
+(   40          (let i 0))
+(   41 sortlp   (print "a[" i "]=" (asub a i)))
+(   42          (let i (+ i 1)))
+(   43          (if (< i max) sortlp))
+(   44          (goto stop))
+(   45 error    (print "Invalid input"))
+(   46 stop     )
+)
+@
+
+
+1.3
+log
+@-
+@
+text
+@d2 1
+a2 1
+;;   1: # $Id: 40-sort-array.sb,v 1.4 2019-01-08 14:51:21-08 - - $
+d8 1
+a8 1
+;;   7: # Note that nan <> nan, other was x = x for all x that is not nan.
+d10 9
+a18 9
+;;   9: 	let size = 100
+;;  10: 	dim a[size]
+;;  11: 	let max = 0
+;;  12: read:	input x
+;;  13: 	if x <> x goto error
+;;  14: 	if eof = 1 goto eof
+;;  15: 	let max = max + 1
+;;  16: 	let a[max] = x
+;;  17: 	if max < size goto read
+d20 28
+a47 26
+;;  19: 	print ""
+;;  20: 	print "unsorted"
+;;  21: 	let i = 1
+;;  22: prtlp:	print "a[", i, "]=", a[i]
+;;  23: 	let i = i + 1
+;;  24: 	if i <= max goto prtlp
+;;  25: 	let i = max
+;;  26: outer:	let j = 1 
+;;  27: inner:	if a[j] <= a[j + 1] goto noswap
+;;  28: 	let t = a[j]
+;;  29: 	let a[j] = a[j+1]
+;;  30: 	let a[j+1]=t
+;;  31: noswap:
+;;  32: 	let j = j + 1
+;;  33: 	if j <= i - 1 goto inner
+;;  34: 	let i = i - 1
+;;  35: 	if i >= 2 goto outer
+;;  36: 	print ""
+;;  37: 	print "sorted"
+;;  38: 	let i = 1
+;;  39: sortlp:	print "a[", i, "]=", a[i]
+;;  40: 	let i = i + 1
+;;  41: 	if i <= max goto sortlp
+;;  42: 	goto stop
+;;  43: error:	print "Invalid input"
+;;  44: stop:
+d61 4
+a64 4
+(   13          (if (<> x x) error))
+(   14          (if (= eof 1) eof))
+(   15          (let max (+ max 1)))
+(   16          (let (asub a max) x))
+d69 1
+a69 1
+(   21          (let i 1))
+d72 23
+a94 21
+(   24          (if (<= i max) prtlp))
+(   25          (let i max))
+(   26 outer    (let j 1))
+(   27 inner    (if (<= (asub a j) (asub a (+ j 1))) noswap))
+(   28          (let t (asub a j)))
+(   29          (let (asub a j) (asub a (+ j 1))))
+(   30          (let (asub a (+ j 1)) t))
+(   31 noswap   )
+(   32          (let j (+ j 1)))
+(   33          (if (<= j (- i 1)) inner))
+(   34          (let i (- i 1)))
+(   35          (if (>= i 2) outer))
+(   36          (print ""))
+(   37          (print "sorted"))
+(   38          (let i 1))
+(   39 sortlp   (print "a[" i "]=" (asub a i)))
+(   40          (let i (+ i 1)))
+(   41          (if (<= i max) sortlp))
+(   42          (goto stop))
+(   43 error    (print "Invalid input"))
+(   44 stop     )
+@
+
+
+1.2
+log
+@-
+@
+text
+@d2 1
+a2 1
+;;   1: # $Id: 40-sort-array.sb,v 1.2 2019-01-02 14:50:40-08 - - $
+d8 38
+a45 37
+;;   7: #
+;;   8: 	let size = 100
+;;   9: 	dim a[size]
+;;  10: 	let max = 0
+;;  11: read:	input x
+;;  12: 	if inputcount = -1 goto eof
+;;  13: 	if inputcount < 1 goto error
+;;  14: 	let max = max + 1
+;;  15: 	let a[max] = x
+;;  16: 	if max < size goto read
+;;  17: eof:
+;;  18: 	print ""
+;;  19: 	print "unsorted"
+;;  20: 	let i = 1
+;;  21: prtlp:	print "a[", i, "]=", a[i]
+;;  22: 	let i = i + 1
+;;  23: 	if i <= max goto prtlp
+;;  24: 	let i = max
+;;  25: outer:	let j = 1 
+;;  26: inner:	if a[j] <= a[j + 1] goto noswap
+;;  27: 	let t = a[j]
+;;  28: 	let a[j] = a[j+1]
+;;  29: 	let a[j+1]=t
+;;  30: noswap:
+;;  31: 	let j = j + 1
+;;  32: 	if j <= i - 1 goto inner
+;;  33: 	let i = i - 1
+;;  34: 	if i >= 2 goto outer
+;;  35: 	print ""
+;;  36: 	print "sorted"
+;;  37: 	let i = 1
+;;  38: sortlp:	print "a[", i, "]=", a[i]
+;;  39: 	let i = i + 1
+;;  40: 	if i <= max goto sortlp
+;;  41: 	goto stop
+;;  42: error:	print "Invalid input"
+;;  43: stop:
+d54 37
+a90 36
+(    8          (let size 100))
+(    9          (dim (asub a size)))
+(   10          (let max 0))
+(   11 read     (input x))
+(   12          (if (= inputcount (- 1)) eof))
+(   13          (if (< inputcount 1) error))
+(   14          (let max (+ max 1)))
+(   15          (let (asub a max) x))
+(   16          (if (< max size) read))
+(   17 eof      )
+(   18          (print ""))
+(   19          (print "unsorted"))
+(   20          (let i 1))
+(   21 prtlp    (print "a[" i "]=" (asub a i)))
+(   22          (let i (+ i 1)))
+(   23          (if (<= i max) prtlp))
+(   24          (let i max))
+(   25 outer    (let j 1))
+(   26 inner    (if (<= (asub a j) (asub a (+ j 1))) noswap))
+(   27          (let t (asub a j)))
+(   28          (let (asub a j) (asub a (+ j 1))))
+(   29          (let (asub a (+ j 1)) t))
+(   30 noswap   )
+(   31          (let j (+ j 1)))
+(   32          (if (<= j (- i 1)) inner))
+(   33          (let i (- i 1)))
+(   34          (if (>= i 2) outer))
+(   35          (print ""))
+(   36          (print "sorted"))
+(   37          (let i 1))
+(   38 sortlp   (print "a[" i "]=" (asub a i)))
+(   39          (let i (+ i 1)))
+(   40          (if (<= i max) sortlp))
+(   41          (goto stop))
+(   42 error    (print "Invalid input"))
+(   43 stop     )
+@
+
+
+1.1
+log
+@-
+@
+text
+@d2 1
+a2 1
+;;   1: # $Id: 40-sort-array.sbir,v 1.1 2017-08-21 17:29:41-07 - - $
+d10 1
+a10 1
+;;   9: 	dim a( size )
+d16 1
+a16 1
+;;  15: 	let a( max ) = x
+d22 1
+a22 1
+;;  21: prtlp:	print "a(", i, ")=", a( i )
+d27 4
+a30 4
+;;  26: inner:	if a(j) <= a(j + 1 ) goto noswap
+;;  27: 	let t = a(j)
+;;  28: 	let a(j) = a(j+1)
+;;  29: 	let a(j+1)=t
+d39 1
+a39 1
+;;  38: sortlp:	print "a(", i, ")=", a( i )
+d54 1
+a54 1
+(    9          (dim (a size)))
+d60 1
+a60 1
+(   15          (let (a max) x))
+d66 1
+a66 1
+(   21 prtlp    (print "a(" i ")=" (a i)))
+d71 4
+a74 4
+(   26 inner    (if (<= (a j) (a (+ j 1))) noswap))
+(   27          (let t (a j)))
+(   28          (let (a j) (a (+ j 1))))
+(   29          (let (a (+ j 1)) t))
+d83 1
+a83 1
+(   38 sortlp   (print "a(" i ")=" (a i)))
+@

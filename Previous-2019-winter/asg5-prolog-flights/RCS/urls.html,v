@@ -1,0 +1,76 @@
+head	1.3;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.3
+date	2018.12.01.01.29.30;	author -;	state -;
+branches;
+next	1.2;
+
+1.2
+date	2018.12.01.01.24.02;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2018.12.01.01.23.49;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@-
+@
+text
+@<P>
+<A HREF=https://www.google.com/>
+<A HREF=https://www.google.com/search?source=hp&q=earth+radius+in+miles>
+Earth radius in miles
+</A>
+<P>
+<A HREF=https://www.space.com/17638-how-big-is-earth.html>
+How Big is Earth?
+</A>
+<P>
+<A HREF=http://www.onlineconversion.com/map_greatcircle_distance.htm>
+OnlineConversion.com
+</A>
+<P>
+<TT>
+$Id: urls.html,v 1.2 2018-11-30 17:24:02-08 - - $
+</TT>
+@
+
+
+1.2
+log
+@-
+@
+text
+@d1 3
+a3 1
+<A HREF=https://www.google.com/search?source=hp&ei=M8cBXJhw9rLQ8Q_0wrXgCg&q=earth+radius+in+miles&btnK=Google+Search&oq=earth+radius+in+miles&gs_l=psy-ab.3..0i70i251j0i22i30l4.1623.6152..6251...0.0..0.63.1119.21......0....1..gws-wiz.....0..0j0i131j0i10j0i3.YyRwRZK1OtU>
+d8 1
+d16 1
+a16 1
+$Id: urls.html,v 1.1 2018-11-30 17:23:49-08 - - $
+@
+
+
+1.1
+log
+@-
+@
+text
+@d12 3
+a14 1
+$Id$
+@

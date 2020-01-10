@@ -1,0 +1,4 @@
+.\" references for ./asg5-prolog-flights
+.ds qrf*ref-END-PNR-hn 
+.ds qrf*ref-END-PNR-pn 1
+.ds qrf*ref-END-PNR-xx 1

@@ -1,0 +1,39 @@
+::::::::::::::::::::::::::::::::
+aok.cpp
+::::::::::::::::::::::::::::::::
+     1	// $Id: aok.cpp,v 1.1 2018-11-06 18:04:21-08 - - $
+     2	int main() {
+     3	   return 0;
+     4	}
+::::::::::::::::::::::::::::::::
+bad.cpp
+::::::::::::::::::::::::::::::::
+     1	// $Id: bad.cpp,v 1.1 2018-11-06 18:04:21-08 - - $
+     2	int main() {
+     3	   return 63;
+     4	}
+::::::::::::::::::::::::::::::::
+segfault.cpp
+::::::::::::::::::::::::::::::::
+     1	// $Id: segfault.cpp,v 1.1 2018-11-06 18:04:21-08 - - $
+     2	int main() {
+     3	   char* p = nullptr;
+     4	   return *p;
+     5	}
+::::::::::::::::::::::::::::::::
+mktests.output
+::::::::::::::::::::::::::::::::
+     1	================ make aok ================
+     2	g++     aok.cpp   -o aok
+     3	aok
+     4	make aok.test status: 0
+     5	================ make bad ================
+     6	g++     bad.cpp   -o bad
+     7	bad
+     8	make: *** [Makefile:8: bad.test] Error 63
+     9	make bad.test status: 2
+    10	================ make segfault ================
+    11	g++     segfault.cpp   -o segfault
+    12	segfault
+    13	make: *** [Makefile:8: segfault.test] Segmentation fault
+    14	make segfault.test status: 2

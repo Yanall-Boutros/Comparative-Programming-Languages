@@ -1,0 +1,1201 @@
+%!PS-Adobe-3.0
+%%BoundingBox: 38 24 574 768
+%%Title: Listing.ps
+%%For: Wesley Mackey
+%%Creator: GNU Enscript 1.6.6
+%%CreationDate: Thu Feb  7 14:27:20 2019
+%%Orientation: Portrait
+%%Pages: (atend)
+%%DocumentMedia: Letter 612 792 0 () ()
+%%DocumentNeededResources: (atend)
+%%EndComments
+%%BeginProlog
+%%BeginResource: procset Enscript-Prolog 1.6 6
+%
+% Procedures.
+%
+
+/_S {	% save current state
+  /_s save def
+} def
+/_R {	% restore from saved state
+  _s restore
+} def
+
+/S {	% showpage protecting gstate
+  gsave
+  showpage
+  grestore
+} bind def
+
+/MF {	% fontname newfontname -> -	make a new encoded font
+  /newfontname exch def
+  /fontname exch def
+
+  /fontdict fontname findfont def
+  /newfont fontdict maxlength dict def
+
+  fontdict {
+    exch
+    dup /FID eq {
+      % skip FID pair
+      pop pop
+    } {
+      % copy to the new font dictionary
+      exch newfont 3 1 roll put
+    } ifelse
+  } forall
+
+  newfont /FontName newfontname put
+
+  % insert only valid encoding vectors
+  encoding_vector length 256 eq {
+    newfont /Encoding encoding_vector put
+  } if
+
+  newfontname newfont definefont pop
+} def
+
+/MF_PS { % fontname newfontname -> -	make a new font preserving its enc
+  /newfontname exch def
+  /fontname exch def
+
+  /fontdict fontname findfont def
+  /newfont fontdict maxlength dict def
+
+  fontdict {
+    exch
+    dup /FID eq {
+      % skip FID pair
+      pop pop
+    } {
+      % copy to the new font dictionary
+      exch newfont 3 1 roll put
+    } ifelse
+  } forall
+
+  newfont /FontName newfontname put
+
+  newfontname newfont definefont pop
+} def
+
+/SF { % fontname width height -> -	set a new font
+  /height exch def
+  /width exch def
+
+  findfont
+  [width 0 0 height 0 0] makefont setfont
+} def
+
+/SUF { % fontname width height -> -	set a new user font
+  /height exch def
+  /width exch def
+
+  /F-gs-user-font MF
+  /F-gs-user-font width height SF
+} def
+
+/SUF_PS { % fontname width height -> -	set a new user font preserving its enc
+  /height exch def
+  /width exch def
+
+  /F-gs-user-font MF_PS
+  /F-gs-user-font width height SF
+} def
+
+/M {moveto} bind def
+/s {show} bind def
+
+/Box {	% x y w h -> -			define box path
+  /d_h exch def /d_w exch def /d_y exch def /d_x exch def
+  d_x d_y  moveto
+  d_w 0 rlineto
+  0 d_h rlineto
+  d_w neg 0 rlineto
+  closepath
+} def
+
+/bgs {	% x y height blskip gray str -> -	show string with bg color
+  /str exch def
+  /gray exch def
+  /blskip exch def
+  /height exch def
+  /y exch def
+  /x exch def
+
+  gsave
+    x y blskip sub str stringwidth pop height Box
+    gray setgray
+    fill
+  grestore
+  x y M str s
+} def
+
+/bgcs { % x y height blskip red green blue str -> -  show string with bg color
+  /str exch def
+  /blue exch def
+  /green exch def
+  /red exch def
+  /blskip exch def
+  /height exch def
+  /y exch def
+  /x exch def
+
+  gsave
+    x y blskip sub str stringwidth pop height Box
+    red green blue setrgbcolor
+    fill
+  grestore
+  x y M str s
+} def
+
+% Highlight bars.
+/highlight_bars {	% nlines lineheight output_y_margin gray -> -
+  gsave
+    setgray
+    /ymarg exch def
+    /lineheight exch def
+    /nlines exch def
+
+    % This 2 is just a magic number to sync highlight lines to text.
+    0 d_header_y ymarg sub 2 sub translate
+
+    /cw d_output_w cols div def
+    /nrows d_output_h ymarg 2 mul sub lineheight div cvi def
+
+    % for each column
+    0 1 cols 1 sub {
+      cw mul /xp exch def
+
+      % for each rows
+      0 1 nrows 1 sub {
+        /rn exch def
+        rn lineheight mul neg /yp exch def
+        rn nlines idiv 2 mod 0 eq {
+	  % Draw highlight bar.  4 is just a magic indentation.
+	  xp 4 add yp cw 8 sub lineheight neg Box fill
+	} if
+      } for
+    } for
+
+  grestore
+} def
+
+% Line highlight bar.
+/line_highlight {	% x y width height gray -> -
+  gsave
+    /gray exch def
+    Box gray setgray fill
+  grestore
+} def
+
+% Column separator lines.
+/column_lines {
+  gsave
+    .1 setlinewidth
+    0 d_footer_h translate
+    /cw d_output_w cols div def
+    1 1 cols 1 sub {
+      cw mul 0 moveto
+      0 d_output_h rlineto stroke
+    } for
+  grestore
+} def
+
+% Column borders.
+/column_borders {
+  gsave
+    .1 setlinewidth
+    0 d_footer_h moveto
+    0 d_output_h rlineto
+    d_output_w 0 rlineto
+    0 d_output_h neg rlineto
+    closepath stroke
+  grestore
+} def
+
+% Do the actual underlay drawing
+/draw_underlay {
+  ul_style 0 eq {
+    ul_str true charpath stroke
+  } {
+    ul_str show
+  } ifelse
+} def
+
+% Underlay
+/underlay {	% - -> -
+  gsave
+    0 d_page_h translate
+    d_page_h neg d_page_w atan rotate
+
+    ul_gray setgray
+    ul_font setfont
+    /dw d_page_h dup mul d_page_w dup mul add sqrt def
+    ul_str stringwidth pop dw exch sub 2 div ul_h_ptsize -2 div moveto
+    draw_underlay
+  grestore
+} def
+
+/user_underlay {	% - -> -
+  gsave
+    ul_x ul_y translate
+    ul_angle rotate
+    ul_gray setgray
+    ul_font setfont
+    0 0 ul_h_ptsize 2 div sub moveto
+    draw_underlay
+  grestore
+} def
+
+% Page prefeed
+/page_prefeed {		% bool -> -
+  statusdict /prefeed known {
+    statusdict exch /prefeed exch put
+  } {
+    pop
+  } ifelse
+} def
+
+% Wrapped line markers
+/wrapped_line_mark {	% x y charwith charheight type -> -
+  /type exch def
+  /h exch def
+  /w exch def
+  /y exch def
+  /x exch def
+
+  type 2 eq {
+    % Black boxes (like TeX does)
+    gsave
+      0 setlinewidth
+      x w 4 div add y M
+      0 h rlineto w 2 div 0 rlineto 0 h neg rlineto
+      closepath fill
+    grestore
+  } {
+    type 3 eq {
+      % Small arrows
+      gsave
+        .2 setlinewidth
+        x w 2 div add y h 2 div add M
+        w 4 div 0 rlineto
+        x w 4 div add y lineto stroke
+
+        x w 4 div add w 8 div add y h 4 div add M
+        x w 4 div add y lineto
+	w 4 div h 8 div rlineto stroke
+      grestore
+    } {
+      % do nothing
+    } ifelse
+  } ifelse
+} def
+
+% EPSF import.
+
+/BeginEPSF {
+  /b4_Inc_state save def    		% Save state for cleanup
+  /dict_count countdictstack def	% Count objects on dict stack
+  /op_count count 1 sub def		% Count objects on operand stack
+  userdict begin
+  /showpage { } def
+  0 setgray 0 setlinecap
+  1 setlinewidth 0 setlinejoin
+  10 setmiterlimit [ ] 0 setdash newpath
+  /languagelevel where {
+    pop languagelevel
+    1 ne {
+      false setstrokeadjust false setoverprint
+    } if
+  } if
+} bind def
+
+/EndEPSF {
+  count op_count sub { pos } repeat	% Clean up stacks
+  countdictstack dict_count sub { end } repeat
+  b4_Inc_state restore
+} bind def
+
+% Check PostScript language level.
+/languagelevel where {
+  pop /gs_languagelevel languagelevel def
+} {
+  /gs_languagelevel 1 def
+} ifelse
+%%EndResource
+%%BeginResource: procset Enscript-Encoding-88591 1.6 6
+/encoding_vector [
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/space        	/exclam       	/quotedbl     	/numbersign   	
+/dollar       	/percent      	/ampersand    	/quoteright   	
+/parenleft    	/parenright   	/asterisk     	/plus         	
+/comma        	/hyphen       	/period       	/slash        	
+/zero         	/one          	/two          	/three        	
+/four         	/five         	/six          	/seven        	
+/eight        	/nine         	/colon        	/semicolon    	
+/less         	/equal        	/greater      	/question     	
+/at           	/A            	/B            	/C            	
+/D            	/E            	/F            	/G            	
+/H            	/I            	/J            	/K            	
+/L            	/M            	/N            	/O            	
+/P            	/Q            	/R            	/S            	
+/T            	/U            	/V            	/W            	
+/X            	/Y            	/Z            	/bracketleft  	
+/backslash    	/bracketright 	/asciicircum  	/underscore   	
+/quoteleft    	/a            	/b            	/c            	
+/d            	/e            	/f            	/g            	
+/h            	/i            	/j            	/k            	
+/l            	/m            	/n            	/o            	
+/p            	/q            	/r            	/s            	
+/t            	/u            	/v            	/w            	
+/x            	/y            	/z            	/braceleft    	
+/bar          	/braceright   	/tilde        	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/space        	/exclamdown   	/cent         	/sterling     	
+/currency     	/yen          	/brokenbar    	/section      	
+/dieresis     	/copyright    	/ordfeminine  	/guillemotleft	
+/logicalnot   	/hyphen       	/registered   	/macron       	
+/degree       	/plusminus    	/twosuperior  	/threesuperior	
+/acute        	/mu           	/paragraph    	/bullet       	
+/cedilla      	/onesuperior  	/ordmasculine 	/guillemotright	
+/onequarter   	/onehalf      	/threequarters	/questiondown 	
+/Agrave       	/Aacute       	/Acircumflex  	/Atilde       	
+/Adieresis    	/Aring        	/AE           	/Ccedilla     	
+/Egrave       	/Eacute       	/Ecircumflex  	/Edieresis    	
+/Igrave       	/Iacute       	/Icircumflex  	/Idieresis    	
+/Eth          	/Ntilde       	/Ograve       	/Oacute       	
+/Ocircumflex  	/Otilde       	/Odieresis    	/multiply     	
+/Oslash       	/Ugrave       	/Uacute       	/Ucircumflex  	
+/Udieresis    	/Yacute       	/Thorn        	/germandbls   	
+/agrave       	/aacute       	/acircumflex  	/atilde       	
+/adieresis    	/aring        	/ae           	/ccedilla     	
+/egrave       	/eacute       	/ecircumflex  	/edieresis    	
+/igrave       	/iacute       	/icircumflex  	/idieresis    	
+/eth          	/ntilde       	/ograve       	/oacute       	
+/ocircumflex  	/otilde       	/odieresis    	/divide       	
+/oslash       	/ugrave       	/uacute       	/ucircumflex  	
+/udieresis    	/yacute       	/thorn        	/ydieresis    	
+] def
+%%EndResource
+%%EndProlog
+%%BeginSetup
+%%IncludeResource: font Courier-Bold
+/HFpt_w 10 def
+/HFpt_h 10 def
+/Courier-Bold /HF-gs-font MF
+/HF /HF-gs-font findfont [HFpt_w 0 0 HFpt_h 0 0] makefont def
+/Courier-Bold /F-gs-font MF
+/F-gs-font 11 11 SF
+/#copies 1 def
+% Pagedevice definitions:
+gs_languagelevel 1 gt {
+  <<
+    /PageSize [612 792] 
+  >> setpagedevice
+} if
+%%BeginResource: procset Enscript-Header-enscript-mycolor 1.6 6
+%%IncludeResource: font Times-Bold
+%%IncludeResource: font Times-Roman
+
+% Fonts.
+/Times-Bold /HeaderFont-Bold MF
+/HeaderDateF /HeaderFont-Bold findfont 12 scalefont def
+
+/Times-Roman /HeaderFont-Times MF
+/HeaderHDRF /HeaderFont-Times findfont 14 scalefont def
+
+/HeaderPageNumF /Helvetica-Bold findfont 28.8 scalefont def
+/HeaderPageCountF /Helvetica-Bold findfont 18 scalefont def
+
+/do_header {	% print enscript header
+  gsave
+    d_header_x d_header_y translate
+
+    /dhw d_header_w 4 sub def
+
+    /linecolor {0 0 0 setrgbcolor} bind def  % line color
+    /txcolor   {0 0 0 setrgbcolor} bind def  % text color
+    /fncolor   {0 0 0 setrgbcolor} bind def  % filename line color
+
+    .5 setlinewidth
+
+    % line across bottom of the header area
+    linecolor
+    0 0 moveto dhw 0 lineto
+
+    % side boxes
+    /sbw d_header_h 2 mul def	% side box width
+
+    % left side box
+    0 0 sbw d_header_h Box
+    linecolor
+    stroke
+
+    % date/time in left box
+    txcolor
+    HeaderDateF setfont
+    moddatestr dup stringwidth pop sbw exch sub 2 div
+    d_header_h 2 div 2 add moveto show
+    modtimestr dup stringwidth pop sbw exch sub 2 div
+    d_header_h 5 div moveto show
+
+    % right side box
+    dhw sbw sub 0 sbw d_header_h Box
+    linecolor
+    stroke
+
+    % get width of pagecount
+    HeaderPageCountF setfont
+    pagecountstr stringwidth pop
+
+    txcolor
+    HeaderPageNumF setfont
+    pagenumstr stringwidth pop add  % add to width of pagecount
+    sbw exch sub 2 div dhw sbw sub add
+    d_header_h .2 mul moveto
+
+    pagenumstr show
+
+    HeaderPageCountF setfont
+    pagecountstr show
+
+    % filename
+    fncolor
+    HeaderHDRF setfont
+    dhw fname stringwidth pop sub 2 div d_header_h 8 div moveto
+    fname show
+
+    % user supplied header string.
+    user_header_p {
+      /h d_header_h 8 div 5 mul def
+
+      % HACK around a bug in enscript 1.6.0:
+      % for some reason this is getting set to "(null)" and
+      %
+      user_header_center_str (\(null\)) eq {
+        /user_header_center_str () def
+      } if
+
+      % Implement strict enscript compatibility.
+      user_header_center_str () eq user_header_right_str () eq and {
+        dhw user_header_left_str stringwidth pop sub 2 div
+        h moveto user_header_left_str show
+      } {
+        sbw 5 add h moveto user_header_left_str show
+
+        dhw user_header_center_str stringwidth pop sub 2 div
+        h moveto user_header_center_str show
+
+	dhw sbw sub 5 sub user_header_right_str stringwidth pop
+	sub h moveto user_header_right_str show
+      } ifelse
+    } if
+
+  grestore
+} bind def
+%%EndResource
+/d_page_w 536 def
+/d_page_h 744 def
+/d_header_x 0 def
+/d_header_y 708 def
+/d_header_w 536 def
+/d_header_h 36 def
+/d_footer_x 0 def
+/d_footer_y 0 def
+/d_footer_w 536 def
+/d_footer_h 0 def
+/d_output_w 536 def
+/d_output_h 708 def
+/cols 1 def
+%%EndSetup
+%%Page: (1) 1
+%%BeginPageSetup
+_S
+38 24 translate
+/pagenum 1 def
+/fname (graph.perl) def
+/fdir (.) def
+/ftail (graph.perl) def
+% User defined strings:
+/pagenumstr (1) def
+/moddatestr (02/07/19) def
+/pagecountstr (/1) def
+/modtimestr (14:27:20) def
+/user_header_p true def
+/user_header_left_str ($cmps112-wm/Assignments/asg4-perl-pmake/code) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+column_borders
+do_header
+32.4 694 M (1:) s
+52.2 694 M
+(#!/usr/bin/perl) s
+32.4 682 M (2:) s
+52.2 682 M
+(# $Id: graph.perl,v 1.1 2018-11-06 18:50:43-08 - - $) s
+32.4 670 M (3:) s
+32.4 658 M (4:) s
+52.2 658 M
+(use strict;) s
+32.4 646 M (5:) s
+52.2 646 M
+(use warnings;) s
+32.4 634 M (6:) s
+52.2 634 M
+($0 =~ s|.*/||;) s
+32.4 622 M (7:) s
+32.4 610 M (8:) s
+52.2 610 M
+(# Example setting up a directed graph.) s
+32.4 598 M (9:) s
+25.8 586 M (10:) s
+52.2 586 M
+(my @inputs = \() s
+25.8 574 M (11:) s
+52.2 574 M
+(   "all : hello",) s
+25.8 562 M (12:) s
+52.2 562 M
+(   "hello : main.o hello.o",) s
+25.8 550 M (13:) s
+52.2 550 M
+(   "main.o : main.c hello.h",) s
+25.8 538 M (14:) s
+52.2 538 M
+(   "hello.o : hello.c hello.h",) s
+25.8 526 M (15:) s
+52.2 526 M
+(   "ci : Makefile main.c hello.c hello.h",) s
+25.8 514 M (16:) s
+52.2 514 M
+(   "test : hello",) s
+25.8 502 M (17:) s
+52.2 502 M
+(   "clean : ",) s
+25.8 490 M (18:) s
+52.2 490 M
+(   "spotless : clean",) s
+25.8 478 M (19:) s
+52.2 478 M
+(\);) s
+25.8 466 M (20:) s
+25.8 454 M (21:) s
+52.2 454 M
+(sub parse_dep \($\) {) s
+25.8 442 M (22:) s
+52.2 442 M
+(   my \($line\) = @_;) s
+25.8 430 M (23:) s
+52.2 430 M
+(   return undef unless $line =~ m/^\(\\S+\)\\s*:\\s*\(.*?\)\\s*$/;) s
+25.8 418 M (24:) s
+52.2 418 M
+(   my \($target, $dependency\) = \($1, $2\);) s
+25.8 406 M (25:) s
+52.2 406 M
+(   my @dependencies = split m/\\s+/, $dependency;) s
+25.8 394 M (26:) s
+52.2 394 M
+(   return $target, \\@dependencies;) s
+25.8 382 M (27:) s
+52.2 382 M
+(}) s
+25.8 370 M (28:) s
+25.8 358 M (29:) s
+52.2 358 M
+(my %graph;) s
+25.8 346 M (30:) s
+52.2 346 M
+(for my $input \(@inputs\) {) s
+25.8 334 M (31:) s
+52.2 334 M
+(   my \($target, $deps\) = parse_dep $input;) s
+25.8 322 M (32:) s
+52.2 322 M
+(   print "$0: syntax error: $input\\n" and next unless defined $target;) s
+25.8 310 M (33:) s
+52.2 310 M
+(   $graph{$target} = $deps;) s
+25.8 298 M (34:) s
+52.2 298 M
+(}) s
+25.8 286 M (35:) s
+25.8 274 M (36:) s
+52.2 274 M
+(for my $target \(keys %graph\) {) s
+25.8 262 M (37:) s
+52.2 262 M
+(   print "\\"$target\\"";) s
+25.8 250 M (38:) s
+52.2 250 M
+(   my $deps = $graph{$target};) s
+25.8 238 M (39:) s
+52.2 238 M
+(   if \(not @$deps\) {) s
+25.8 226 M (40:) s
+52.2 226 M
+(      print " has no dependencies";) s
+25.8 214 M (41:) s
+52.2 214 M
+(   }else {) s
+25.8 202 M (42:) s
+52.2 202 M
+(      print " depends on";) s
+25.8 190 M (43:) s
+52.2 190 M
+(      print " \\"$_\\"" for @$deps;) s
+25.8 178 M (44:) s
+52.2 178 M
+(   }) s
+25.8 166 M (45:) s
+52.2 166 M
+(   print "\\n";) s
+25.8 154 M (46:) s
+52.2 154 M
+(}) s
+25.8 142 M (47:) s
+_R
+S
+%%Page: (1) 2
+%%BeginPageSetup
+_S
+38 24 translate
+/pagenum 1 def
+/fname (graph.output) def
+/fdir (.) def
+/ftail (graph.output) def
+% User defined strings:
+/pagenumstr (1) def
+/moddatestr (02/07/19) def
+/pagecountstr (/1) def
+/modtimestr (14:27:20) def
+/user_header_p true def
+/user_header_left_str ($cmps112-wm/Assignments/asg4-perl-pmake/code) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+column_borders
+do_header
+32.4 694 M (1:) s
+52.2 694 M
+("test" depends on "hello") s
+32.4 682 M (2:) s
+52.2 682 M
+("clean" has no dependencies) s
+32.4 670 M (3:) s
+52.2 670 M
+("all" depends on "hello") s
+32.4 658 M (4:) s
+52.2 658 M
+("main.o" depends on "main.c" "hello.h") s
+32.4 646 M (5:) s
+52.2 646 M
+("ci" depends on "Makefile" "main.c" "hello.c" "hello.h") s
+32.4 634 M (6:) s
+52.2 634 M
+("hello.o" depends on "hello.c" "hello.h") s
+32.4 622 M (7:) s
+52.2 622 M
+("spotless" depends on "clean") s
+32.4 610 M (8:) s
+52.2 610 M
+("hello" depends on "main.o" "hello.o") s
+_R
+S
+%%Page: (1) 3
+%%BeginPageSetup
+_S
+38 24 translate
+/pagenum 1 def
+/fname (mtime.perl) def
+/fdir (.) def
+/ftail (mtime.perl) def
+% User defined strings:
+/pagenumstr (1) def
+/moddatestr (02/07/19) def
+/pagecountstr (/1) def
+/modtimestr (14:27:20) def
+/user_header_p true def
+/user_header_left_str ($cmps112-wm/Assignments/asg4-perl-pmake/code) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+column_borders
+do_header
+32.4 694 M (1:) s
+52.2 694 M
+(#!/usr/bin/perl) s
+32.4 682 M (2:) s
+52.2 682 M
+(# $Id: mtime.perl,v 1.1 2018-11-06 18:50:44-08 - - $) s
+32.4 670 M (3:) s
+52.2 670 M
+(#) s
+32.4 658 M (4:) s
+52.2 658 M
+(# NAME) s
+32.4 646 M (5:) s
+52.2 646 M
+(#    older.perl - check whether a pair of files are older or newer) s
+32.4 634 M (6:) s
+52.2 634 M
+(#) s
+32.4 622 M (7:) s
+52.2 622 M
+(# SYNOPSIS) s
+32.4 610 M (8:) s
+52.2 610 M
+(#    older.perl filename...) s
+32.4 598 M (9:) s
+52.2 598 M
+(#) s
+25.8 586 M (10:) s
+52.2 586 M
+(# DESCRIPTION) s
+25.8 574 M (11:) s
+52.2 574 M
+(#    The two files' modification times are compared and a) s
+25.8 562 M (12:) s
+52.2 562 M
+(#    relationship is printed.) s
+25.8 550 M (13:) s
+52.2 550 M
+(#) s
+25.8 538 M (14:) s
+25.8 526 M (15:) s
+52.2 526 M
+(use strict;) s
+25.8 514 M (16:) s
+52.2 514 M
+(use warnings;) s
+25.8 502 M (17:) s
+52.2 502 M
+(use POSIX qw\(strftime\);) s
+25.8 490 M (18:) s
+52.2 490 M
+($0 =~ s|.*/||;) s
+25.8 478 M (19:) s
+25.8 466 M (20:) s
+52.2 466 M
+(sub mtime \($\) {) s
+25.8 454 M (21:) s
+52.2 454 M
+(   my \($filename\) = @_;) s
+25.8 442 M (22:) s
+52.2 442 M
+(   my @stat = stat $filename;) s
+25.8 430 M (23:) s
+52.2 430 M
+(   return @stat ? $stat[9] : undef;) s
+25.8 418 M (24:) s
+52.2 418 M
+(}) s
+25.8 406 M (25:) s
+25.8 394 M (26:) s
+52.2 394 M
+(sub fileinfo \($\) {) s
+25.8 382 M (27:) s
+52.2 382 M
+(   my \($filename\) = @_;) s
+25.8 370 M (28:) s
+52.2 370 M
+(   my $mtime = mtime $filename;) s
+25.8 358 M (29:) s
+52.2 358 M
+(   print "$filename: ";) s
+25.8 346 M (30:) s
+52.2 346 M
+(   if \(defined $mtime\) {print strftime "%c\\n", localtime $mtime}) s
+25.8 334 M (31:) s
+52.2 334 M
+(                  else {print "$!\\n"}) s
+25.8 322 M (32:) s
+52.2 322 M
+(   return $mtime;) s
+25.8 310 M (33:) s
+52.2 310 M
+(}) s
+25.8 298 M (34:) s
+25.8 286 M (35:) s
+52.2 286 M
+(for my $filename \(@ARGV\) {) s
+25.8 274 M (36:) s
+52.2 274 M
+(   unless \(-e $filename\) {) s
+25.8 262 M (37:) s
+52.2 262 M
+(      printf STDERR "$0: $filename: $!\\n";) s
+25.8 250 M (38:) s
+52.2 250 M
+(   }else {) s
+25.8 238 M (39:) s
+52.2 238 M
+(      my $mtime = mtime $filename;) s
+25.8 226 M (40:) s
+52.2 226 M
+(      my $ctime = strftime "%c", localtime $mtime;) s
+25.8 214 M (41:) s
+52.2 214 M
+(      printf "%-20s %12d %s\\n", $filename, $mtime, $ctime;) s
+25.8 202 M (42:) s
+52.2 202 M
+(   }) s
+25.8 190 M (43:) s
+52.2 190 M
+(}) s
+25.8 178 M (44:) s
+_R
+S
+%%Page: (1) 4
+%%BeginPageSetup
+_S
+38 24 translate
+/pagenum 1 def
+/fname (mtime.output) def
+/fdir (.) def
+/ftail (mtime.output) def
+% User defined strings:
+/pagenumstr (1) def
+/moddatestr (02/07/19) def
+/pagecountstr (/1) def
+/modtimestr (14:27:20) def
+/user_header_p true def
+/user_header_left_str ($cmps112-wm/Assignments/asg4-perl-pmake/code) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+column_borders
+do_header
+32.4 694 M (1:) s
+52.2 694 M
+(HEADER.html            1549578416 Thu 07 Feb 2019 02:26:56 PM PST) s
+32.4 682 M (2:) s
+52.2 682 M
+(Listing.pdf            1541559137 Tue 06 Nov 2018 06:52:17 PM PST) s
+32.4 670 M (3:) s
+52.2 670 M
+(Listing.ps             1541559137 Tue 06 Nov 2018 06:52:17 PM PST) s
+32.4 658 M (4:) s
+52.2 658 M
+(RCS                    1549578440 Thu 07 Feb 2019 02:27:20 PM PST) s
+32.4 646 M (5:) s
+52.2 646 M
+(graph.output           1549578440 Thu 07 Feb 2019 02:27:20 PM PST) s
+32.4 634 M (6:) s
+52.2 634 M
+(graph.perl             1549578440 Thu 07 Feb 2019 02:27:20 PM PST) s
+32.4 622 M (7:) s
+52.2 622 M
+(mk                     1549578440 Thu 07 Feb 2019 02:27:20 PM PST) s
+32.4 610 M (8:) s
+52.2 610 M
+(mtime.output           1549578440 Thu 07 Feb 2019 02:27:20 PM PST) s
+32.4 598 M (9:) s
+52.2 598 M
+(mtime.perl             1549578440 Thu 07 Feb 2019 02:27:20 PM PST) s
+25.8 586 M (10:) s
+52.2 586 M
+(sigtoperl              1541559137 Tue 06 Nov 2018 06:52:17 PM PST) s
+25.8 574 M (11:) s
+52.2 574 M
+(sigtoperl.cpp          1541559136 Tue 06 Nov 2018 06:52:16 PM PST) s
+25.8 562 M (12:) s
+52.2 562 M
+(sigtoperl.output       1541559137 Tue 06 Nov 2018 06:52:17 PM PST) s
+25.8 550 M (13:) s
+52.2 550 M
+(zerotime               1541559107 Tue 06 Nov 2018 06:51:47 PM PST) s
+25.8 538 M (14:) s
+52.2 538 M
+(zerotime.cpp           1541559107 Tue 06 Nov 2018 06:51:47 PM PST) s
+25.8 526 M (15:) s
+52.2 526 M
+(zerotime.txt           1549578440 Thu 07 Feb 2019 02:27:20 PM PST) s
+25.8 514 M (16:) s
+52.2 514 M
+(.                      1549578440 Thu 07 Feb 2019 02:27:20 PM PST) s
+25.8 502 M (17:) s
+52.2 502 M
+(/dev/null              1549328910 Mon 04 Feb 2019 05:08:30 PM PST) s
+_R
+S
+%%Page: (1) 5
+%%BeginPageSetup
+_S
+38 24 translate
+/pagenum 1 def
+/fname (sigtoperl.cpp) def
+/fdir (.) def
+/ftail (sigtoperl.cpp) def
+% User defined strings:
+/pagenumstr (1) def
+/moddatestr (02/07/19) def
+/pagecountstr (/1) def
+/modtimestr (14:27:20) def
+/user_header_p true def
+/user_header_left_str ($cmps112-wm/Assignments/asg4-perl-pmake/code) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+column_borders
+do_header
+32.4 694 M (1:) s
+52.2 694 M
+(// $Id: sigtoperl.cpp,v 1.1 2018-11-06 18:50:44-08 - - $) s
+32.4 682 M (2:) s
+32.4 670 M (3:) s
+52.2 670 M
+(#include <cstdlib>) s
+32.4 658 M (4:) s
+52.2 658 M
+(#include <cstring>) s
+32.4 646 M (5:) s
+52.2 646 M
+(#include <ctime>) s
+32.4 634 M (6:) s
+52.2 634 M
+(#include <iomanip>) s
+32.4 622 M (7:) s
+52.2 622 M
+(#include <iostream>) s
+32.4 610 M (8:) s
+52.2 610 M
+(#include <string>) s
+32.4 598 M (9:) s
+52.2 598 M
+(#include <sys/utsname.h>) s
+25.8 586 M (10:) s
+52.2 586 M
+(using namespace std;) s
+25.8 574 M (11:) s
+25.8 562 M (12:) s
+52.2 562 M
+(int main \(int, char** argv\) {) s
+25.8 550 M (13:) s
+25.8 538 M (14:) s
+52.2 538 M
+(   // Print UTS system information.) s
+25.8 526 M (15:) s
+52.2 526 M
+(   struct utsname utsbuf {};) s
+25.8 514 M (16:) s
+52.2 514 M
+(   uname \(&utsbuf\);) s
+25.8 502 M (17:) s
+52.2 502 M
+(   cout << "# " << basename \(argv[0]\) << ": " << utsbuf.machine) s
+25.8 490 M (18:) s
+52.2 490 M
+(        << " " << utsbuf.sysname << " " << utsbuf.nodename << endl;) s
+25.8 478 M (19:) s
+25.8 466 M (20:) s
+52.2 466 M
+(   // Print current date/time.) s
+25.8 454 M (21:) s
+52.2 454 M
+(   struct tm tm_local;) s
+25.8 442 M (22:) s
+52.2 442 M
+(   time_t tm_now = time \(nullptr\);) s
+25.8 430 M (23:) s
+52.2 430 M
+(   localtime_r \(&tm_now, &tm_local\);) s
+25.8 418 M (24:) s
+52.2 418 M
+(   char tm_buffer[256];) s
+25.8 406 M (25:) s
+52.2 406 M
+(   strftime \(tm_buffer, sizeof tm_buffer, "%c", &tm_local\);) s
+25.8 394 M (26:) s
+52.2 394 M
+(   cout << "# " << basename \(argv[0]\) << ": " << tm_buffer << endl;) s
+25.8 382 M (27:) s
+25.8 370 M (28:) s
+52.2 370 M
+(   // Print strsignal information.) s
+25.8 358 M (29:) s
+52.2 358 M
+(   constexpr int MAXSIG = 255;) s
+25.8 346 M (30:) s
+52.2 346 M
+(   cout << "my %strsignal = \(" << endl;) s
+25.8 334 M (31:) s
+52.2 334 M
+(   for \(int sig = 0; sig < MAXSIG; ++sig\) {) s
+25.8 322 M (32:) s
+52.2 322 M
+(      const char* strsig = strsignal \(sig\);) s
+25.8 310 M (33:) s
+52.2 310 M
+(      if \(strsig == nullptr\) continue;) s
+25.8 298 M (34:) s
+52.2 298 M
+(      string stringsig = strsig;) s
+25.8 286 M (35:) s
+52.2 286 M
+(      if \(stringsig.find_first_of \("Unknown signal "\) == 0\) continue;) s
+25.8 274 M (36:) s
+52.2 274 M
+(      if \(stringsig.find_first_of \("Real-time signal "\) == 0\) continue;) s
+25.8 262 M (37:) s
+52.2 262 M
+(      cout << setw\(5\) << sig << " => \\"" << stringsig << "\\"," << endl;) s
+25.8 250 M (38:) s
+52.2 250 M
+(   }) s
+25.8 238 M (39:) s
+52.2 238 M
+(   printf \("\);\\n"\);) s
+25.8 226 M (40:) s
+52.2 226 M
+(   return EXIT_SUCCESS;) s
+25.8 214 M (41:) s
+52.2 214 M
+(}) s
+25.8 202 M (42:) s
+_R
+S
+%%Page: (1) 6
+%%BeginPageSetup
+_S
+38 24 translate
+/pagenum 1 def
+/fname (sigtoperl.output) def
+/fdir (.) def
+/ftail (sigtoperl.output) def
+% User defined strings:
+/pagenumstr (1) def
+/moddatestr (02/07/19) def
+/pagecountstr (/1) def
+/modtimestr (14:27:20) def
+/user_header_p true def
+/user_header_left_str ($cmps112-wm/Assignments/asg4-perl-pmake/code) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+column_borders
+do_header
+32.4 694 M (1:) s
+52.2 694 M
+(# sigtoperl: x86_64 Linux unix2.lt.ucsc.edu) s
+32.4 682 M (2:) s
+52.2 682 M
+(# sigtoperl: Thu Feb  7 14:27:20 2019) s
+32.4 670 M (3:) s
+52.2 670 M
+(my %strsignal = \() s
+32.4 658 M (4:) s
+52.2 658 M
+(    1 => "Hangup",) s
+32.4 646 M (5:) s
+52.2 646 M
+(    2 => "Interrupt",) s
+32.4 634 M (6:) s
+52.2 634 M
+(    3 => "Quit",) s
+32.4 622 M (7:) s
+52.2 622 M
+(    4 => "Illegal instruction",) s
+32.4 610 M (8:) s
+52.2 610 M
+(    5 => "Trace/breakpoint trap",) s
+32.4 598 M (9:) s
+52.2 598 M
+(    6 => "Aborted",) s
+25.8 586 M (10:) s
+52.2 586 M
+(    7 => "Bus error",) s
+25.8 574 M (11:) s
+52.2 574 M
+(    8 => "Floating point exception",) s
+25.8 562 M (12:) s
+52.2 562 M
+(    9 => "Killed",) s
+25.8 550 M (13:) s
+52.2 550 M
+(   11 => "Segmentation fault",) s
+25.8 538 M (14:) s
+52.2 538 M
+(   13 => "Broken pipe",) s
+25.8 526 M (15:) s
+52.2 526 M
+(   14 => "Alarm clock",) s
+25.8 514 M (16:) s
+52.2 514 M
+(   15 => "Terminated",) s
+25.8 502 M (17:) s
+52.2 502 M
+(   16 => "Stack fault",) s
+25.8 490 M (18:) s
+52.2 490 M
+(   17 => "Child exited",) s
+25.8 478 M (19:) s
+52.2 478 M
+(   18 => "Continued",) s
+25.8 466 M (20:) s
+52.2 466 M
+(   19 => "Stopped \(signal\)",) s
+25.8 454 M (21:) s
+52.2 454 M
+(   20 => "Stopped",) s
+25.8 442 M (22:) s
+52.2 442 M
+(   21 => "Stopped \(tty input\)",) s
+25.8 430 M (23:) s
+52.2 430 M
+(   22 => "Stopped \(tty output\)",) s
+25.8 418 M (24:) s
+52.2 418 M
+(   24 => "CPU time limit exceeded",) s
+25.8 406 M (25:) s
+52.2 406 M
+(   25 => "File size limit exceeded",) s
+25.8 394 M (26:) s
+52.2 394 M
+(   26 => "Virtual timer expired",) s
+25.8 382 M (27:) s
+52.2 382 M
+(   27 => "Profiling timer expired",) s
+25.8 370 M (28:) s
+52.2 370 M
+(   28 => "Window changed",) s
+25.8 358 M (29:) s
+52.2 358 M
+(   29 => "I/O possible",) s
+25.8 346 M (30:) s
+52.2 346 M
+(   30 => "Power failure",) s
+25.8 334 M (31:) s
+52.2 334 M
+(   31 => "Bad system call",) s
+25.8 322 M (32:) s
+52.2 322 M
+(\);) s
+_R
+S
+%%Trailer
+%%Pages: 6
+%%DocumentNeededResources: font Times-Roman Courier-Bold Times-Bold 
+%%EOF

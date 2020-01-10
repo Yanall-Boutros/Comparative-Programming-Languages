@@ -1,0 +1,54 @@
+CMPS-112 · Winter 2019 · Program 5 · Logic Programming: Prolog  1 of 1
+$Id: asg5-prolog-flights.mm,v 1.4 2019-02-07 14:31:14-08 - - $
+PWD: /afs/cats.ucsc.edu/courses/cmps112-wm/Assignments/
+asg5-prolog-flights
+URL: http://www2.ucsc.edu/courses/cmps112-wm/:/Assignments/
+asg5-prolog-flights/
+
+1.  Logic Programming in Prolog
+
+You will use Prolog to write an airline reservation system for the
+Twilight Zone Airlines.  Given a request to travel from one city to
+another, print out the flight schedule.  For each leg of the trip,
+print out the departure airport, airport, city name, and time.  For
+example:
+
+| ?- fly( lax, sea).
+depart  LAX  Los Angeles     14:22
+arrive  SFO  San Francisco   15:29
+depart  SFO  San Francisco   16:02
+arrive  SEA  Seattle-Tacoma  17:42
+true ?
+yes
+
+A database has been provided which lists some airports, their cities,
+and the North latitudes and West longitudes of the airports.  A flight
+schedule has also been provided listing the departure and arrival
+airports and the departure times.
+
+2.  Logic
+
+Some notes about the logic of the program.
+
+ (a) To compute the distance between airports, use the haversine
+     formula.  The database contains degrees and minutes, which must
+     be converted to radians.  The result must be converted to miles.
+
+ (b) Planes fly at a constant speed of 500 miles per hour and always
+     using great circle paths, so the arrival time can be computed
+     from the departure time.
+
+ (c) A flight transfer always takes 30 minutes, so during a transfer
+     at a hub, the departure of a connecting flight must be at least
+     30 minutes later than the arrival of the incoming flight.
+
+ (d) There are no overnight trips.  The complete trip departs and
+     arrives in the same day, although the final arrival time may be
+     shown as greater than 23:59.
+
+3.  What to Submit
+
+Submit one file:  functions.pl.  Also submit README, and if
+applicable, PARTNER.  The grader will copy in the files .score/
+database.pl and the test data.
+

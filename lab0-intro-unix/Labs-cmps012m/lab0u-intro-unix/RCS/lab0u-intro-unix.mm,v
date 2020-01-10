@@ -1,0 +1,2118 @@
+head	1.79;
+access;
+symbols;
+locks;
+comment	@.\" @;
+
+
+1.79
+date	2015.12.07.22.37.46;	author -;	state -;
+branches;
+next	1.78;
+
+1.78
+date	2015.12.07.22.36.21;	author -;	state -;
+branches;
+next	1.77;
+
+1.77
+date	2015.12.07.22.35.49;	author -;	state -;
+branches;
+next	1.76;
+
+1.76
+date	2015.12.07.22.35.25;	author -;	state -;
+branches;
+next	1.75;
+
+1.75
+date	2015.01.12.22.16.56;	author -;	state -;
+branches;
+next	1.74;
+
+1.74
+date	2015.01.09.00.44.14;	author -;	state -;
+branches;
+next	1.73;
+
+1.73
+date	2015.01.09.00.34.59;	author -;	state -;
+branches;
+next	1.72;
+
+1.72
+date	2015.01.08.23.53.43;	author -;	state -;
+branches;
+next	1.71;
+
+1.71
+date	2015.01.08.23.52.54;	author -;	state -;
+branches;
+next	1.70;
+
+1.70
+date	2015.01.08.23.51.53;	author -;	state -;
+branches;
+next	1.69;
+
+1.69
+date	2015.01.08.23.51.33;	author -;	state -;
+branches;
+next	1.68;
+
+1.68
+date	2015.01.08.23.50.15;	author -;	state -;
+branches;
+next	1.67;
+
+1.67
+date	2015.01.07.00.23.25;	author -;	state -;
+branches;
+next	1.66;
+
+1.66
+date	2015.01.07.00.22.47;	author -;	state -;
+branches;
+next	1.65;
+
+1.65
+date	2015.01.07.00.21.42;	author -;	state -;
+branches;
+next	1.64;
+
+1.64
+date	2015.01.07.00.21.23;	author -;	state -;
+branches;
+next	1.63;
+
+1.63
+date	2015.01.07.00.04.39;	author -;	state -;
+branches;
+next	1.62;
+
+1.62
+date	2014.12.24.00.51.48;	author -;	state -;
+branches;
+next	1.61;
+
+1.61
+date	2014.12.24.00.49.00;	author -;	state -;
+branches;
+next	1.60;
+
+1.60
+date	2014.12.24.00.48.21;	author -;	state -;
+branches;
+next	1.59;
+
+1.59
+date	2014.12.24.00.47.00;	author -;	state -;
+branches;
+next	1.58;
+
+1.58
+date	2014.12.23.03.07.32;	author -;	state -;
+branches;
+next	1.57;
+
+1.57
+date	2014.12.23.03.05.50;	author -;	state -;
+branches;
+next	1.56;
+
+1.56
+date	2014.12.23.03.03.40;	author -;	state -;
+branches;
+next	1.55;
+
+1.55
+date	2014.12.23.02.24.57;	author -;	state -;
+branches;
+next	1.54;
+
+1.54
+date	2014.12.23.02.22.32;	author -;	state -;
+branches;
+next	1.53;
+
+1.53
+date	2014.12.23.02.20.07;	author -;	state -;
+branches;
+next	1.52;
+
+1.52
+date	2014.12.23.02.18.04;	author -;	state -;
+branches;
+next	1.51;
+
+1.51
+date	2014.12.23.02.17.27;	author -;	state -;
+branches;
+next	1.50;
+
+1.50
+date	2014.12.23.02.12.11;	author -;	state -;
+branches;
+next	1.49;
+
+1.49
+date	2014.12.23.02.07.07;	author -;	state -;
+branches;
+next	1.48;
+
+1.48
+date	2014.12.23.02.05.36;	author -;	state -;
+branches;
+next	1.47;
+
+1.47
+date	2014.12.23.02.03.44;	author -;	state -;
+branches;
+next	1.46;
+
+1.46
+date	2014.12.23.01.51.25;	author -;	state -;
+branches;
+next	1.45;
+
+1.45
+date	2014.12.23.01.46.40;	author -;	state -;
+branches;
+next	1.44;
+
+1.44
+date	2014.12.23.01.45.30;	author -;	state -;
+branches;
+next	1.43;
+
+1.43
+date	2014.12.23.01.44.52;	author -;	state -;
+branches;
+next	1.42;
+
+1.42
+date	2014.12.23.01.42.13;	author -;	state -;
+branches;
+next	1.41;
+
+1.41
+date	2014.12.23.01.37.16;	author -;	state -;
+branches;
+next	1.40;
+
+1.40
+date	2014.12.23.01.35.43;	author -;	state -;
+branches;
+next	1.39;
+
+1.39
+date	2014.12.20.04.45.19;	author -;	state -;
+branches;
+next	1.38;
+
+1.38
+date	2014.12.20.04.44.21;	author -;	state -;
+branches;
+next	1.37;
+
+1.37
+date	2014.12.20.04.36.35;	author -;	state -;
+branches;
+next	1.36;
+
+1.36
+date	2014.12.20.04.35.25;	author -;	state -;
+branches;
+next	1.35;
+
+1.35
+date	2014.12.20.04.33.34;	author -;	state -;
+branches;
+next	1.34;
+
+1.34
+date	2014.12.20.04.33.08;	author -;	state -;
+branches;
+next	1.33;
+
+1.33
+date	2014.12.20.04.31.32;	author -;	state -;
+branches;
+next	1.32;
+
+1.32
+date	2014.12.20.04.31.09;	author -;	state -;
+branches;
+next	1.31;
+
+1.31
+date	2014.12.20.04.26.45;	author -;	state -;
+branches;
+next	1.30;
+
+1.30
+date	2014.12.20.04.25.35;	author -;	state -;
+branches;
+next	1.29;
+
+1.29
+date	2014.12.20.04.25.17;	author -;	state -;
+branches;
+next	1.28;
+
+1.28
+date	2014.12.20.04.24.05;	author -;	state -;
+branches;
+next	1.27;
+
+1.27
+date	2014.12.20.04.19.38;	author -;	state -;
+branches;
+next	1.26;
+
+1.26
+date	2014.12.20.04.19.12;	author -;	state -;
+branches;
+next	1.25;
+
+1.25
+date	2014.12.20.04.10.29;	author -;	state -;
+branches;
+next	1.24;
+
+1.24
+date	2014.12.20.04.10.17;	author -;	state -;
+branches;
+next	1.23;
+
+1.23
+date	2014.12.20.04.09.50;	author -;	state -;
+branches;
+next	1.22;
+
+1.22
+date	2014.12.20.04.09.08;	author -;	state -;
+branches;
+next	1.21;
+
+1.21
+date	2014.12.20.04.06.56;	author -;	state -;
+branches;
+next	1.20;
+
+1.20
+date	2014.12.20.04.06.20;	author -;	state -;
+branches;
+next	1.19;
+
+1.19
+date	2014.12.20.04.05.29;	author -;	state -;
+branches;
+next	1.18;
+
+1.18
+date	2014.12.20.04.03.41;	author -;	state -;
+branches;
+next	1.17;
+
+1.17
+date	2014.12.20.04.02.48;	author -;	state -;
+branches;
+next	1.16;
+
+1.16
+date	2014.12.20.04.02.09;	author -;	state -;
+branches;
+next	1.15;
+
+1.15
+date	2014.12.20.04.01.53;	author -;	state -;
+branches;
+next	1.14;
+
+1.14
+date	2014.12.20.03.58.30;	author -;	state -;
+branches;
+next	1.13;
+
+1.13
+date	2014.12.20.03.58.09;	author -;	state -;
+branches;
+next	1.12;
+
+1.12
+date	2014.12.20.03.56.57;	author -;	state -;
+branches;
+next	1.11;
+
+1.11
+date	2014.12.20.03.56.38;	author -;	state -;
+branches;
+next	1.10;
+
+1.10
+date	2014.12.20.03.54.25;	author -;	state -;
+branches;
+next	1.9;
+
+1.9
+date	2014.12.20.03.52.37;	author -;	state -;
+branches;
+next	1.8;
+
+1.8
+date	2014.12.20.03.44.40;	author -;	state -;
+branches;
+next	1.7;
+
+1.7
+date	2014.12.20.03.44.20;	author -;	state -;
+branches;
+next	1.6;
+
+1.6
+date	2014.12.20.03.42.11;	author -;	state -;
+branches;
+next	1.5;
+
+1.5
+date	2014.12.20.03.41.55;	author -;	state -;
+branches;
+next	1.4;
+
+1.4
+date	2014.12.20.03.41.40;	author -;	state -;
+branches;
+next	1.3;
+
+1.3
+date	2014.12.20.03.30.33;	author -;	state -;
+branches;
+next	1.2;
+
+1.2
+date	2014.12.20.03.30.10;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2014.12.20.03.29.30;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.79
+log
+@-
+@
+text
+@.so Tmac.mm-etc
+.if t .Newcentury-fonts
+.INITR* \n[.F]
+.SIZE 12 14
+.TITLE CMPS-012M Winter\~2016 Lab\~0 "Introduction to Unix"
+.RCS "$Id: lab0u-intro-unix.mm,v 1.78 2015-12-07 14:36:21-08 - - $"
+.PWD
+.URL
+.ds SUBQUARTER cmps012b-wm.w16
+.ds SUBMITDIR /afs/cats.ucsc.edu/class/\*[SUBQUARTER]/lab0/\[Do]USER
+.ds COURSEDIR /afs/cats.ucsc.edu/courses/cmps012b-wm
+.ds COURSEURL http://www2.ucsc.edu/courses/cmps012b-wm/:/
+.ds BINDIR \*[COURSEDIR]/bin
+.nr HISTORY 0 1
+.af HISTORY 01
+.ds UNIXHOST unix.ucsc.edu
+.de LI=file
+.   LI
+.   ds file \\n[li*cnt!\\n[li*lvl]]_\\$1
+..
+.de PROMPT
+.   TVCODE* 1 "bash-\\n+[HISTORY]\[Do] " "\\$*"
+..
+.de OUTPUT
+.   TVCODE* 1 "\\$*"
+..
+.de SUBMIT
+.   ie \\n[.$]=0 .PROMPT submit \*[SUBQUARTER] lab0 \\*[file]
+.   el           .PROMPT submit \*[SUBQUARTER] lab0 \\$*
+..
+.H 1 "Overview"
+This lab will introduce you to Unix (Linux)
+and basic commands used to navigate around the file system.
+You will learn how to submit assignments using the
+.V= submit 
+command on Unix.
+File and directory security and organization will also be
+covered, 
+specifically for the AFS file system.
+Interacting with Unix is done by typing commands at the shell
+prompt.
+We will discuss only the
+.V= bash 
+shell.
+.H 1 "Directories and ACLs"
+Organize your work by creating a separate directory for each 
+course you take,
+and a separate subdirectory under that for each assignment or lab that
+you work on.
+In the following commentary,
+what the computer types out is shown in Courier plain type,
+and what the user types in is shown in Courier bold type.
+.DS
+.PROMPT cd
+.PROMPT mkdir private
+.DE
+The command
+.V= cd
+without arguments sets the current directory to
+.V= \[Do]HOME ,
+which can also be referred to by a tilde 
+.=V ( \[ti] ).
+The
+.V= mkdir
+command creates a new directory.
+An error will be printed if you already have the directory.
+.DS
+.PROMPT fs setacl private $USER all -clear
+.PROMPT fs listacl private
+.OUTPUT Access list for private is
+.OUTPUT Normal rights:
+.OUTPUT "  foobar rlidwka"
+.DE
+This has set an access control list (ACL) on the private directory,
+which limits access to the user
+.V= foobar .
+The environment variable
+.V= \[Do]USER
+always contains your user name.
+Any directories created under this directory will inherit
+the ACL from its parent.
+An ACL may be placed only on a directory,
+never on an individual file.
+The letters
+.V= rlidwka
+show which access rights are available to which user\(::
+.nr Txtindent \n[Pi]*7/2
+.de acl_code
+.   LI "\f[CB]\\$1\0\f[P](\\$2)"
+..
+.VL \n[Txtindent] \n[Pi] 1
+.acl_code r read
+allows read access to the files in the directory.
+.acl_code l list
+allows
+.V= ls (1)
+to list the names of the files in the directory.
+.acl_code i insert
+allows new files to be inserted into the directory.
+.acl_code d delete
+allows files to be deleted from the directory.
+.acl_code w write
+allows writing (updating) to files in the directory.
+.acl_code k lock
+allows files in the directory to be locked.
+.acl_code a admin
+allows administrative
+.=V ( fs\~setacl )
+access to the directory.
+.LE
+.P
+If an access right is given as
+.V= "system:authuser rl" ,
+it means that any authorized user may read files and list directories.
+This is usually what is placed on course directories,
+such as the one you are looking at now.
+.P
+If you are working from off campus,
+you will need to connect to the servers
+.V= unix.ucsc.edu .
+Read 
+.IR "``Unix Timeshare\(::"
+.IR "How to Connect''" \(::
+.VTCODE* 1 \
+"http://its.ucsc.edu/unix-timeshare/tutorials/how-to-connect.html"
+When you are in the Unix lab,
+you do not need to use the servers.
+.H 1 "Lab exercises"
+For this lab,
+you will be asked to create files and submit them using the
+.V= submit
+command.
+.ALX 01 ()
+.LI=file private-lab0
+You should have a separate directory for each course and a subdirectory
+of that for each lab or programming project.
+Create one for lab0.
+The shell variable
+.V= \[Do]HOME
+and the tilde
+.=V ( \[ti] )
+both refer to your home directory.
+.PROMPT cd \[ti]/private
+.PROMPT mkdir -p cmps012b/lab0
+.PROMPT cd cmps012b/lab0
+The
+.V= pwd (1)
+command shows you which directory is your current directory.
+.PROMPT pwd
+The 
+.V= ls (1)
+command shows you the contents of a directory.
+The
+.V= -l
+option produces output in long format and
+.V= -a
+shows hidden files as well.
+.PROMPT ls -la
+.PROMPT pwd >\*[file]
+.PROMPT ls -la >>\*[file]
+.PROMPT cat \*[file]
+.SUBMIT
+.LI=file date
+Create a file called \*[file] by redirecting the output of the
+.V= date (1)
+command.
+Then submit it.
+.PROMPT date
+.PROMPT date >\*[file]
+.PROMPT cat \*[file]
+.SUBMIT
+Note that the first command prints to the terminal,
+while the second one redirects the output to a file.
+.LI=file acl
+Verify that you have properly set security on your private file
+hierarchy.
+Also check your disk quota.
+.PROMPT fs listacl \[ti]/private
+.PROMPT fs listquota
+.PROMPT fs listacl \[ti]/private >\*[file]
+.PROMPT fs listquota >>\*[file]
+.PROMPT cat \\*[file]
+.SUBMIT
+Note that
+.V= >
+redirects output to a file, but
+.V= >>
+appends output to an existing file.
+You can abbreviate the first operand of
+.V= fs \(::
+.V= fs\~sa ,
+.V= fs\~la ,
+and
+.V= fs\~lq .
+.LI=file which_shell
+Verify that you are using 
+.V= bash
+and not
+.V= tcsh .
+.PROMPT echo $0
+.OUTPUT tcsh
+.PROMPT bash
+.PROMPT echo $0
+.OUTPUT -bash
+.PROMPT echo $0 >\*[file]
+.SUBMIT
+So far, there have been no differences between the two shells,
+but later on in the course, there will be some little difficulties
+with
+.V= tcsh .
+If the first 
+.V= echo
+command displays
+.V= bash ,
+then you are already using
+.V= bash .
+If you wish to change your shell to 
+.V= bash
+permanently,
+type the command
+.V= chsh
+and follow instructions.
+Whether or not you change your shell is up to you,
+but there are some advantages to using
+.V= bash
+as opposed to
+.V= tcsh .
+.LI=file getent
+The
+.V= getent (1)
+command shows you information about your own username.
+.PROMPT getent passwd \[Do]USER
+.PROMPT getent passwd \[Do]USER >\*[file]
+.SUBMIT
+Its seven fields show the username,
+what used to be the password field (but is no longer used),
+your numeric userid,
+your numeric group number (which is the same for everyone),
+your actual name,
+your home directory,
+and
+your default shell.
+.LI=file .bashrc
+The file
+.V= \[ti]/.bashrc
+in your home directory controls how 
+.V= bash
+starts up.
+It is not created by default,
+so using your favorite editor, create a file called
+\&.bashrc
+in your home directory with the following line\(::
+.VTCODE* 1 "alias sub12b=\[Dq]submit \*[SUBQUARTER]\[Dq]"
+Every time you start bash from the command line,
+all commands in this file are executed.
+To source it the first time
+.PROMPT source \[ti]/.bashrc
+This is done automatically every time you start
+.V= bash .
+.SUBMIT \[ti]/.bashrc
+You do not have to source this file the next time you log in.
+.LI=file .bash_profile
+Also create a file
+.V= \[ti]/.bash_profile
+with the line
+.VTCODE* 1 "source \[Do]HOME/.bashrc
+This will cause your
+.V= \&.bashrc
+to be sourced whether you start it as a login shell or subshell.
+.PROMPT "sub12b lab0 .bashrc .bash_profile
+You can now abbreviate the 
+.V= submit
+command.
+.LI=file verifying
+To verify what you have submitted, use the command
+.PROMPT ls -la \*[SUBMITDIR]
+You may submit files as many times as you like before the due date.
+When you do submit files, 
+they are prefixed with sequence numbers.
+So, for example,
+if you submit
+.V= foo
+four times, you will see
+.V= 1_foo ,
+.V= 2_foo ,
+.V= 3_foo ,
+.V= 4_foo ,
+in the submit directory.
+Always verify what you have submitted.
+If you are not sure of what you submitted, submit again.
+Type this
+.V= ls
+command again and redirect output into a file called
+.V= \*[file] .
+.SUBMIT
+.LI=file goodbye.java
+Write a program in Java which prints the message
+.V= "Goodbye, Java"
+to the standard error
+.=V ( System.err )
+and then uses
+.V= System.exit
+to exit with exit status 1.
+.PROMPT javac goodbye.java
+.PROMPT java goodbye
+.OUTPUT "Goodbye, Java."
+.PROMPT echo \[Do]?
+.OUTPUT 1
+.SUBMIT goodbye.java
+.LI=file mk.goodbye
+Create a shell script that compiles, runs, and prints the
+exit status of this program\(::
+.PROMPT cat mk.goodbye
+.OUTPUT #!/bin/bash
+.OUTPUT javac goodbye.java
+.OUTPUT java goodbye
+.OUTPUT echo \[Do]?
+.PROMPT chmod +x mk.goodbye
+.SUBMIT mk.goodbye
+This final program is a shell script which automates a small task.
+The
+.V= x -bit
+must be turned on for it to work.
+.LE
+.P
+This lab has asked you to submit 10 files.
+Verify that they are all submitted.
+.H 1 "Naming files"
+.ALX 1 ()
+.LI 
+Filenames should be spelled using only lower case letters,
+digits, periods, and underscores or minus signs.
+Upper case letters in filenames are generally to be avoided,
+except for special names such as 
+.V= Makefile
+and 
+.V= README ,
+which must be spelled exactly that way.
+Commands like
+.V= ls (1)
+sort filenames lexicographically and thus list capitalized names before
+lower case names.
+The following non-alphanumeric characters generally to not cause
+problems when used in filenames\(::
+.VTCODE* 1  "% + , - . : = @@ _"
+.LI 
+Shell metacharacters are prohibited in filenames.
+A slash 
+.=V ( / )
+is a directory separator,
+so Unix will not let you use it in a filename, even if you quote it.
+Following is a list of shell metacharacters\(::
+.VTCODE* 1  \
+"! \[Dq] # \[Do] & ' ( ) * / ; < > ? [ \[rs] ] \[ha] ` { | } \[ti]"
+.LI
+The tilde
+.=V ( \[ti] ) 
+only has special meaning when it is the first character in a filename,
+in which case it causes username interpolation.
+.LI
+The plus
+.=V ( + )
+and minus
+.=V ( - )
+characters
+should never appear as the first character of a filename,
+since they also typically introduce command-line options.
+.LI
+Be careful about using dot
+.=V ( . )
+as the first character because that makes files ``hidden''.
+The term ``dotfile'' is often used to refer to such a file.
+Control files such as
+.V= \&.bashrc
+usually begin with a dot.
+.LI
+And never use space or tabs in filenames\(!!
+.LE
+.H 1 "Learning an editor"
+If you are already familiar with editing files on Unix,
+you may ignore this part.
+If not, try one of the following\(::
+.ALX 1 ()
+.LI
+The following command will give you a tour of
+.V= vim \(::
+.PROMPT vimtutor
+.LI
+The following command will give you an introduction to
+.V= emacs \(::
+.PROMPT emacs &
+Then select from the menu
+.V= "Help \[->] Emacs tutorial" .
+.LI
+A beginner might prefer to use
+.V= pico
+or
+.V= nano ,
+which are extremely simple editors,
+but are not used by professionals.
+.LI
+Never under any circumstances use
+M*cr*\[Do]*ft W*rd
+to create a program file.
+.LI
+Never cut and paste anything from a PDF into a text file.
+If you cut and paste, 
+do so from a text file.
+.LE
+.Cato.maior
+.H 1 "Grading guidelines"
+The subdirectory
+.V= \&.score
+under this directory contains instructions to the graders.
+This directory will not be shown on the web,
+and with
+.V= ls (1),
+only with the
+.V= -a
+option.
+.H 1 "Submit checklist"
+Carefully review the submit checklist\(::
+.VTCODE* 0 \*[COURSEDIR]/Syllabus/submit-checklist/
+.VTCODE* 0 \*[COURSEURL]/Syllabus/submit-checklist/
+.FINISH
+@
+
+
+1.78
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.77 2015-12-07 14:35:49-08 - - $"
+d405 5
+a410 1
+.LE
+@
+
+
+1.77
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.76 2015-12-07 14:35:25-08 - - $"
+d303 1
+a303 1
+to exit with an exit status of 1.
+@
+
+
+1.76
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.75 2015-01-12 14:16:56-08 - - $"
+d9 1
+a9 1
+.ds SUBQUARTER cmps012b-wm.w15
+@
+
+
+1.75
+log
+@-
+@
+text
+@d5 2
+a6 2
+.TITLE CMPS-012M Winter\~2015 Lab\~0 "Introduction to Unix"
+.RCS "$Id: lab0u-intro-unix.mm,v 1.74 2015-01-08 16:44:14-08 - - $"
+@
+
+
+1.74
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.73 2015-01-08 16:34:59-08 - - $"
+d309 1
+a309 1
+.SUBMIT
+d319 1
+a319 1
+.SUBMIT
+@
+
+
+1.73
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.72 2015-01-08 15:53:43-08 - - $"
+d28 2
+a29 1
+.   PROMPT submit \*[SUBQUARTER] lab0 \\*[file] \\$*
+@
+
+
+1.72
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.71 2015-01-08 15:52:54-08 - - $"
+d17 4
+d28 1
+a28 1
+.   PROMPT submit \*[SUBQUARTER] lab0 \\$*
+a132 4
+.de LI=file
+.   LI
+.   ds file \\n[li*cnt!\\n[li*lvl]]_\\$1
+..
+d161 1
+a161 1
+.SUBMIT \*[file]
+d170 1
+a170 1
+.SUBMIT \*[file]
+d182 1
+a182 1
+.SUBMIT \\*[file]
+d205 1
+a205 1
+.SUBMIT \*[file]
+d233 1
+a233 1
+.SUBMIT \*[file]
+d294 1
+a294 1
+.SUBMIT \*[file]
+d308 1
+a308 1
+.SUBMIT goodbye.java
+d318 1
+a318 1
+.SUBMIT mk.goodbye
+@
+
+
+1.71
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.70 2015-01-08 15:51:53-08 - - $"
+d12 1
+d419 1
+@
+
+
+1.70
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.69 2015-01-08 15:51:33-08 - - $"
+d417 1
+a417 4
+.VTCODE* 0 \
+/afs/cats.ucsc.edu/courses/cmps012b-wm/Syllabus/submit-checklist/
+.VTCODE* 0 \
+http://www2.ucsc.edu/courses/cmps012b-wm/:/Syllabus/submit-checklist/
+@
+
+
+1.69
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.68 2015-01-08 15:50:15-08 - - $"
+d416 1
+@
+
+
+1.68
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.67 2015-01-06 16:23:25-08 - - $"
+d416 4
+a419 2
+Read
+.V= /afs/cats.ucsc.edu/courses/cmps012b-wm/Syllabus/submit-checklist/
+@
+
+
+1.67
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.66 2015-01-06 16:22:47-08 - - $"
+d415 3
+@
+
+
+1.66
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.65 2015-01-06 16:21:42-08 - - $"
+a155 4
+The term ``dotfile'' is often used to refer to such a file.
+Control files such as
+.V= \&.bashrc
+usually begin with a dot.
+d370 4
+@
+
+
+1.65
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.64 2015-01-06 16:21:23-08 - - $"
+d156 4
+@
+
+
+1.64
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.63 2015-01-06 16:04:39-08 - - $"
+d358 1
+@
+
+
+1.63
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.62 2014-12-23 16:51:48-08 - - $"
+a340 1
+Use this as a sorting tool.
+d365 1
+@
+
+
+1.62
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.61 2014-12-23 16:49:00-08 - - $"
+d268 1
+a268 1
+.PROMPT "sub12b .bashrc .bash_profile
+@
+
+
+1.61
+log
+@-
+@
+text
+@d5 2
+a6 2
+.TITLE CMPS-012M Winter\~2015 "Introduction to Unix"
+.RCS "$Id: lab0u-intro-unix.mm,v 1.60 2014-12-23 16:48:21-08 - - $"
+@
+
+
+1.60
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.59 2014-12-23 16:47:00-08 - - $"
+d369 1
+@
+
+
+1.59
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.58 2014-12-22 19:07:32-08 - - $"
+d299 3
+a301 1
+and then exits with an exit status of 1.
+@
+
+
+1.58
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.57 2014-12-22 19:05:50-08 - - $"
+d306 1
+a306 1
+.LI=mk.goodbye
+@
+
+
+1.57
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.56 2014-12-22 19:03:40-08 - - $"
+d385 7
+@
+
+
+1.56
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.55 2014-12-22 18:24:57-08 - - $"
+d352 1
+d357 1
+a357 1
+This, along with the plus
+d361 6
+a366 3
+characters,
+may appear in a filename, 
+but never as the first character.
+@
+
+
+1.55
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.54 2014-12-22 18:22:32-08 - - $"
+d386 10
+@
+
+
+1.54
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.53 2014-12-22 18:20:07-08 - - $"
+d306 14
+@
+
+
+1.53
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.52 2014-12-22 18:18:04-08 - - $"
+d294 12
+@
+
+
+1.52
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.51 2014-12-22 18:17:27-08 - - $"
+d295 3
+@
+
+
+1.51
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.50 2014-12-22 18:12:11-08 - - $"
+d116 2
+a117 2
+.E= ``Unix Timeshare\(::"
+.E= "How to Connect''"
+@
+
+
+1.50
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.49 2014-12-22 18:07:07-08 - - $"
+d111 11
+@
+
+
+1.49
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.48 2014-12-22 18:05:36-08 - - $"
+d325 21
+@
+
+
+1.48
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.47 2014-12-22 18:03:44-08 - - $"
+d278 5
+@
+
+
+1.47
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.46 2014-12-22 17:51:25-08 - - $"
+d264 14
+@
+
+
+1.46
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.45 2014-12-22 17:46:40-08 - - $"
+d241 23
+@
+
+
+1.45
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.44 2014-12-22 17:45:30-08 - - $"
+d230 11
+d268 2
+a269 1
+.VTCODE* 1  "! \[Dq] # \[Do] & ' ( ) * / ; < > ? [ \[rs] ] \[ha] ` { | } \[ti]"
+d281 1
+@
+
+
+1.44
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.43 2014-12-22 17:44:52-08 - - $"
+d257 1
+a257 2
+.VTCODE* 1  "! \[Dq] # \[Do] & ' ( ) * / ; < > ? \ 
+[ \[rs] ] \[ha] ` { | } \[ti]"
+@
+
+
+1.43
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.42 2014-12-22 17:42:13-08 - - $"
+d249 1
+a249 1
+.CODE "% + , - . : = @@ _"
+d257 1
+a257 1
+.CODE "! \[Dq] # \[Do] & ' ( ) * / ; < > ? \ 
+@
+
+
+1.42
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.41 2014-12-22 17:37:16-08 - - $"
+d231 40
+@
+
+
+1.41
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.40 2014-12-22 17:35:43-08 - - $"
+d176 6
+d215 15
+@
+
+
+1.40
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.39 2014-12-19 20:45:19-08 - - $"
+d133 3
+d137 8
+@
+
+
+1.39
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.38 2014-12-19 20:44:21-08 - - $"
+d110 1
+a110 13
+such as this one.
+.DS
+.PROMPT cd \[ti]/private
+.PROMPT mkdir -p cmps012b/lab0
+.PROMPT cd cmps012b/lab0
+.DE
+These commands will create a directory for your lab0 work
+and change directory into it.
+The shell variable
+.V= \[Do]HOME
+and the tilde
+.=V ( \[ti] )
+both refer to your home directory.
+d121 18
+d193 5
+@
+
+
+1.38
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.37 2014-12-19 20:36:35-08 - - $"
+a186 1
+.LI=file
+@
+
+
+1.37
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.36 2014-12-19 20:35:25-08 - - $"
+d159 29
+@
+
+
+1.36
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.35 2014-12-19 20:33:34-08 - - $"
+d13 2
+a14 1
+.nr HISTORY 00 1
+@
+
+
+1.35
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.34 2014-12-19 20:33:08-08 - - $"
+d13 1
+a13 1
+.nr HISTORY 0 1
+@
+
+
+1.34
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.33 2014-12-19 20:31:32-08 - - $"
+d129 1
+a130 1
+.   LI
+@
+
+
+1.33
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.32 2014-12-19 20:31:09-08 - - $"
+d147 11
+a157 1
+.PROMPT fs la 
+@
+
+
+1.32
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.31 2014-12-19 20:26:45-08 - - $"
+d16 1
+a16 1
+.   TVCODE 1 "bash-\\n+[HISTORY]\[Do] " "\\$*"
+d19 1
+a19 1
+.   TVCODE 1 "\\$*"
+@
+
+
+1.31
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.30 2014-12-19 20:25:35-08 - - $"
+d21 2
+a22 5
+.de submit
+.   P
+.   nop Submit\(::
+.   V= \\$1
+.   br
+d128 1
+a128 2
+.LI
+.de numfile
+d130 1
+d132 1
+d137 1
+a137 1
+.numfile date
+d139 9
+a147 1
+.PROMPT submit \*[SUBQUARTER] lab0 \*[file]
+@
+
+
+1.30
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.29 2014-12-19 20:25:17-08 - - $"
+d132 3
+a134 1
+.ds file \\n[li*cnt!\\n[li*lvl]]_date
+d139 1
+@
+
+
+1.29
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.28 2014-12-19 20:24:05-08 - - $"
+d132 1
+a132 1
+.ds file li*cnt!\\n[li*lvl]_date
+@
+
+
+1.28
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.27 2014-12-19 20:19:38-08 - - $"
+d132 1
+a132 1
+.ds file \\n[li*lvl]_date
+@
+
+
+1.27
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.26 2014-12-19 20:19:12-08 - - $"
+d21 6
+d128 2
+a129 1
+.V= submit command.
+d132 7
+a138 1
+test
+@
+
+
+1.26
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.25 2014-12-19 20:10:29-08 - - $"
+d115 1
+a115 1
+.V= \[ti]HOME
+@
+
+
+1.25
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.24 2014-12-19 20:10:17-08 - - $"
+d107 20
+@
+
+
+1.24
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.23 2014-12-19 20:09:50-08 - - $"
+d77 1
+a77 1
+.nr Txtindent \n[Pi]*3.5
+@
+
+
+1.23
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.22 2014-12-19 20:09:08-08 - - $"
+d77 1
+a77 1
+.nr Pi4 \n[Pi]*4
+d81 1
+a81 1
+.VL \n[Pi4] \n[Pi] 1
+@
+
+
+1.22
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.21 2014-12-19 20:06:56-08 - - $"
+d77 1
+a77 1
+.nr Pi3 \n[Pi]*3
+d81 1
+a81 1
+.VL \n[Pi3] \n[Pi] 1
+d101 1
+@
+
+
+1.21
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.20 2014-12-19 20:06:20-08 - - $"
+d72 2
+d79 1
+a79 1
+.   LI "\f[CB]\\$1\f[P] (\\$2)"
+d101 5
+@
+
+
+1.20
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.19 2014-12-19 20:05:29-08 - - $"
+d76 2
+a77 2
+.de acl_codes
+.   LI "\f[CB]\\$1\fP (\\$2)"
+d80 1
+a80 1
+.V=LI r read
+d82 1
+a82 1
+.V=LI l list
+d86 1
+a86 1
+.V=LI i insert
+d88 1
+a88 1
+.V=LI d delete
+d90 1
+a90 1
+.V=LI w write
+d92 1
+a92 1
+.V=LI k lock
+d94 1
+a94 1
+.V=LI a admin
+@
+
+
+1.19
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.18 2014-12-19 20:03:41-08 - - $"
+d77 1
+a77 1
+.   .LI "\f[CB]\\$1\fP (\\$2)"
+d83 1
+a83 1
+allows the command
+@
+
+
+1.18
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.17 2014-12-19 20:02:48-08 - - $"
+d75 6
+a80 4
+.nr Pi2 \n[Pi]*2
+.VL \n[Pi2] \n[Pi] 1
+.V=LI r
+read
+d82 1
+a82 2
+.V=LI l
+list
+d86 1
+a86 2
+.V=LI i
+insert
+d88 1
+a88 2
+.V=LI d
+delete
+d90 1
+a90 2
+.V=LI w
+write
+d92 1
+a92 2
+.V=LI k
+lock
+d94 1
+a94 2
+.V=LI a
+admin
+d98 1
+@
+
+
+1.17
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.16 2014-12-19 20:02:09-08 - - $"
+d75 2
+a76 1
+.VL \n[Pi]
+@
+
+
+1.16
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.15 2014-12-19 20:01:53-08 - - $"
+d75 1
+a75 1
+.SH=BVL
+@
+
+
+1.15
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.14 2014-12-19 19:58:30-08 - - $"
+d76 1
+a76 1
+V=LI r
+d79 1
+a79 1
+V=LI l
+d84 1
+a84 1
+V=LI i
+d87 1
+a87 1
+V=LI d
+d90 1
+a90 1
+V=LI w
+d93 1
+a93 1
+V=LI k
+d96 1
+a96 1
+V=LI a
+@
+
+
+1.14
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.13 2014-12-19 19:58:09-08 - - $"
+d75 6
+a80 6
+.DS
+.TS
+center tab(|); lfCB l lw(235p).
+r|read|allows read access to the files in the directory.
+l|list|T{
+.fi
+d84 14
+a97 7
+T}
+i|insert|allows new files to be inserted into the directory.
+d|delete|allows files to be deleted from the directory.
+w|write|allows writing (updating) to files in the directory.
+k|lock|allows files in the directory to be locked.
+a|admin|T{
+.fi
+a100 3
+T}
+.TE
+.DE
+@
+
+
+1.13
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.12 2014-12-19 19:56:57-08 - - $"
+d80 1
+d90 1
+@
+
+
+1.12
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.11 2014-12-19 19:56:38-08 - - $"
+d77 1
+a77 1
+tab(|); lfCB l l.
+@
+
+
+1.11
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.10 2014-12-19 19:54:25-08 - - $"
+d93 2
+@
+
+
+1.10
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.9 2014-12-19 19:52:37-08 - - $"
+d75 5
+a79 8
+.ALX i () "" 0
+.LI
+.E= r
+(read)
+allows read access to the files in the directory.
+.LI
+.E= l
+(list)
+d83 6
+a88 19
+.LI
+.E= i
+(insert)
+allows new files to be inserted into the directory.
+.LI
+.E= d
+(delete)
+allows files to be deleted from the directory.
+.LI
+.E= w
+(write)
+allows writing (updating) to files in the directory.
+.LI
+.E= k
+(lock)
+allows files in the directory to be locked.
+.LI
+.E= a
+(admin)
+d92 1
+a92 1
+.LE
+@
+
+
+1.9
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.8 2014-12-19 19:44:40-08 - - $"
+d84 1
+a84 2
+.V= ls (1),
+among others,
+d100 2
+d104 4
+@
+
+
+1.8
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.7 2014-12-19 19:44:20-08 - - $"
+d60 1
+a60 1
+.OUTPUT Access list for . is
+d62 1
+a62 1
+.OUTPUT "  wmackey rlidwka"
+d64 40
+@
+
+
+1.7
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.6 2014-12-19 19:42:11-08 - - $"
+d60 3
+a62 3
+.REPLY Access list for . is
+.REPLY Normal rights:
+.REPLY "  wmackey rlidwka"
+@
+
+
+1.6
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.5 2014-12-19 19:41:55-08 - - $"
+d18 3
+d56 8
+@
+
+
+1.5
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.4 2014-12-19 19:41:40-08 - - $"
+a13 1
+.ds PROMPT bash-\\n+[HISTORY]\[Do]
+d16 1
+a16 1
+.   TVCODE 1 "bash-\\n[HISTORY]\[Do] " "\\$*"
+@
+
+
+1.4
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.3 2014-12-19 19:30:33-08 - - $"
+d17 1
+a17 1
+.   TVCODE 1 "bash-\\n[HISTORY]\[Do] " "$*"
+@
+
+
+1.3
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.2 2014-12-19 19:30:10-08 - - $"
+d9 10
+d33 21
+@
+
+
+1.2
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.1 2014-12-19 19:29:30-08 - - $"
+d20 1
+a20 2
+In this course,
+we will be discussing only the
+@
+
+
+1.1
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id$"
+d17 1
+a17 3
+specifically for AFS (the Andrew File System),
+which is used on the servers and the workstations in the lab.
+.P
+d23 1
+a23 1
+(Bourne-again) shell.
+@

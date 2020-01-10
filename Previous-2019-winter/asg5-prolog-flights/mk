@@ -1,0 +1,7 @@
+#!/bin/sh -x
+# $Id: mk,v 1.2 2018-02-28 16:42:22-08 - - $
+cid + $0 haversine.perl
+cmd="haversine.perl lax sfo sjc nyc sfo sea"
+(echo COMMAND: $cmd; echo ''; $cmd) >haversine.output
+mkpspdf haversine.lis.ps haversine.perl haversine.output
+mkpspdf database.pl.ps .score/database.pl

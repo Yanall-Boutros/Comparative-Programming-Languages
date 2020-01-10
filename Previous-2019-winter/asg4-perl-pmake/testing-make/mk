@@ -1,0 +1,16 @@
+#!/bin/sh
+# $Id: mk,v 1.2 2018-11-06 18:04:21-08 - - $
+
+cid + $0 Makefile *.cpp
+
+for target in $(ls *.cpp | sed 's/\.cpp$//')
+do
+   echo ================ make $target ================
+   make $target
+   make $target.test
+   echo make $target.test status: $?
+done >mktests.output 2>&1
+
+catnv $0 Makefile $(which catnv) >mktests.listing1
+catnv *.cpp mktests.output >mktests.listing2
+mkpspdf Listing.ps mktests.listing?

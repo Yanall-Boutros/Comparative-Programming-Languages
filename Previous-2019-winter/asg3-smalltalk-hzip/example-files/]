@@ -1,0 +1,15 @@
+#!/afs/cats.ucsc.edu/courses/cmps112-wm/usr/smalltalk/bin/gst -f
+
+nl := Character nl.
+yyy := 99999.
+
+Object subclass: Foo [
+   |xxx|
+   bar := 3.
+   debug [ stdout << yyy << bar << Character nl. ]
+].
+
+stdout << bar << nl.
+x := Foo new.
+x inspect.
+x debug.

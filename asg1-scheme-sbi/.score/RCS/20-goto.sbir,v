@@ -1,0 +1,83 @@
+head	1.2;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.2
+date	2019.12.12.00.13.15;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2018.09.27.21.31.36;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@-
+@
+text
+@;;File: 20-goto.sb
+;;   1: # $Id: 20-goto.sb,v 1.2 2019-11-08 12:49:19-08 - - $
+;;   2: #
+;;   3:         goto zero
+;;   4: four:   print "four"
+;;   5:         goto done
+;;   6: one:    print "one"
+;;   7:         goto two
+;;   8: three:  print "three"
+;;   9:         goto four
+;;  10: two:    print "two"
+;;  11:         goto three
+;;  12: zero:   print "zero"
+;;  13:         goto one
+;;  14: done:
+(
+(    1          )
+(    2          )
+(    3          (goto zero))
+(    4 four     (print "four"))
+(    5          (goto done))
+(    6 one      (print "one"))
+(    7          (goto two))
+(    8 three    (print "three"))
+(    9          (goto four))
+(   10 two      (print "two"))
+(   11          (goto three))
+(   12 zero     (print "zero"))
+(   13          (goto one))
+(   14 done     )
+)
+@
+
+
+1.1
+log
+@-
+@
+text
+@d2 1
+a2 1
+;;   1: # $Id: 20-goto.sbir,v 1.1 2017-08-21 17:29:41-07 - - $
+d4 11
+a14 11
+;;   3: 	goto zero
+;;   4: four:	print "four"
+;;   5: 	goto done
+;;   6: one:	print "one"
+;;   7: 	goto two
+;;   8: three:	print "three"
+;;   9: 	goto four
+;;  10: two:	print "two"
+;;  11: 	goto three
+;;  12: zero:	print "zero"
+;;  13: 	goto one
+@

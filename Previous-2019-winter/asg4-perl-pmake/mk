@@ -1,0 +1,3 @@
+#!/bin/sh
+cid $0
+mkpspdf pmake-Makefiles.ps .score/*/Makefile*

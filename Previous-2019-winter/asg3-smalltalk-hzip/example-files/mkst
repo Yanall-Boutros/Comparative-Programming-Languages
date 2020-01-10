@@ -1,0 +1,25 @@
+#!/usr/bin/perl
+# $Id: mkst,v 1.3 2019-02-01 14:39:58-08 - - $
+# Run smalltalk and capture the output.
+
+$0 =~ s|.*/||;
+
+for $prog (@ARGV) {
+   system "cid + $prog";
+
+   $lis = "$prog.lis";
+
+   open PROG, "<$prog" or die "$0: $prog: $!";
+   open LIS, ">$lis" or die "$0: $prog: $!";
+
+   while (<PROG>) {
+      next unless m/"TEST:\s*(.*)"/;
+      $cmd = $1;
+      print LIS ":" x 32, "\n", "$0: $cmd\n", ":" x 32, "\n";
+      print LIS `$cmd`;
+      print LIS "::::::::::Exit status $?\n";
+   }
+
+   system "mkpspdf $prog.ps $prog $lis";
+
+}

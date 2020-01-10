@@ -1,0 +1,1603 @@
+head	1.51;
+access;
+symbols;
+locks;
+comment	@.\" @;
+
+
+1.51
+date	2015.12.07.22.38.24;	author -;	state -;
+branches;
+next	1.50;
+
+1.50
+date	2015.01.09.02.54.56;	author -;	state -;
+branches;
+next	1.49;
+
+1.49
+date	2015.01.09.02.54.04;	author -;	state -;
+branches;
+next	1.48;
+
+1.48
+date	2015.01.09.02.37.09;	author -;	state -;
+branches;
+next	1.47;
+
+1.47
+date	2015.01.09.02.31.39;	author -;	state -;
+branches;
+next	1.46;
+
+1.46
+date	2015.01.09.02.12.57;	author -;	state -;
+branches;
+next	1.45;
+
+1.45
+date	2015.01.09.02.11.54;	author -;	state -;
+branches;
+next	1.44;
+
+1.44
+date	2015.01.09.02.11.19;	author -;	state -;
+branches;
+next	1.43;
+
+1.43
+date	2015.01.09.02.02.46;	author -;	state -;
+branches;
+next	1.42;
+
+1.42
+date	2015.01.09.01.46.45;	author -;	state -;
+branches;
+next	1.41;
+
+1.41
+date	2015.01.09.01.37.37;	author -;	state -;
+branches;
+next	1.40;
+
+1.40
+date	2015.01.09.01.35.45;	author -;	state -;
+branches;
+next	1.39;
+
+1.39
+date	2015.01.09.01.33.48;	author -;	state -;
+branches;
+next	1.38;
+
+1.38
+date	2015.01.09.01.31.39;	author -;	state -;
+branches;
+next	1.37;
+
+1.37
+date	2015.01.09.01.25.18;	author -;	state -;
+branches;
+next	1.36;
+
+1.36
+date	2015.01.09.01.24.50;	author -;	state -;
+branches;
+next	1.35;
+
+1.35
+date	2015.01.09.01.22.54;	author -;	state -;
+branches;
+next	1.34;
+
+1.34
+date	2015.01.09.01.17.38;	author -;	state -;
+branches;
+next	1.33;
+
+1.33
+date	2015.01.09.01.16.15;	author -;	state -;
+branches;
+next	1.32;
+
+1.32
+date	2015.01.09.01.16.04;	author -;	state -;
+branches;
+next	1.31;
+
+1.31
+date	2015.01.09.01.05.52;	author -;	state -;
+branches;
+next	1.30;
+
+1.30
+date	2015.01.09.00.29.58;	author -;	state -;
+branches;
+next	1.29;
+
+1.29
+date	2015.01.09.00.29.47;	author -;	state -;
+branches;
+next	1.28;
+
+1.28
+date	2015.01.09.00.29.34;	author -;	state -;
+branches;
+next	1.27;
+
+1.27
+date	2015.01.09.00.17.56;	author -;	state -;
+branches;
+next	1.26;
+
+1.26
+date	2015.01.08.23.55.40;	author -;	state -;
+branches;
+next	1.25;
+
+1.25
+date	2015.01.08.23.34.14;	author -;	state -;
+branches;
+next	1.24;
+
+1.24
+date	2015.01.08.23.33.31;	author -;	state -;
+branches;
+next	1.23;
+
+1.23
+date	2015.01.08.23.30.48;	author -;	state -;
+branches;
+next	1.22;
+
+1.22
+date	2015.01.08.23.28.41;	author -;	state -;
+branches;
+next	1.21;
+
+1.21
+date	2015.01.08.23.26.47;	author -;	state -;
+branches;
+next	1.20;
+
+1.20
+date	2015.01.08.23.25.27;	author -;	state -;
+branches;
+next	1.19;
+
+1.19
+date	2015.01.08.00.42.20;	author -;	state -;
+branches;
+next	1.18;
+
+1.18
+date	2015.01.08.00.40.12;	author -;	state -;
+branches;
+next	1.17;
+
+1.17
+date	2015.01.08.00.39.46;	author -;	state -;
+branches;
+next	1.16;
+
+1.16
+date	2015.01.08.00.39.10;	author -;	state -;
+branches;
+next	1.15;
+
+1.15
+date	2015.01.08.00.37.53;	author -;	state -;
+branches;
+next	1.14;
+
+1.14
+date	2015.01.08.00.34.47;	author -;	state -;
+branches;
+next	1.13;
+
+1.13
+date	2015.01.08.00.34.12;	author -;	state -;
+branches;
+next	1.12;
+
+1.12
+date	2015.01.08.00.30.41;	author -;	state -;
+branches;
+next	1.11;
+
+1.11
+date	2015.01.07.22.25.35;	author -;	state -;
+branches;
+next	1.10;
+
+1.10
+date	2015.01.07.22.12.41;	author -;	state -;
+branches;
+next	1.9;
+
+1.9
+date	2015.01.07.02.26.19;	author -;	state -;
+branches;
+next	1.8;
+
+1.8
+date	2015.01.07.02.23.14;	author -;	state -;
+branches;
+next	1.7;
+
+1.7
+date	2015.01.07.02.22.47;	author -;	state -;
+branches;
+next	1.6;
+
+1.6
+date	2015.01.07.02.18.34;	author -;	state -;
+branches;
+next	1.5;
+
+1.5
+date	2015.01.07.02.14.54;	author -;	state -;
+branches;
+next	1.4;
+
+1.4
+date	2015.01.07.02.14.34;	author -;	state -;
+branches;
+next	1.3;
+
+1.3
+date	2015.01.07.02.13.50;	author -;	state -;
+branches;
+next	1.2;
+
+1.2
+date	2015.01.07.02.12.29;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2015.01.07.02.09.54;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.51
+log
+@-
+@
+text
+@.so Tmac.mm-etc
+.if t .Newcentury-fonts
+.INITR* \n[.F]
+.SIZE 12 14
+.GETST* ELIMCR_BASH Figure_ELIMCR_BASH
+.GETHN* HELLO_JAVA Header_HELLO_JAVA
+.GETHN* MK_HELLO Header_MK_HELLO
+.TITLE CMPS-012M Winter\~2016 Lab\~1 "Shells, scripts, etc."
+.RCS "$Id: lab1u-shells-etc.mm,v 1.50 2015-01-08 18:54:56-08 - - $"
+.PWD
+.URL
+.ds SUBQUARTER cmps012b-wm.w15
+.ds COURSEDIR /afs/cats.ucsc.edu/courses/cmps012b-wm
+.ds COURSEURL http://www2.ucsc.edu/courses/cmps012b-wm/:/
+.ds BINDIR \*[COURSEDIR]/bin
+.nr HISTORY 0 1
+.af HISTORY 01
+.de PROMPT
+.   TVCODE* 1 "bash-\\n+[HISTORY]\[Do] " "\\$*"
+..
+.de OUTPUT
+.   TVCODE* 1 "\\$*"
+..
+.de SUBMIT
+.   P
+.   nop Submit\(::
+.   V= "\\$*"
+..
+.H 1 "Overview"
+This lab will continue your introduction to Unix.
+We will look at environment variables,
+controlling the shell with
+.V= \&.bashrc ,
+and backing up files using the
+.V= RCS
+utilities.
+.H 1 "The \f[CB]\[Do]PATH\f[P] variable"
+There are some commands given in this lab which are not generally
+available Unix commands.
+These are
+.V= cid 
+and
+.V= checksource .
+You will notice that you get an error message when you use them\(::
+.DS
+.PROMPT cid hello.java
+.OUTPUT "bash: cid: command not found"
+.DE
+This is because they are not in your path.
+These commands, among many others, are in the directory
+.V= \*[BINDIR]/ .
+You should add this directory to your path.
+How this is done depends on which shell you are using.
+We will discuss only
+.V= bash
+in this document and ignore the others. 
+.P
+The path to the course
+.V= bin
+directory can be added to your path with the command\(::
+.PROMPT export PATH=\[Do]PATH:\*[BINDIR]
+This command should be added to your
+.V= \&.bashrc
+file.
+.H 1 "Standard output, standard error, and exit status"
+Normal output is written to the standard output,
+which is 
+.V= stdout
+in C,
+.V= System.out
+in Java,
+and file descriptor 1 in the shell.
+Error messages and other out of band notes are written to the
+standard error,
+which is
+.V= stderr
+in C,
+.V= System.err
+in Java,
+and file descriptor 2 in the shell.
+When a program returns to its caller,
+it provides an exit status integer between 0 and 255.
+Success is indicated with 0,
+and any other number indicates failure.
+.P
+.SETR HELLO_JAVA
+Write a Java program called
+.V= hello.java
+with the following specifications\(::
+.ALX a ()
+.LI
+If it is given no command line arguments (in
+.V= args )
+it prints the message
+.VTCODE* 1 "Hello, World!"
+to the standard output and exits with status 0.
+.LI
+If it is given any command line arguments,
+it prints the message
+.VTCODE* 1 "Usage: hello"
+to the standard error and exits with status code 1.
+.LE
+.H 1 "Putting Java in a jar"
+Java programs can be run from the command line using the
+.V= java
+command directly,
+but the usual practice is to put class files in a jar file
+so that they can be executed like any other Unix command.
+.P
+This is done via the 
+.V= jar
+command, which requires a
+.V= Manifest
+file to tell the jar file exec which class is the main class.
+.SETR MK_HELLO
+.DS
+.PROMPT echo Main-class: hello >Manifest
+.PROMPT jar cvfm hello Manifest hello.class
+.PROMPT chmod +x hello
+.DE
+The 
+.V= echo
+command redirects output to the 
+.V= Manifest
+file (note the capital M).
+Then the
+.V= hello
+jar is created and the 
+.V= x -bit
+is turned on.
+.H 1 "Running a jar file"
+A jar file can just be run using the name of the file,
+without having to specify that it is a Java program.
+It can be specified by explicit path name, as here,
+or by the name of the program being looked up in the
+.V= \[Do]PATH
+variable.
+.DS
+.PROMPT ./hello
+.OUTPUT Hello, World!
+.PROMPT echo \[Do]?
+.OUTPUT 0
+.PROMPT ./hello world
+.OUTPUT Usage: hello
+.PROMPT echo \[Do]?
+.OUTPUT 1
+.DE
+.H 1 "The script \f[CB]checksource\f[P]"
+Use the script
+.V= checksource
+to check on some basic formatting items.
+Edit your files so that it does not complain.
+If you run
+.V= checksource
+without filename operands,
+it will print out a text-format manual page.
+To check up on
+.V= hello.java ,
+use the command\(::
+.DS
+.PROMPT "checksource hello.java"
+.DE
+Tab characters should
+.E= only
+be used in a
+.V= Makefile .
+Otherwise indentation should be done with a few spaces.
+If you edit on a M*cr*\[Do]*ft system,
+make sure to eliminate the carriage turn charcters from the
+file when copying to Unix.
+And do not make lines longer than 72 characters.
+.P
+Carriage return characters can be eliminated with the following
+.V= vim
+line mode command\(::
+.VTCODE* 1 ":g/\[ha]V\[ha]M/s///g"
+Do not actually type the circumflex
+.=V ( \[ha] )
+here.
+The
+.V= \[ha] -notation
+means hold down the Control key.
+So
+.V= \[ha]V\[ha]M
+means type the letters ``vm''
+while holding down the Control key.
+Or use the
+.V= bash
+script
+.V= elimcr
+(see Figure \*[Figure_ELIMCR_BASH])
+in the course
+.V= bin
+directory.
+.H 1 "\f[CB]RCS\f[P]"
+It is a good idea to keep many backup copies of your work.
+.V= RCS
+is a good utility to keep track of backup copies.
+If you don't have backups,
+you will have to depend on the IT department
+to recover yesterday's copy.
+Murphy's law says that the most important changes won't be in
+that copy.
+The corollary also says that you will lose your files so close
+to the due date that IC won't get your backups back to you in time.
+In this case, 
+you will get a 0 on the assignment for not submitting anything.
+.P
+Note that the code above has a magic string in it\(::
+.V= \[Do]Id\[Do] \|.
+These track your development progress.
+For the initial checkin, do the following\(::
+.DS
+.PROMPT mkdir RCS
+.PROMPT ci -zLT -s- -t- -m- -u hello.java
+.OUTPUT RCS/hello.java,v  <--  hello.java
+.OUTPUT initial revision: 1.1
+.OUTPUT done
+.DE
+Now you have your initial version.
+Look at the 
+.V= man
+page for
+.V= ci
+for all of the options.
+You will also want to read the
+.V= co 
+page.
+The options were\(::
+.V= -zLT
+causes the time stamp to be in local time instead of UTC,
+.V= -s-
+sets the state to \-,
+.V= -t-
+suppresses the descriptive text,
+.V= -m-
+suppresses the log message,
+and
+.V= -u
+checks in the file unlocked, thus not destroying the source.
+.P
+.ne 7v
+Unfortunately, 
+the file is now read-only,
+so you may want to make locking non-strict\(::
+.DS
+.PROMPT rcs -U hello.java
+.OUTPUT RCS file: RCS/hello.java,v
+.OUTPUT done
+.PROMPT chmod u+w hello.java
+.PROMPT ls -la hello.java
+.OUTPUT -rw-r--r--  1 foobar  user  465 Sep 14 18:42 hello.java
+.DE
+Oops, you forgot to put your name and username at the top of the file.
+Edit the comment on the first line to reflect your name and username.
+Every file you submit must have a comment on the first line
+with your name and username in it.
+Add in your name and username.
+Now check in another copy to make a backup.
+.DS
+.PROMPT ci -zLT -s- -t- -m- -u hello.java
+.OUTPUT RCS/hello.java,v  <--  hello.java
+.OUTPUT new revision: 1.2; previous revision: 1.1
+.OUTPUT done
+.DE
+Use 
+.V= cat
+to look at the new version of your file.
+.P
+There are some alternatives to
+.V= RCS \(::
+.V= SCCS
+(very old).
+.V= CVS
+(more flexible but more complicated).
+.V= SVN
+(some people like using this).
+There are also some others.
+.H 1 "Recovering lost files"
+If you are keeping files in an
+.V= RCS
+subdirectory,
+you may recover them using the
+.V= co
+command.
+For example
+.PROMPT co -r1.9 hello.java
+will recover version 1.9 of the file
+.V= hello.java
+from the archive.
+.P
+To see what versions of
+.V= hello.java
+you have in the archive, use the command
+.PROMPT rlog hello.java
+.P
+If you want to see the differences between, say, versions 1.7 and 1.11,
+use the command
+.PROMPT rcsdiff -r1.7 -r1.11 hello.java
+.P
+Whenever you create a new file, 
+either the first or last line should be a comment with the
+.V= \[Do]Id\[Do]
+code in it, as in
+.VTCODE* 1 "// \[Do]Id\[Do]"
+After doing this, a check-in will automatically edit it to something
+like
+.VTCODE* 1 \
+"// \[Do]Id: hello.java,v 1.1 2015-01-06 18:02:07-08 - - \[Do]"
+which shows the name of the file,
+the veersion,
+and the date and time of check-in.
+The ``-08'' at the end of the time indicates the number of
+hours west of Greenwich Mean Time (GMT), 
+aka Universal Time Co\[:o]rdinated (UTC).
+.H 1 "The script \f[CB]cid\f[P]"
+An alternative to using
+.V= ci
+(see below)
+directly is the program
+.V= cid .
+It works just like
+.V= ci ,
+but automatically creates the
+.V= RCS
+subdirectory and does the correct locking.
+To fetch back a deleted file, use the
+.V= co
+command.
+You will find that the
+.V= cid
+command is much simpler to use,
+since it automatically sets up the
+.V= RCS
+subdirectory and appropriate file locking.
+.P
+In order to find where that script is, you can do the following\(::
+.DS
+.PROMPT cd \*[COURSEDIR]
+.PROMPT find * -name cid -follow 2>/dev/null
+.DE
+This says find all files whose name is
+.V= cid ,
+even if you have to follow symbolic links.
+Without the redirection
+.V= 2>/dev/null ,
+you will get lots of error messages because of directories that you
+don't have permission to access.
+With this redirection, error messages will be sent to
+.V= /dev/null ,
+the bit bucket.
+Try it both ways, with and without redirecting
+.V= stderr .
+.H 1 "Lab exercises"
+Each of the following items specifies something that must be 
+done for credit in this lab.
+.ALX 1 ()
+.LI
+Write the program
+.V= hello.java
+.substring Header_HELLO_JAVA 0 -4
+as described in section \*[Header_HELLO_JAVA].
+Note that neither the class name nor the file name have upper-case
+letters.
+Then check it into an RCS subdirectory\(::
+.PROMPT cid hello.java
+Then edit the file and insert the following line as the first line in
+the file\(::
+.VTCODE* 1 "// \[Do]Id\[Do]"
+Then check it in again\(::
+.PROMPT cid hello.java
+Now add your name and username immediately after the RCS Id line,
+and check it in again.
+Notice that it now has version 1.3 of the file,
+or later, if you have edited it several more times.
+.SUBMIT hello.java
+.LI
+Write a shell script for
+.V= bash
+called
+.V= mkhello .
+Make the first two lines of the file as follows\(::
+.VTCODE* 1 "#!/bin/bash
+.VTCODE* 1 "# \[Do]Id\[Do]
+and insert your name and username as the third line.
+After that add the necessary
+.V= bash
+commands to do the following (in the order specified here)\(::
+.ALX i ()
+.LI
+Use the
+.V= cid
+command to check
+.V= hello.java
+into the RCS subdirectory.
+.LI
+Compile
+.V= hello.java
+into
+.V= hello.class .
+.LI
+Create the
+.V= Manifest
+file.
+.LI
+Put the
+.V= Manifest
+and the class file into a jar file called
+.V= hello .
+.LI
+Turn on the 
+.V= x -bit
+to make it executable.
+.LI
+Remove the
+.V= Manifest
+and
+.V= hello.class
+files.
+.LE
+.substring Header_MK_HELLO 0 -4
+See section \*[Header_MK_HELLO] for details of some of these commands.
+Check the script
+.V= mkhello
+into the RCS subdirectory.
+.SUBMIT mkhello
+.LI
+Write another shell script called
+.V= testhello .
+Make sure the hashbang
+.=V ( #! )
+is the first line and the RCS Id is the second line.
+This script should create 6 files\(::
+.ALX a ()
+.LI
+When
+.V= hello
+is run without arguments, it creates
+.V= test1.out ,
+.V= test1.err ,
+and
+.V= test1.status .
+.LI
+When
+.V= hello
+is run with the argument
+.V= world
+it creates
+.V= test2.out ,
+.V= test2.err ,
+and
+.V= test2.status .
+.LE
+The files with suffix
+.V= \&.out
+should capture standard output\(;;
+the files with suffix
+.V= \&.err
+should capture standard error\(;;
+and the files with suffix
+.V= status
+should have the exit status values from 
+.V= bash 's
+variable
+.V= \[Do]? .
+.SUBMIT testhello
+.LI
+When programs are in nonstandard places, the
+.V= \[Do]PATH
+environment variable addes places to look for programs and scripts.
+To ensure that
+.V= cid
+and
+.V= checksource
+are available, add the following to
+.V= \[ti]/.bashrc\(::
+.VTCODE* 1 "export cmps012b=/afs/cats.ucsc.edu/courses/cmps012b-wm"
+.VTCODE* 1 "export PATH=\[Do]PATH:\[Do]cmps012b/bin"
+.SUBMIT \[ti]/.bashrc
+.LI
+Using an alias is a useful way to avoid typing in long commands
+and pathnames.
+Add the following lines to
+.V= \[ti]/.bashrc\(::
+.VTCODE* 1 "alias 0='cd \[Do]cmps012b'"
+.VTCODE* 1 "alias 0a='cd \[Do]cmps012b/Assignments'"
+.VTCODE* 1 "alias 0m='cd \[Do]cmps012b/Labs-cmps012m'"
+After sourcing 
+.V= \[ti]/.bashrc ,
+you can use the commands
+.V= 0 ,
+.V= 0a ,
+and
+.V= 0m
+to quickly navigate to three of my directories.
+Perhaps you wish to add a few more aliases.
+Note that there are no spaces before or after the equal sign.
+.SUBMIT \[ti]/.bashrc
+.LI
+Another way to refer to files quickly is with a symbolic link.
+A symbolic link is just a file named somewhere convenient which
+points at another file.
+Type the following\(::
+.PROMPT "ln -s /afs/cats.ucsc.edu/courses/cmps012b-wm/ \[ti]/12b
+This creates the link
+.V= 12b
+in your home directory, so no you can get to the 12B directory with
+PROMPT "cd \[ti]/12b"
+Symbolic links remain as files unless/until you delete them.
+The commands
+.V= ls (1)
+and
+.V= stat (1)
+can be used to find information about files.
+Create a file
+.V= links \(::
+.PROMPT ls -la \[ti]/12b >links
+.PROMPT stat \[ti]/12b >>links
+Note that
+.=V `` > ''
+is a redirect to create a file or replace it,
+and
+.=V `` >> ''
+appends to a file.
+.SUBMIT links
+.LI
+Are you sure you submitted all required files\(??
+You may submit files more than once before the due date.
+In the directory containing the
+.V= \&.tt
+version of this file, type the command\(::
+.PROMPT grep Submit: *.tt
+This will list all of the lines with the string
+.=V `` Submit: ''.
+Cut and paste the output of this command into a file called
+.V= submits .
+.SUBMIT submits
+.LE
+.H 1 "Submit checklist"
+Carefully review the submit checklist\(::
+.VTCODE* 0 \*[COURSEDIR]/Syllabus/submit-checklist/
+.VTCODE* 0 \*[COURSEURL]/Syllabus/submit-checklist/
+.P
+The subdirectory
+.V= \&.score
+has instructions to the grader,
+along with a script that the grader will run.
+.DS
+\&
+.B1
+.SP
+.ft CR
+.nf
+.eo
+.pso cat -n bin/elimcr | expand
+.ec
+.fi
+.ft R
+.SP
+.B2
+.FG "\f[CB]bin/elimcr\f[P]" "" 0 ELIMCR_BASH
+.DE
+.DS
+\&
+.B1
+.SP
+.ft CR
+.nf
+.eo
+.pso cat -n bashrc.example | expand
+.ec
+.fi
+.ft R
+.SP
+.B2
+.FG "Example \f[CB].bashrc" "" 0 ELIMCR_BASH
+.DE
+.FINISH
+@
+
+
+1.50
+log
+@-
+@
+text
+@d8 2
+a9 2
+.TITLE CMPS-012M Winter\~2015 Lab\~1 "Shells, scripts, etc."
+.RCS "$Id: lab1u-shells-etc.mm,v 1.49 2015-01-08 18:54:04-08 - - $"
+@
+
+
+1.49
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.48 2015-01-08 18:37:09-08 - - $"
+d543 5
+@
+
+
+1.48
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.47 2015-01-08 18:31:39-08 - - $"
+d526 12
+@
+
+
+1.47
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.46 2015-01-08 18:12:57-08 - - $"
+d499 27
+@
+
+
+1.46
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.45 2015-01-08 18:11:54-08 - - $"
+d519 15
+@
+
+
+1.45
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.44 2015-01-08 18:11:19-08 - - $"
+d497 1
+@
+
+
+1.44
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.43 2015-01-08 18:02:46-08 - - $"
+d485 3
+a487 3
+alias 0='cd \[Do]cmps012b'
+alias 0a='cd \[Do]cmps012b/Assignments'
+alias 0m='cd \[Do]cmps012b/Labs-cmps012m'
+@
+
+
+1.43
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.42 2015-01-08 17:46:45-08 - - $"
+d61 1
+a61 1
+.PROMPT export PATH=$PATH:\*[BINDIR]
+a357 4
+.de LI=file
+.   LI
+.   ds file \\n[li*cnt!\\n[li*lvl]]_\\$1
+..
+d467 31
+@
+
+
+1.42
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.41 2015-01-08 17:37:37-08 - - $"
+d357 1
+a357 1
+.ALX 01 ()
+@
+
+
+1.41
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.40 2015-01-08 17:35:45-08 - - $"
+a28 4
+.de LI=file
+.   LI
+.   ds file \\n[li*cnt!\\n[li*lvl]]_\\$1
+..
+d131 7
+d431 40
+@
+
+
+1.40
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.39 2015-01-08 17:33:48-08 - - $"
+d26 2
+a27 3
+.   nop Submit the file\(::
+.   ie \\n[.$]=0 .PROMPT submit \*[SUBQUARTER] lab0 \\*[file]
+.   el           .PROMPT submit \*[SUBQUARTER] lab0 \\$*
+d359 1
+a359 1
+.LI=file hello.java
+d377 2
+a378 2
+.SUBMIT
+.LI=file mkhello
+d427 1
+a427 1
+.SUBMIT
+@
+
+
+1.39
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.38 2015-01-08 17:31:39-08 - - $"
+d25 2
+d376 2
+a377 1
+Notice that it now has version 1.3 of the file.
+@
+
+
+1.38
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.37 2015-01-08 17:25:18-08 - - $"
+d25 2
+a26 1
+.   PROMPT submit \*[SUBQUARTER] lab0 \\$*
+@
+
+
+1.37
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.36 2015-01-08 17:24:50-08 - - $"
+d386 1
+a386 1
+commands to\(::
+d389 6
+@
+
+
+1.36
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.35 2015-01-08 17:22:54-08 - - $"
+d387 1
+a387 1
+.ALX i () "" 0
+@
+
+
+1.35
+log
+@-
+@
+text
+@d9 1
+a9 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.34 2015-01-08 17:17:38-08 - - $"
+d383 1
+a383 1
+and put your name and username as the third line.
+d387 1
+a387 1
+.ALX a () "" 0
+d395 2
+a396 1
+.V= Manifest file.
+d415 4
+@
+
+
+1.34
+log
+@-
+@
+text
+@d7 1
+d9 1
+a9 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.33 2015-01-08 17:16:15-08 - - $"
+d117 1
+d384 30
+@
+
+
+1.33
+log
+@-
+@
+text
+@d8 1
+a8 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.32 2015-01-08 17:16:04-08 - - $"
+d358 1
+@
+
+
+1.32
+log
+@-
+@
+text
+@d8 1
+a8 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.31 2015-01-08 17:05:52-08 - - $"
+d379 1
+a379 1
+.VTOCDE* 1 "# \[Do]Id\[Do]
+@
+
+
+1.31
+log
+@-
+@
+text
+@d6 1
+d8 1
+a8 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.30 2015-01-08 16:29:58-08 - - $"
+d87 1
+d91 1
+a91 1
+.ALX a () "" 0
+d355 27
+a381 1
+.LI=file
+@
+
+
+1.30
+log
+@-
+@
+text
+@d7 1
+a7 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.29 2015-01-08 16:29:47-08 - - $"
+d345 9
+@
+
+
+1.29
+log
+@-
+@
+text
+@d7 1
+a7 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.28 2015-01-08 16:29:34-08 - - $"
+a28 5
+.SP 3v
+.S +20 +24
+.E= "This lab is not finished\(!!"
+.S -20 -24
+.SP
+@
+
+
+1.28
+log
+@-
+@
+text
+@d7 1
+a7 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.27 2015-01-08 16:17:56-08 - - $"
+d29 1
+a29 1
+.SP
+@
+
+
+1.27
+log
+@-
+@
+text
+@d7 1
+a7 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.26 2015-01-08 15:55:40-08 - - $"
+d29 5
+a353 4
+.SP 3v
+.S +20 +24
+.E= "This lab is not finished\(!!"
+.S -20 -24
+@
+
+
+1.26
+log
+@-
+@
+text
+@d7 1
+a7 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.25 2015-01-08 15:34:14-08 - - $"
+d12 1
+@
+
+
+1.25
+log
+@-
+@
+text
+@d7 1
+a7 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.24 2015-01-08 15:33:31-08 - - $"
+d344 4
+@
+
+
+1.24
+log
+@-
+@
+text
+@d7 1
+a7 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.23 2015-01-08 15:30:48-08 - - $"
+d329 2
+a330 2
+.TVCODE 1 "\*[PROMPT] " "cd \*[COURSEDIR]"
+.TVCODE 1 "\*[PROMPT] " "find * -name cid -follow 2>/dev/null"
+@
+
+
+1.23
+log
+@-
+@
+text
+@d7 1
+a7 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.22 2015-01-08 15:28:41-08 - - $"
+d306 38
+@
+
+
+1.22
+log
+@-
+@
+text
+@d7 1
+a7 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.21 2015-01-08 15:26:47-08 - - $"
+d277 1
+a277 1
+.VTCODE* 1 "co -r1.9 hello.java"
+d285 1
+a285 1
+.VTCODE* 1 "rlog hello.java"
+d289 1
+a289 1
+.VTCODE* 1 "rcsdiff -r1.7 -r1.11 hello.java"
+d299 1
+a299 1
+"// \[Do]Id: hello.java,v 1.12 2014-03-24 17:32:36-07 - - \[Do]"
+d303 1
+a303 1
+The ``-07'' at the end of the time indicates the number of
+@
+
+
+1.21
+log
+@-
+@
+text
+@d7 1
+a7 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.20 2015-01-08 15:25:27-08 - - $"
+d237 6
+a242 6
+.TVCODE 1 "\*[PROMPT] " "rcs -U hello.java
+.TVCODE 1 "RCS file: RCS/hello.java,v"
+.TVCODE 1 "done"
+.TVCODE 1 "\*[PROMPT] " "chmod u+w hello.java"
+.TVCODE 1 "\*[PROMPT] " "ls -la hello.java"
+.TVCODE 1 "-rw-r--r--  1 foobar  user  465 Sep 14 18:42 hello.java"
+d251 4
+a254 4
+.TVCODE 1 "\*[PROMPT] " "ci -zLT -s- -t- -m- -u hello.java"
+.TVCODE 1 "RCS/hello.java,v  <--  hello.java"
+.TVCODE 1 "new revision: 1.2; previous revision: 1.1"
+.TVCODE 1 "done"
+@
+
+
+1.20
+log
+@-
+@
+text
+@d7 1
+a7 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.19 2015-01-07 16:42:20-08 - - $"
+d204 5
+a208 5
+.TVCODE 1 "\*[PROMPT] " "mkdir RCS"
+.TVCODE 1 "\*[PROMPT] " "ci -zLT -s- -t- -m- -u hello.java"
+.TVCODE 1 "RCS/hello.java,v  <--  hello.java"
+.TVCODE 1 "initial revision: 1.1"
+.TVCODE 1 "done"
+@
+
+
+1.19
+log
+@-
+@
+text
+@d7 1
+a7 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.18 2015-01-07 16:40:12-08 - - $"
+d185 121
+@
+
+
+1.18
+log
+@-
+@
+text
+@d6 2
+a7 2
+.TITLE CMPS-012M Winter\~2015 Lab\~1 "Shells, etc."
+.RCS "$Id: lab1u-shells-etc.mm,v 1.17 2015-01-07 16:39:46-08 - - $"
+@
+
+
+1.17
+log
+@-
+@
+text
+@d7 1
+a7 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.16 2015-01-07 16:39:10-08 - - $"
+d181 1
+a184 1
+See Figure \*[Figure_ELIMCR_BASH].
+@
+
+
+1.16
+log
+@-
+@
+text
+@d7 1
+a7 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.15 2015-01-07 16:37:53-08 - - $"
+d177 1
+a177 2
+Alternatively,
+use the
+@
+
+
+1.15
+log
+@-
+@
+text
+@d7 1
+a7 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.14 2015-01-07 16:34:47-08 - - $"
+d178 3
+a180 1
+use the script
+d185 1
+a185 3
+(This is a
+.V= bash
+script.)
+@
+
+
+1.14
+log
+@-
+@
+text
+@d7 1
+a7 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.13 2015-01-07 16:34:12-08 - - $"
+d191 1
+@
+
+
+1.13
+log
+@-
+@
+text
+@d7 1
+a7 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.12 2015-01-07 16:30:41-08 - - $"
+d196 1
+a196 1
+.pso cat -n bin/hello.java | expand
+@
+
+
+1.12
+log
+@-
+@
+text
+@d5 1
+d7 1
+a7 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.11 2015-01-07 14:25:35-08 - - $"
+d190 14
+@
+
+
+1.11
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.10 2015-01-07 14:12:41-08 - - $"
+d174 1
+a174 2
+means type the letters
+.=V `` VM ''
+@
+
+
+1.10
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.9 2015-01-06 18:26:19-08 - - $"
+d157 1
+a157 3
+If you edit on a
+.V= M*cr*\[Do]*ft
+system,
+@
+
+
+1.9
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.8 2015-01-06 18:23:14-08 - - $"
+d167 1
+a167 1
+.VTCODE* 1 ":g/\[ha]V\[ha]M/s///"
+d172 2
+a173 1
+.V= \[ha] -notation means hold down the Control key.
+d180 1
+a180 1
+use the command
+@
+
+
+1.8
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.7 2015-01-06 18:22:47-08 - - $"
+d176 1
+a176 1
+.=v `` VM ''
+@
+
+
+1.7
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.6 2015-01-06 18:18:34-08 - - $"
+d187 1
+a187 1
+.P
+@
+
+
+1.6
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.5 2015-01-06 18:14:54-08 - - $"
+d164 24
+@
+
+
+1.5
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.4 2015-01-06 18:14:34-08 - - $"
+d165 1
+a165 1
+.E= "This lab is not finished being written\(!!"
+@
+
+
+1.4
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.3 2015-01-06 18:13:50-08 - - $"
+d164 3
+a166 3
+.S +20
+This lab is not finished being written\(!!
+.S -20
+@
+
+
+1.3
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.2 2015-01-06 18:12:29-08 - - $"
+d9 1
+@
+
+
+1.2
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab1u-shells-etc.mm,v 1.1 2015-01-06 18:09:54-08 - - $"
+d162 4
+@
+
+
+1.1
+log
+@-
+@
+text
+@d6 1
+a6 1
+.RCS "$Id: lab0u-intro-unix.mm,v 1.67 2015-01-06 16:23:25-08 - - $"
+d151 11
+@

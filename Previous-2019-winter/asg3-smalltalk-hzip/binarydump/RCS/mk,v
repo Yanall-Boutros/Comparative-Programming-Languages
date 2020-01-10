@@ -1,0 +1,50 @@
+head	1.2;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.2
+date	2019.02.02.01.09.39;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2016.10.13.19.52.01;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@-
+@
+text
+@#!/bin/sh
+# $Id: mk,v 1.1 2016-10-13 12:52:01-07 - - $
+cid $0 *.c testfile.in
+mkc *.c
+binarydump testfile.in >testbinary.out 2>&1
+hexadecimaldump testfile.in >testhexadecimal.out 2>&1
+mkpspdf Listing.src.ps *.c
+mkpspdf -N Listing.out.ps *.out
+@
+
+
+1.1
+log
+@-
+@
+text
+@d2 1
+a2 1
+# $Id: mk,v 1.1 2015-10-22 16:54:21-07 - - $
+d8 1
+a8 1
+mkpspdf -c Listing.out.ps *.out
+@

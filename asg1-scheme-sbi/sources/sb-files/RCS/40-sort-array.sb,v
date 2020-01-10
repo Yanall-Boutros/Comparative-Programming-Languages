@@ -1,0 +1,239 @@
+head	1.7;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.7
+date	2019.11.26.22.08.39;	author -;	state -;
+branches;
+next	1.6;
+
+1.6
+date	2019.11.08.20.48.25;	author -;	state -;
+branches;
+next	1.5;
+
+1.5
+date	2019.01.17.20.01.56;	author -;	state -;
+branches;
+next	1.4;
+
+1.4
+date	2019.01.08.22.51.21;	author -;	state -;
+branches;
+next	1.3;
+
+1.3
+date	2019.01.08.22.47.42;	author -;	state -;
+branches;
+next	1.2;
+
+1.2
+date	2019.01.02.22.50.40;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2009.02.04.01.37.29;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.7
+log
+@-
+@
+text
+@# $Id: 40-sort-array.sb,v 1.6 2019-11-08 12:48:25-08 - - $
+#
+# sort numbers
+#
+# Input is a sequence of numbers ending with end of file.
+# User is assumed to have not more than 100 numbers.
+# Note that nan != nan, other was x = x for all x that is not nan.
+#
+        let size = 100
+        dim a[size]
+        let max = 0
+read:   input x
+        if eof != 0 goto eof
+        if x != x goto error
+        let a[max] = x
+        let max = max + 1
+        if max < size goto read
+eof:
+        print ""
+        print "unsorted"
+        let i = 0
+prtlp:  print "a[", i, "]=", a[i]
+        let i = i + 1
+        if i < max goto prtlp
+        if i < 1 goto sorted
+
+        let i = max - 1
+outer:  let j = 0 
+inner:  if a[j] <= a[j + 1] goto noswap
+        let t = a[j]
+        let a[j] = a[j+1]
+        let a[j+1]=t
+noswap: let j = j + 1
+        if j <= i - 1 goto inner
+        let i = i - 1
+        if i > 0 goto outer
+
+sorted: print ""
+        print "sorted"
+        let i = 0
+sortlp: print "a[", i, "]=", a[i]
+        let i = i + 1
+        if i < max goto sortlp
+        goto stop
+error:  print "Invalid input"
+stop:
+@
+
+
+1.6
+log
+@-
+@
+text
+@d1 1
+a1 1
+# $Id: 40-sort-array.sb,v 1.2 2019-02-01 12:54:01-08 - - $
+d7 1
+a7 1
+# Note that nan <> nan, other was x = x for all x that is not nan.
+d13 2
+a14 2
+        if eof <> 0 goto eof
+        if x <> x goto error
+@
+
+
+1.5
+log
+@-
+@
+text
+@d1 1
+a1 1
+# $Id: 40-sort-array.sb,v 1.4 2019-01-08 14:51:21-08 - - $
+d9 9
+a17 9
+	let size = 100
+	dim a[size]
+	let max = 0
+read:	input x
+	if eof = 1 goto eof
+	if x <> x goto error
+	let max = max + 1
+	let a[max] = x
+	if max < size goto read
+d19 27
+a45 25
+	print ""
+	print "unsorted"
+	let i = 1
+prtlp:	print "a[", i, "]=", a[i]
+	let i = i + 1
+	if i <= max goto prtlp
+	let i = max
+outer:	let j = 1 
+inner:	if a[j] <= a[j + 1] goto noswap
+	let t = a[j]
+	let a[j] = a[j+1]
+	let a[j+1]=t
+noswap:
+	let j = j + 1
+	if j <= i - 1 goto inner
+	let i = i - 1
+	if i >= 2 goto outer
+	print ""
+	print "sorted"
+	let i = 1
+sortlp:	print "a[", i, "]=", a[i]
+	let i = i + 1
+	if i <= max goto sortlp
+	goto stop
+error:	print "Invalid input"
+@
+
+
+1.4
+log
+@-
+@
+text
+@d1 1
+a1 1
+# $Id: 40-sort-array.sb,v 1.3 2019-01-08 14:47:42-08 - - $
+d13 1
+a14 1
+	if eof = 1 goto eof
+@
+
+
+1.3
+log
+@-
+@
+text
+@d1 1
+a1 1
+# $Id: 40-sort-array.sb,v 1.2 2019-01-02 14:50:40-08 - - $
+d14 1
+a14 1
+	if eof <> 0 goto eof
+@
+
+
+1.2
+log
+@-
+@
+text
+@d1 1
+a1 1
+# $Id: 40-sort-array.sb,v 1.1 2009-02-03 17:37:29-08 - - $
+d7 1
+d13 2
+a14 2
+	if inputcount = -1 goto eof
+	if inputcount < 1 goto error
+@
+
+
+1.1
+log
+@-
+@
+text
+@d1 1
+a1 1
+# $Id: 40-sort-array.sb,v 1.1 2008-02-05 15:34:45-08 - - $
+d9 1
+a9 1
+	dim a( size )
+d15 1
+a15 1
+	let a( max ) = x
+d21 1
+a21 1
+prtlp:	print "a(", i, ")=", a( i )
+d26 4
+a29 4
+inner:	if a(j) <= a(j + 1 ) goto noswap
+	let t = a(j)
+	let a(j) = a(j+1)
+	let a(j+1)=t
+d38 1
+a38 1
+sortlp:	print "a(", i, ")=", a( i )
+@

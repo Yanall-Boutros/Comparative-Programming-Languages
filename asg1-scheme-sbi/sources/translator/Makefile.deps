@@ -1,0 +1,36 @@
+# Makefile.deps created Wed Dec 11 16:06:23 PST 2019
+absyn.cmo :
+absyn.cmx :
+etc.cmo : \
+    etc.cmi
+etc.cmx : \
+    etc.cmi
+etc.cmi :
+lexer.cmo : \
+    parser.cmi \
+    etc.cmi \
+    absyn.cmo
+lexer.cmx : \
+    parser.cmx \
+    etc.cmx \
+    absyn.cmx
+main.cmo : \
+    parser.cmi \
+    lexer.cmo \
+    etc.cmi \
+    absyn.cmo
+main.cmx : \
+    parser.cmx \
+    lexer.cmx \
+    etc.cmx \
+    absyn.cmx
+parser.cmo : \
+    etc.cmi \
+    absyn.cmo \
+    parser.cmi
+parser.cmx : \
+    etc.cmx \
+    absyn.cmx \
+    parser.cmi
+parser.cmi : \
+    absyn.cmo

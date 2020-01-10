@@ -1,0 +1,62 @@
+head	1.3;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.3
+date	2018.08.23.20.24.25;	author -;	state -;
+branches;
+next	1.2;
+
+1.2
+date	2018.08.23.20.23.40;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2018.08.23.20.23.24;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@-
+@
+text
+@#!/bin/sh
+# $Id: mk.readme,v 1.2 2018-08-23 13:23:40-07 - - $
+vi README.text
+cid + $0 README.text
+txt2html README.text
+@
+
+
+1.2
+log
+@-
+@
+text
+@d2 2
+a3 1
+# $Id: mk.readme,v 1.1 2018-08-23 13:23:24-07 - - $
+@
+
+
+1.1
+log
+@-
+@
+text
+@d2 1
+a2 1
+# $Id$
+a4 1
+ls -la README.*
+@

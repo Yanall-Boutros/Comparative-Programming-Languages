@@ -1,0 +1,14 @@
+================ make aok ================
+g++     aok.cpp   -o aok
+aok
+make aok.test status: 0
+================ make bad ================
+g++     bad.cpp   -o bad
+bad
+make: *** [Makefile:8: bad.test] Error 63
+make bad.test status: 2
+================ make segfault ================
+g++     segfault.cpp   -o segfault
+segfault
+make: *** [Makefile:8: segfault.test] Segmentation fault
+make segfault.test status: 2

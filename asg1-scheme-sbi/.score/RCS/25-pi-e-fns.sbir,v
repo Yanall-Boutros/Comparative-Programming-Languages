@@ -1,0 +1,154 @@
+head	1.3;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.3
+date	2019.12.17.23.15.20;	author -;	state -;
+branches;
+next	1.2;
+
+1.2
+date	2019.12.12.00.13.15;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2018.09.27.21.31.36;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@-
+@
+text
+@;;File: 25-pi-e-fns.sb
+;;   1: # $Id: 25-pi-e-fns.sb,v 1.3 2019-12-11 16:23:56-08 - - $
+;;   2: 
+;;   3:         print pi, e
+;;   4:         let pi = 4 * atan(1)
+;;   5:         let e = exp(1)
+;;   6:         print "pi = ", pi
+;;   7:         print "e = ", e
+;;   8: 
+;;   9:         print "sqrt (pi) = ", sqrt (pi)
+;;  10:         print "exp (pi) = ", exp (pi)
+;;  11:         print "log (pi) = ", log (pi)
+;;  12:         print "sin (pi) = ", sin (pi)
+;;  13:         print "cos (pi) = ", cos (pi)
+;;  14:         print "tan (pi) = ", tan (pi)
+;;  15:         print "acos (pi) = ", acos (pi)
+;;  16:         print "asin (pi) = ", asin (pi)
+;;  17:         print "atan (pi) = ", atan (pi)
+;;  18:         print "abs (pi) = ", abs (pi)
+;;  19:         print "ceiling (pi) = ", ceiling (pi)
+;;  20:         print "floor (pi) = ", floor (pi)
+;;  21:         print "round (pi) = ", round (pi)
+;;  22: 
+(
+(    1          )
+(    2          )
+(    3          (print pi e))
+(    4          (let pi (* 4 (atan 1))))
+(    5          (let e (exp 1)))
+(    6          (print "pi = " pi))
+(    7          (print "e = " e))
+(    8          )
+(    9          (print "sqrt (pi) = " (sqrt pi)))
+(   10          (print "exp (pi) = " (exp pi)))
+(   11          (print "log (pi) = " (log pi)))
+(   12          (print "sin (pi) = " (sin pi)))
+(   13          (print "cos (pi) = " (cos pi)))
+(   14          (print "tan (pi) = " (tan pi)))
+(   15          (print "acos (pi) = " (acos pi)))
+(   16          (print "asin (pi) = " (asin pi)))
+(   17          (print "atan (pi) = " (atan pi)))
+(   18          (print "abs (pi) = " (abs pi)))
+(   19          (print "ceiling (pi) = " (ceiling pi)))
+(   20          (print "floor (pi) = " (floor pi)))
+(   21          (print "round (pi) = " (round pi)))
+(   22          )
+)
+@
+
+
+1.2
+log
+@-
+@
+text
+@d2 1
+a2 1
+;;   1: # $Id: 25-pi-e-fns.sb,v 1.2 2019-11-08 12:49:19-08 - - $
+d10 13
+a22 13
+;;   9:         print "sqrt ( pi ) = ", sqrt ( pi )
+;;  10:         print "exp  ( pi ) = ", exp  ( pi )
+;;  11:         print "log  ( pi ) = ", log  ( pi )
+;;  12:         print "sin  ( pi ) = ", sin  ( pi )
+;;  13:         print "cos  ( pi ) = ", cos  ( pi )
+;;  14:         print "tan  ( pi ) = ", tan  ( pi )
+;;  15:         print "acos ( pi ) = ", acos ( pi )
+;;  16:         print "asin ( pi ) = ", asin ( pi )
+;;  17:         print "atan ( pi ) = ", atan ( pi )
+;;  18:         print "abs  ( pi ) = ", abs  ( pi )
+;;  19:         print "ceil ( pi ) = ", ceil ( pi )
+;;  20:         print "floor( pi ) = ", floor( pi )
+;;  21:         print "round( pi ) = ", round( pi )
+d33 13
+a45 13
+(    9          (print "sqrt ( pi ) = " (sqrt pi)))
+(   10          (print "exp  ( pi ) = " (exp pi)))
+(   11          (print "log  ( pi ) = " (log pi)))
+(   12          (print "sin  ( pi ) = " (sin pi)))
+(   13          (print "cos  ( pi ) = " (cos pi)))
+(   14          (print "tan  ( pi ) = " (tan pi)))
+(   15          (print "acos ( pi ) = " (acos pi)))
+(   16          (print "asin ( pi ) = " (asin pi)))
+(   17          (print "atan ( pi ) = " (atan pi)))
+(   18          (print "abs  ( pi ) = " (abs pi)))
+(   19          (print "ceil ( pi ) = " (ceil pi)))
+(   20          (print "floor( pi ) = " (floor pi)))
+(   21          (print "round( pi ) = " (round pi)))
+@
+
+
+1.1
+log
+@-
+@
+text
+@d2 1
+a2 1
+;;   1: # $Id: 25-pi-e-fns.sbir,v 1.1 2017-08-21 17:29:41-07 - - $
+d4 5
+a8 5
+;;   3: print pi, e
+;;   4: let pi = 4 * atan(1)
+;;   5: let e = exp(1)
+;;   6: print "pi = ", pi
+;;   7: print "e = ", e
+d10 13
+a22 13
+;;   9: print "sqrt ( pi ) = ", sqrt ( pi )
+;;  10: print "exp  ( pi ) = ", exp  ( pi )
+;;  11: print "log  ( pi ) = ", log  ( pi )
+;;  12: print "sin  ( pi ) = ", sin  ( pi )
+;;  13: print "cos  ( pi ) = ", cos  ( pi )
+;;  14: print "tan  ( pi ) = ", tan  ( pi )
+;;  15: print "acos ( pi ) = ", acos ( pi )
+;;  16: print "asin ( pi ) = ", asin ( pi )
+;;  17: print "atan ( pi ) = ", atan ( pi )
+;;  18: print "abs  ( pi ) = ", abs  ( pi )
+;;  19: print "ceil ( pi ) = ", ceil ( pi )
+;;  20: print "floor( pi ) = ", floor( pi )
+;;  21: print "round( pi ) = ", round( pi )
+@
