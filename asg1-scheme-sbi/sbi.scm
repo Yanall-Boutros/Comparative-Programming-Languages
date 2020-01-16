@@ -12,7 +12,24 @@
 ;;    The file mentioned in argv[1] is read and assumed to be an SBIR
 ;;    program, which is the executed.  Currently it is only printed.
 ;;
+;; I got this func_table starter code from Mackey's Example Directory
+(define PRINT (lambda (x)
+               (display x)
+               (newline)
+              )
+)
 
+(define func_table (make-hash))
+(for-each
+    (lambda (item) (hash-set! func_table (car item) (cadr item)))
+    `(("PRINT" ,(lambda (x) (display x) (newline)))
+      ("INPUT" )
+      ("DIM" )
+      ("LET" )
+      ("IF" )
+      ("GOTO" ))
+)
+ 
 (define *stdin* (current-input-port))
 (define *stdout* (current-output-port))
 (define *stderr* (current-error-port))
