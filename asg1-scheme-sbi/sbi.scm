@@ -20,14 +20,28 @@
 )
 
 (define func_table (make-hash))
+(define label_hash (make-hash))
+(define append_to_lh (lambda (line) (if (not (equal? ((cdr line) '())))
+                                     (hash-set! label_hash (car line) (cadr line))
+                                     ( '())
+                                     )
+                     )
+)
+(define append_to_lh (lambda (line) (if (not (equal? (cdr line) '()))
+                                        (hash-set! label_hash (car line) (cadr line))
+                                        (display "")
+                                        )
+                      )
+)
+
 (for-each
     (lambda (item) (hash-set! func_table (car item) (cadr item)))
-    `(("PRINT" ,(lambda (x) (display x) (newline)))
-      ("INPUT" )
-      ("DIM" )
-      ("LET" )
-      ("IF" )
-      ("GOTO" ))
+    `(("print" ,(lambda (x) (display x) (newline))))
+;;      ("INPUT" )
+;;      ("DIM" )
+;;      ("LET" )
+;;      ("IF" )
+;;      ("GOTO" ))
 )
  
 (define *stdin* (current-input-port))
@@ -70,7 +84,7 @@
     (printf "~a: ~s~n" *run-file* filename)
     (printf "==================================================~n")
     (printf "(~n")
-    (for-each (lambda (line) (printf "~s~n" line)) program)
+    (for-each (lambda (line) (append_to_lh line) ) program)
     (printf ")~n"))
 
 (define (main arglist)
@@ -84,3 +98,4 @@
     (main (vector->list (current-command-line-arguments)))
     (printf "sbi.scm: interactive mode~n"))
 
+(display label_hash)
