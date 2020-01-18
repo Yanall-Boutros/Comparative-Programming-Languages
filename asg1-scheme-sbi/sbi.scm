@@ -11,29 +11,60 @@
 ;; DESCRIPTION
 ;;    The file mentioned in argv[1] is read and assumed to be an SBIR
 ;;    program, which is the executed.  Currently it is only printed.
-;;
+
+;; ====================================================================
+;; Variable Declarations
+;; ====================================================================
+(define *stdin* (current-input-port))
+(define *stdout* (current-output-port))
+(define *stderr* (current-error-port))
 ;; I got this func_table starter code from Mackey's Example Directory
+(define func_table (make-hash))
+(define var_table (make-hash))
+(define line_hash (make-hash))
+(define label_hash (make-hash))
+;; ====================================================================
+;; Function Definitions
+;; ====================================================================
+(define append_to_lh (lambda (line) (if (not (null? (cdr line)))
+                                        (hash-set! line_hash (car line) (cadr line))
+                                        (display "")
+                                        )
+                      )
+)
 (define PRINT (lambda (x)
                (display x)
                (newline)
               )
 )
 
-(define func_table (make-hash))
-(define label_hash (make-hash))
-(define append_to_lh (lambda (line) (if (not (equal? ((cdr line) '())))
-                                     (hash-set! label_hash (car line) (cadr line))
-                                     ( '())
-                                     )
-                     )
-)
-(define append_to_lh (lambda (line) (if (not (equal? (cdr line) '()))
-                                        (hash-set! label_hash (car line) (cadr line))
-                                        (display "")
-                                        )
-                      )
+(define ret-val-index (lambda (h i)
+                 (if (hash-has-key? h i)
+                  i
+                  (ret-val-index h (+ i 1))
+                  )
+                 )
 )
 
+;; Thanks to
+;; https://stackoverflow.com/questions/3172768/adding-an-element-to-list-in-scheme
+;; for the help
+(define (list_append . lsts)
+  (cond
+    ((null? lsts) '())
+    ((null? (car lsts)) (apply append (cdr lsts)))
+    (else (cons (caar lsts) (apply append (cdar lsts) (cdr lsts))))))
+
+;;(define interpret-program (lambda tllist)
+;;;; If there is no statement, call interpret statement with the cdr
+;;;; of the top level node
+;;                           ()
+;;
+;;)
+
+;; ====================================================================
+;; Build the tables
+;; ====================================================================
 (for-each
     (lambda (item) (hash-set! func_table (car item) (cadr item)))
     `(("print" ,(lambda (x) (display x) (newline))))
@@ -44,9 +75,10 @@
 ;;      ("GOTO" ))
 )
  
-(define *stdin* (current-input-port))
-(define *stdout* (current-output-port))
-(define *stderr* (current-error-port))
+(for-each
+    (lambda (item) (hash-set! var_table (car item) (cadr item)))
+    `(("lines" , '()))
+)
 
 (define *run-file*
     (let-values
@@ -84,7 +116,7 @@
     (printf "~a: ~s~n" *run-file* filename)
     (printf "==================================================~n")
     (printf "(~n")
-    (for-each (lambda (line) (append_to_lh line) ) program)
+    (for-each (lambda (line) (hash-set! var_table "lines" (list_append (hash-ref var_table "lines") line)) )program)
     (printf ")~n"))
 
 (define (main arglist)
@@ -98,4 +130,4 @@
     (main (vector->list (current-command-line-arguments)))
     (printf "sbi.scm: interactive mode~n"))
 
-(display label_hash)
+(display (hash-ref var_table "lines"))
