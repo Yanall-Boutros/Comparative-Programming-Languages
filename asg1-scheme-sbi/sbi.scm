@@ -45,6 +45,29 @@
                   )
                  )
 )
+;; Again, thanks to Macket for some example code
+(define (what-kind value)
+    (cond ((real? value) 'real)
+          ((vector? value) 'vector)
+          ((procedure? value) 'procedure)
+          ((list? value) 'list)
+          (else 'other)))
+
+
+(define insert_labels (lambda (l)
+  ;; if the car is null, return empty list
+  ;; if the car of the list is of type other, append the cadr
+  ;; else, recur
+  (cond 
+   [(null? (cdr l) ) (hash-set! label_hash (car l) (car l))]
+   ;; if the next element is null, append and break
+   [(eq? (what-kind (car l)) 'other) (hash-set! label_hash (car l) (cadr l)) (insert_labels (cdr l))]
+   [else (insert_labels (cdr l))]
+   )
+  )
+)
+
+
 
 ;; Thanks to
 ;; https://stackoverflow.com/questions/3172768/adding-an-element-to-list-in-scheme
@@ -130,4 +153,8 @@
     (main (vector->list (current-command-line-arguments)))
     (printf "sbi.scm: interactive mode~n"))
 
-(display (hash-ref var_table "lines"))
+;; (display (hash-ref var_table "lines"))
+;; Build the table which contains all key values such that
+;; key = label, value = top-level node pointed at
+(insert_labels (hash-ref var_table "lines"))
+(display label_hash)
