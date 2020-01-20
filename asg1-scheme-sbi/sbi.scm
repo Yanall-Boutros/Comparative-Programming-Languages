@@ -68,7 +68,7 @@
                                           [(string? (car l))(display (car l))(PRINT (cdr l))]
                                           [(number? (car l))(display (car l))(PRINT (cdr l))]
                ;; If the element is not a string, evaluate the expression and print
-                                          [(list? (car l))(display "eval expr")(PRINT (cdr l))]
+                                          [(list? (car l))(display (EVAL_EXPR (car l) ))(PRINT (cdr l))]
                                           ) 
                ;; otherwise, -- if the first element is string print string.
                (newline)
@@ -79,8 +79,8 @@
 (define (EVAL_EXPR expr)
 ;; Starter Code taking from mackeys evalexpr.scm
     (cond ((number? expr) (+ 0.0 expr))
-          (else (let ((fn (hash-ref fnhash (car expr)))
-                      (args (map evalexpr (cdr expr))))
+          (else (let ((fn (hash-ref func_table (car expr)))
+                      (args (map EVAL_EXPR (cdr expr))))
                      (apply fn args))))
 )
 ;; The dim statement creates an array given by the variable name and
@@ -92,8 +92,10 @@
              (newline)
              (display "DIM")
              (newline)
-             (display l)
+             (display (car l))
              (newline)
+             (hash-set! var_table )
+             ;; 
              '()
              )
 )
@@ -104,16 +106,24 @@
 ;; sage is sent to the vector representing the array. If the Symbol table
 ;; entry is not an array, an error occurs.
 (define LET (lambda (l)
-             (newline)
-             (display "LET")
-             (newline)
-             (display l)
-             (newline)
+             (cond
              ;; Determine if array or variable
-;;             (cond
-;;              [()()]
-;;              [()()]
-;;             )
+             [(symbol? (car l))(hash-set! var_table (car l) (cadr l))]
+             ;; If not variable, figure out what to do for array
+             [(pair? (car l))
+             ;; If it is a pair, then check to see if the array is in the table,
+             ;; and check to see if the array is in bounds
+             ;; check to see if it's in table
+               (if (and (hash-has-key? var_table (car l)) (<= (- 1 (EVAL_EXPR (cadr l))) (vector-length (car l))))
+                    (vector-set! (hash-ref *variable-table* (car l))
+                                 (exact-round (- 1 (EVAL_EXPR (cadr l))))
+                                 (EVAL_EXPR (car (cddr l)))
+                    )
+               (printf "Vector not found or array out of bounds")
+               )
+             ]
+             [else (printf "Error, improper LET usage")]
+             )
              '()
              )
  )
@@ -211,9 +221,9 @@
       ("if" , IF)
       ("goto" ,GOTO)
       ;; operator section
-      (+ , +) 
-      (- , -) 
-      (* , *)
+      (+  ,+) 
+      (-  ,-) 
+      (*  ,*)
       (/ , (lambda (x y) (/ x  y )))
       (% , (lambda (x y) (- (+ x 0.0) 
       (* (truncate (/ (+ x 0.0) (+ y 0.0))) (+ y 0.0)))))
@@ -222,7 +232,7 @@
       (= , equal?)
       (< , <)
       (> , >)
-      (<> , (lambda (x y) (not (equal? x y))))
+      ('!= , (lambda (x y) (not (equal? x y))))
       (>= , >=)
       (<= , <=)
       ;; math functions 
@@ -289,9 +299,8 @@
     (printf "==================================================~n")
     (printf "~a: ~s~n" *run-file* filename)
     (printf "==================================================~n")
-    (printf "(~n")
     (for-each (lambda (line) (hash-set! var_table "lines" (list_append (hash-ref var_table "lines") line)) )program)
-    (printf ")~n"))
+)
 
 (define (main arglist)
     (if (or (null? arglist) (not (null? (cdr arglist))))
