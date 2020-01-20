@@ -26,33 +26,132 @@
 ;; ====================================================================
 ;; Function Definitions
 ;; ====================================================================
-(define append_to_lh (lambda (line) (if (not (null? (cdr line)))
-                                        (hash-set! line_hash (car line) (cadr line))
-                                        (display "")
-                                        )
-                      )
-)
-(define PRINT (lambda (x)
-               (display x)
+;; Props to mackey for the code
+(define *symbol-table* (make-hash))
+(define (symbol-get key)
+        (hash-ref *symbol-table* key))
+(define (symbol-put! key value)
+        (hash-set! *symbol-table* key value))
+
+(for-each
+    (lambda (pair)
+            (symbol-put! (car pair) (cadr pair)))
+    `(
+        (log10_2 0.301029995663981195213738894724493026768189881)
+        (sqrt_2  1.414213562373095048801688724209698078569671875)
+        (e       2.718281828459045235360287471352662497757247093)
+        (pi      3.141592653589793238462643383279502884197169399)
+        (div     ,(lambda (x y) (floor (/ x y))))
+        (log10   ,(lambda (x) (/ (log x) (log 10.0))))
+        (mod     ,(lambda (x y) (- x (* (div x y) y))))
+        (quot    ,(lambda (x y) (truncate (/ x y))))
+        (rem     ,(lambda (x y) (- x (* (quot x y) y))))
+        (+       ,+)
+        (^       ,expt)
+        (ceil    ,ceiling)
+        (exp     ,exp)
+        (floor   ,floor)
+        (log     ,log)
+        (sqrt    ,sqrt)
+        (let    ,"let")
+        (input  ,"input")
+        (print  ,"print")
+        (dim    ,"dim")
+        (if     ,"if")
+        (goto   ,"goto")
+     ))
+
+
+(define PRINT (lambda (l)
+               ;; if the value is null, print new line
+               (if (not (eq? l '()))(cond
+                                          [(string? (car l))(display (car l))(PRINT (cdr l))]
+                                          [(number? (car l))(display (car l))(PRINT (cdr l))]
+               ;; If the element is not a string, evaluate the expression and print
+                                          [(list? (car l))(display "eval expr")(PRINT (cdr l))]
+                                          ) 
+               ;; otherwise, -- if the first element is string print string.
                (newline)
               )
+              '()
+              )
+)
+(define (EVAL_EXPR expr)
+;; Starter Code taking from mackeys evalexpr.scm
+    (cond ((number? expr) (+ 0.0 expr))
+          (else (let ((fn (hash-ref fnhash (car expr)))
+                      (args (map evalexpr (cdr expr))))
+                     (apply fn args))))
+)
+;; The dim statement creates an array given by the variable name and
+;; inserts it into the array table, replacing any previous array already in
+;; the array table. The dimension of the array is given by the expression.
+;; All values in the array are initialized to 0. The expression is rounded to
+;; the nearest integer before being used as the bound, which must be positive
+(define DIM (lambda (l)
+             (newline)
+             (display "DIM")
+             (newline)
+             (display l)
+             (newline)
+             '()
+             )
 )
 
-(define ret-val-index (lambda (h i)
-                 (if (hash-has-key? h i)
-                  i
-                  (ret-val-index h (+ i 1))
-                  )
-                 )
-)
-;; Again, thanks to Macket for some example code
+;; A let statement makes an assignment to a variable. The expression is
+;; first evaluated. For a Variable, its value is stored into the Symbol table,
+;; replacing whatever was there previously. For an Arrayref , the store mes-
+;; sage is sent to the vector representing the array. If the Symbol table
+;; entry is not an array, an error occurs.
+(define LET (lambda (l)
+             (newline)
+             (display "LET")
+             (newline)
+             (display l)
+             (newline)
+             ;; Determine if array or variable
+;;             (cond
+;;              [()()]
+;;              [()()]
+;;             )
+             '()
+             )
+ )
+(define INPUT (lambda (l)
+             (newline)
+             (display "INPUT")
+             (newline)
+             (display l)
+             (newline)
+             '()
+             )
+ )
+(define IF (lambda (l)
+             (newline)
+             (display "IF")
+             (newline)
+             (display l)
+             (newline)
+             '()
+          )
+ )
+(define GOTO (lambda (l)
+             (newline)
+             (display "GOTO")
+             (newline)
+             (display l)
+             (newline)
+             '()
+          )
+ )
+
+;; Again, thanks to Mackey for some example code
 (define (what-kind value)
     (cond ((real? value) 'real)
           ((vector? value) 'vector)
           ((procedure? value) 'procedure)
           ((list? value) 'list)
           (else 'other)))
-
 
 (define insert_labels (lambda (l)
   ;; if the car is null, return empty list
@@ -67,6 +166,21 @@
   )
 )
 
+(define interpret-statement (lambda (l)
+    ;;If there is a statement, lookup the keyword in the statement hash
+    ;; lookup the car of l  to get the keyword
+    (define cmd (hash-ref *symbol-table* (caar l)))
+    (if (hash-has-key? func_table cmd) ((hash-ref func_table cmd) (cdar l) ) (display "Error: no key") )
+  )
+)
+
+(define interpret-program (lambda (l)
+   ;; if there is no statement, call the function recursively on cdr
+   (if (empty? l) (exit) '())
+   (if (eq? (what-kind (car l)) 'list)(hash-set! var_table "ret-val" (interpret-statement l ))(interpret-program (cdr l)))
+   (if (null? (hash-ref var_table "ret-val")) (interpret-program (cdr l)) "")
+   )
+)
 
 
 ;; Thanks to
@@ -90,17 +204,54 @@
 ;; ====================================================================
 (for-each
     (lambda (item) (hash-set! func_table (car item) (cadr item)))
-    `(("print" ,(lambda (x) (display x) (newline))))
-;;      ("INPUT" )
-;;      ("DIM" )
-;;      ("LET" )
-;;      ("IF" )
-;;      ("GOTO" ))
+    `(("print" , PRINT)
+      ("input" , INPUT)
+      ("dim" , DIM)
+      ("let" , LET)
+      ("if" , IF)
+      ("goto" ,GOTO)
+      ;; operator section
+      (+ , +) 
+      (- , -) 
+      (* , *)
+      (/ , (lambda (x y) (/ x  y )))
+      (% , (lambda (x y) (- (+ x 0.0) 
+      (* (truncate (/ (+ x 0.0) (+ y 0.0))) (+ y 0.0)))))
+      (^ , expt)
+      ;; relop
+      (= , equal?)
+      (< , <)
+      (> , >)
+      (<> , (lambda (x y) (not (equal? x y))))
+      (>= , >=)
+      (<= , <=)
+      ;; math functions 
+      (exp , exp)
+      (ceil , ceiling)
+      (floor , floor)
+      (sqrt , sqrt)
+      (abs , abs)
+      (acos , acos)
+      (asin , asin)
+      (atan , atan)
+      (cos , cos)
+      (round , round)
+      (sin , sin)
+      (tan , tan)
+      (trunc , truncate)
+      (log , (lambda (x) (log (+ x 0.0))))
+      (log10 , (lambda (x) (/ (log (+ x 0.0)) (log 10.0))))
+      (log2 , (lambda (x) (/ (log (+ x 0.0)) (log 2.0))))
+  )
 )
  
 (for-each
     (lambda (item) (hash-set! var_table (car item) (cadr item)))
-    `(("lines" , '()))
+    `(
+      ("lines" , '())
+      ("ret-val" 0)
+
+      )
 )
 
 (define *run-file*
@@ -157,4 +308,4 @@
 ;; Build the table which contains all key values such that
 ;; key = label, value = top-level node pointed at
 (insert_labels (hash-ref var_table "lines"))
-(display label_hash)
+(interpret-program (hash-ref var_table "lines"))
