@@ -23,6 +23,7 @@
 (define var_table (make-hash))
 (define line_hash (make-hash))
 (define label_hash (make-hash))
+(define array_table (make-hash))
 ;; ====================================================================
 ;; Function Definitions
 ;; ====================================================================
@@ -59,8 +60,13 @@
         (dim    ,"dim")
         (if     ,"if")
         (goto   ,"goto")
+        (eof    , 0)
      ))
 
+(define asub (lambda (a . i)
+  (vector-ref (hash-ref var_table a) i)
+)
+)
 
 (define PRINT (lambda (l)
                ;; if the value is null, print new line
@@ -79,6 +85,7 @@
 (define (EVAL_EXPR expr)
 ;; Starter Code taking from mackeys evalexpr.scm
     (cond ((number? expr) (+ 0.0 expr))
+          ((symbol? expr) (hash-ref var_table expr))
           (else (let ((fn (hash-ref func_table (car expr)))
                       (args (map EVAL_EXPR (cdr expr))))
                      (apply fn args))))
@@ -89,13 +96,10 @@
 ;; All values in the array are initialized to 0. The expression is rounded to
 ;; the nearest integer before being used as the bound, which must be positive
 (define DIM (lambda (l)
-             (newline)
-             (display "DIM")
-             (newline)
-             (display (car l))
-             (newline)
-             (hash-set! var_table )
-             ;; 
+             (define var_name (cadar l))
+             (define var_size (caddar l))
+             (define vec (make-vector (exact-round (EVAL_EXPR var_size))))
+             (hash-set! array_table var_name vec)
              '()
              )
 )
@@ -105,52 +109,103 @@
 ;; replacing whatever was there previously. For an Arrayref , the store mes-
 ;; sage is sent to the vector representing the array. If the Symbol table
 ;; entry is not an array, an error occurs.
+;; got some help for this part from 
+;; https://github.com/bosdhill/CS112/blob/master/asg1/sbi.scm
+;; I got lost with how to handle the array part of the function. Additionally
+;; since I implemented this program in a different order I had to change 
+;; some of the logic surrouding evaluating expressions
 (define LET (lambda (l)
              (cond
              ;; Determine if array or variable
-             [(symbol? (car l))(hash-set! var_table (car l) (cadr l))]
+             [(symbol? (car l))(hash-set! var_table (car l) (EVAL_EXPR (cadr l)))]
              ;; If not variable, figure out what to do for array
              [(pair? (car l))
              ;; If it is a pair, then check to see if the array is in the table,
              ;; and check to see if the array is in bounds
              ;; check to see if it's in table
-               (if (and (hash-has-key? var_table (car l)) (<= (- 1 (EVAL_EXPR (cadr l))) (vector-length (car l))))
-                    (vector-set! (hash-ref *variable-table* (car l))
-                                 (exact-round (- 1 (EVAL_EXPR (cadr l))))
+               (if (and (hash-has-key? array_table (car l))
+                         (<= (- (EVAL_EXPR (cadr l)) 1)
+                             (vector-length (car l))
+                         )
+                    )
+                    (vector-set! (hash-ref array-table (car l))
+                                 (exact-round (- (EVAL_EXPR (cadr l)) 1))
                                  (EVAL_EXPR (car (cddr l)))
                     )
-               (printf "Vector not found or array out of bounds")
+                    (printf "Vector not found or array out of bounds")
                )
              ]
              [else (printf "Error, improper LET usage")]
              )
              '()
              )
- )
-(define INPUT (lambda (l)
-             (newline)
-             (display "INPUT")
-             (newline)
-             (display l)
-             (newline)
+)
+
+;; Numeric values are read in and assigned to the input variables in
+;; sequence. Arguments might be elements of an array. For each value
+;; read into a Memory, the value is inserted into the Symbol table under
+;; that variable’s key. For arrays, the array must already exist and the sub-
+;; script not be out of bounds.
+
+;; If an invalid value (anything that is not a number?) is read, the value
+;; returned is nan. If end of file is encountered, the value returned is nan
+;; and the variable eof is entered into the symbol table with the value 1.
+;; The value of nan can be computed using the expression (/ 0.0 0.0).
+;; Counterintuitively, the expression (= nan nan) is false.
+
+;; Example code taken from mackeys example folder
+(define INPUT(lambda (l)
+             (define cur_symbol (car l))
+             (let ((object (read)))
+             (cond [(eof-object? object) object]
+                   [(number? object)
+                   ;; If the argument is an element of array, then
+                   ;; check if it exists and is in correct bounds, 
+                   ;; then update set array sub value to object.
+                   ;; Take the cdr of input args and repeat
+                       (cond 
+                          [(symbol? cur_symbol)(hash-set! var_table cur_symbol object)]
+                          [else (begin (if
+                                         (and (hash-has-key? array_table (car l))
+                                              (<= (- (EVAL_EXPR (cadr l)) 1)
+                                              (vector-length (car l)))
+                                         )
+                                         (vector-set! (hash-ref array_table (car l))
+                                                      object
+                                         )
+                                         (die "Vector doesn't exist")
+                                )
+                            )
+                          ]
+                        )
+                   ;; otherwise, set varialbe to value
+                   ]
+                   [else (begin (die "invalid number: ~a~n")
+                                (hash-set! var_table eof 1)
+                                (/ 0.0 0.0)
+                          )
+                   ]
+              )
+             ) 
              '()
              )
- )
+)
 (define IF (lambda (l)
+             (define relexpr (car l))
+             (define target (cadr l))
              (newline)
-             (display "IF")
              (newline)
-             (display l)
+             (display relexpr)
              (newline)
+             (define e (EVAL_EXPR relexpr))
              '()
           )
  )
 (define GOTO (lambda (l)
-             (newline)
-             (display "GOTO")
-             (newline)
-             (display l)
-             (newline)
+             (if (hash-has-key? label_hash (car l))
+                 (interpret-program (hash-ref label_hash (car l)))
+                 (die "Bad Label")
+             )
              '()
           )
  )
@@ -168,7 +223,7 @@
   ;; if the car of the list is of type other, append the cadr
   ;; else, recur
   (cond 
-   [(null? (cdr l) ) (hash-set! label_hash (car l) (car l))]
+   [(null? (cdr l) ) (hash-set! label_hash (car l) '())]
    ;; if the next element is null, append and break
    [(eq? (what-kind (car l)) 'other) (hash-set! label_hash (car l) (cadr l)) (insert_labels (cdr l))]
    [else (insert_labels (cdr l))]
@@ -180,7 +235,10 @@
     ;;If there is a statement, lookup the keyword in the statement hash
     ;; lookup the car of l  to get the keyword
     (define cmd (hash-ref *symbol-table* (caar l)))
-    (if (hash-has-key? func_table cmd) ((hash-ref func_table cmd) (cdar l) ) (display "Error: no key") )
+    (if (hash-has-key? func_table cmd)
+        ((hash-ref func_table cmd) (cdar l))
+        (die "Error: no key")
+    )
   )
 )
 
@@ -232,7 +290,7 @@
       (= , equal?)
       (< , <)
       (> , >)
-      ('!= , (lambda (x y) (not (equal? x y))))
+      (!= , (lambda (x y) (not (equal? x y))))
       (>= , >=)
       (<= , <=)
       ;; math functions 
@@ -252,6 +310,8 @@
       (log , (lambda (x) (log (+ x 0.0))))
       (log10 , (lambda (x) (/ (log (+ x 0.0)) (log 10.0))))
       (log2 , (lambda (x) (/ (log (+ x 0.0)) (log 2.0))))
+      (asub, asub)
+      (eof,  eof)
   )
 )
  
@@ -260,7 +320,7 @@
     `(
       ("lines" , '())
       ("ret-val" 0)
-
+      (eof,      0)
       )
 )
 
