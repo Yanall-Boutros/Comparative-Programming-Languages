@@ -85,18 +85,14 @@
 (define (EVAL_EXPR expr)
 ;; Starter Code taking from mackeys evalexpr.scm
     (newline)
-    (display "HaSh DuMp")
+    (display "in EVAL_EXPR")
     (newline)
-    (display "var_table")
-    (newline)
-    (display var_table)
-    (newline)
-    (display "arrat_table")
-    (newline)
-    (display array_table)
+    (display "Expr = ")
+    (display expr)
     (newline)
     (cond ((number? expr) (+ 0.0 expr))
-          ((symbol? expr) (hash-ref var_table expr))
+          ((vector? expr) (hash-ref array_table expr))
+          ((symbol? expr) (EVAL_EXPR (hash-ref var_table expr)))
           (else (let ((fn (hash-ref func_table (car expr)))
                       (args (map EVAL_EXPR (cdr expr))))
                      (apply fn args))))
@@ -109,13 +105,6 @@
 (define DIM (lambda (l)
              (define var_name (cadar l))
              (define var_size (caddar l))
-             (newline)
-             (display "fFiN")
-             (newline)
-             (display var_name)
-             (newline)
-             (display var_size)
-             (newline)
              (define vec (make-vector (exact-round (EVAL_EXPR var_size))))
              (hash-set! array_table var_name vec)
              '()
@@ -133,6 +122,12 @@
 ;; since I implemented this program in a different order I had to change 
 ;; some of the logic surrouding evaluating expressions
 (define LET (lambda (l)
+             (newline)
+             (display "IN LET")
+             (newline)
+             (display "l = ")
+             (display l)
+             (newline)
              (cond
              ;; Determine if array or variable
              [(symbol? (car l))(hash-set! var_table (car l) (EVAL_EXPR (cadr l)))]
@@ -176,6 +171,12 @@
 ;; Example code taken from mackeys example folder
 (define INPUT(lambda (l)
              (define cur_symbol (car l))
+             (newline)
+             (display "IN INPUT")
+             (newline)
+             (display "l = ")
+             (display l)
+             (newline)
              (let ((object (read)))
              (cond [(eof-object? object) object]
                    [(number? object)
@@ -184,7 +185,8 @@
                    ;; then update set array sub value to object.
                    ;; Take the cdr of input args and repeat
                        (cond 
-                          [(symbol? cur_symbol)(hash-set! var_table cur_symbol object)]
+                          [(symbol? cur_symbol)(newline)(display "cur_symbol = ")(display cur_symbol)(newline)
+                                               (hash-set! var_table cur_symbol object) (newline)(display "var_table = ")(display var_table)(newline)]
                           [else (begin (if
                                          (and (hash-has-key? array_table (car l))
                                               (<= (- (EVAL_EXPR (cadr l)) 1)
@@ -210,12 +212,21 @@
              '()
              )
 )
+;; The two Expressions are compared according to the given Relop, and if
+;; the comparison is true, control transfers to the statement, as for the goto
+;; statement.
+;;
 (define IF (lambda (l)
              (define relexpr (car l))
              (define target (cadr l))
              (newline)
+             (display "IN IF")
              (newline)
+             (display "relexpr = ")
              (display relexpr)
+             (newline)
+             (display "target = ")
+             (display target)
              (newline)
              (define e (EVAL_EXPR relexpr))
              '()
@@ -280,12 +291,6 @@
     ((null? (car lsts)) (apply append (cdr lsts)))
     (else (cons (caar lsts) (apply append (cdar lsts) (cdr lsts))))))
 
-;;(define interpret-program (lambda tllist)
-;;;; If there is no statement, call interpret statement with the cdr
-;;;; of the top level node
-;;                           ()
-;;
-;;)
 
 ;; ====================================================================
 ;; Build the tables
