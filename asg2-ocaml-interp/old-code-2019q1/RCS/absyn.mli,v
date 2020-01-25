@@ -1,0 +1,97 @@
+head	1.3;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.3
+date	2020.01.23.00.07.24;	author -;	state -;
+branches;
+next	1.2;
+
+1.2
+date	2019.01.25.01.42.06;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2019.01.24.23.47.38;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@-
+@
+text
+@(* $Id: absyn.mli,v 1.2 2019-01-24 17:42:06-08 - - $ *)
+
+(*
+* Abstract syntax definitions for SB.
+*)
+
+type linenr    = int
+type ident     = string
+type label     = string
+type number    = float
+type oper      = string
+
+and  memref    = Arrayref of ident * expr
+               | Variable of ident
+
+and  expr      = Number of number
+               | Memref of memref
+               | Unary of oper * expr
+               | Binary of oper * expr * expr
+
+type printable = Printexpr of expr
+               | String of string
+
+type stmt      = Dim of ident * expr
+               | Let of memref * expr
+               | Goto of label
+               | If of expr * label
+               | Print of printable list
+               | Input of memref list
+
+type progline  = linenr * label option * stmt option
+
+type program   = progline list
+
+@
+
+
+1.2
+log
+@-
+@
+text
+@d1 1
+a1 1
+(* $Id: absyn.mli,v 1.1 2019-01-24 15:47:38-08 - - $ *)
+a12 3
+type printable = Printexpr of expr
+               | String of string
+
+d20 3
+@
+
+
+1.1
+log
+@-
+@
+text
+@d1 1
+a1 1
+(* $Id: absyn.mli,v 1.9 2019-01-24 13:15:38-08 - - $ *)
+d13 1
+a13 1
+and  printable = Printexpr of expr
+@

@@ -1,0 +1,101 @@
+head	1.3;
+access;
+symbols;
+locks;
+comment	@; @;
+
+
+1.3
+date	2020.01.23.00.07.24;	author -;	state -;
+branches;
+next	1.2;
+
+1.2
+date	2019.01.25.23.10.01;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2019.01.24.23.47.38;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@-
+@
+text
+@(* $Id: etc.ml,v 1.2 2019-01-25 15:10:01-08 - - $ *)
+
+let execname = Filename.basename Sys.argv.(0)
+
+let exit_status_ref : int ref = ref 0
+
+let quit () =
+    if !Sys.interactive
+    then Printf.printf "quit (): exit %d\n%!" !exit_status_ref
+    else exit !exit_status_ref
+
+let eprint_list message =
+    (exit_status_ref := 1;
+     flush_all ();
+     List.iter prerr_string message;
+     prerr_newline ();
+     flush_all ())
+
+let warn message = eprint_list (execname :: ": " :: message)
+
+let die message = (warn message; quit ())
+
+let syntax_error position message =
+    warn (position.Lexing.pos_fname :: ": "
+            :: string_of_int position.Lexing.pos_lnum :: ": "
+            :: message)
+
+let usage_exit message =
+    (eprint_list ("Usage: " :: execname :: " " :: message); quit ())
+
+let buffer : string list ref = ref []
+
+let rec read_number () = match !buffer with
+    | head::tail -> (buffer := tail;
+                     try float_of_string head
+                     with Failure _ -> nan)
+    | [] -> let line = input_line stdin
+            in (buffer := Str.split (Str.regexp "[ \\t]+") line;
+                read_number ())
+
+@
+
+
+1.2
+log
+@-
+@
+text
+@d1 1
+a1 1
+(* $Id: etc.ml,v 1.1 2019-01-24 15:47:38-08 - - $ *)
+d5 1
+a5 1
+let exit_status_ref = ref 0
+@
+
+
+1.1
+log
+@-
+@
+text
+@d1 1
+a1 1
+(* $Id: etc.ml,v 1.1 2019-01-18 11:49:38-08 - - $ *)
+d9 1
+a9 1
+    then Printf.printf "Quit: exit %d\n%!" !exit_status_ref
+@

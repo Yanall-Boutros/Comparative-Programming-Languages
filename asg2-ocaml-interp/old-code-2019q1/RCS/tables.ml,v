@@ -1,0 +1,184 @@
+head	1.5;
+access;
+symbols;
+locks;
+comment	@; @;
+
+
+1.5
+date	2019.01.30.01.26.15;	author -;	state -;
+branches;
+next	1.4;
+
+1.4
+date	2019.01.25.22.55.20;	author -;	state -;
+branches;
+next	1.3;
+
+1.3
+date	2019.01.25.01.08.37;	author -;	state -;
+branches;
+next	1.2;
+
+1.2
+date	2019.01.25.00.14.37;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2019.01.24.23.47.38;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@-
+@
+text
+@(* $Id: tables.ml,v 1.4 2019-01-25 14:55:20-08 - - $ *)
+
+type variable_table_t = (string, float) Hashtbl.t
+type array_table_t = (string, float array) Hashtbl.t
+type unary_fn_table_t = (string, float -> float) Hashtbl.t
+type binary_fn_table_t = (string, float -> float -> float) Hashtbl.t
+type label_table_t = (string, Absyn.program) Hashtbl.t
+
+let variable_table : variable_table_t = Hashtbl.create 16
+let _ = List.iter (fun (label, value) ->
+                  Hashtbl.add variable_table label value)
+                 ["e"  , exp 1.0;
+                  "eof", 0.0;
+                  "pi" , acos ~-.1.0;
+                  "nan", nan]
+
+let array_table : array_table_t = Hashtbl.create 16
+
+let unary_fn_table : unary_fn_table_t = Hashtbl.create 16
+let _ = List.iter (fun (label, value) ->
+                  Hashtbl.add unary_fn_table label value)
+                 ["+"    , (~+.);
+                  "-"    , (~-.);
+                  "abs"  , abs_float;
+                  "acos" , acos;
+                  "asin" , asin;
+                  "atan" , atan;
+                  "ceil" , ceil;
+                  "cos"  , cos;
+                  "exp"  , exp;
+                  "floor", floor;
+                  "log"  , log;
+                  "log10", log10;
+                  "log2" , (fun x -> log x /. log 2.0);
+                  "round", (fun x -> floor (x +. 0.5));
+                  "sin"  , sin;
+                  "sqrt" , sqrt;
+                  "tan"  , tan]
+
+let binary_fn_table : binary_fn_table_t = Hashtbl.create 16
+let _ = List.iter (fun (label, value) ->
+                  Hashtbl.add binary_fn_table label value)
+                 ["+", (+.);
+                  "-", (-.);
+                  "*", ( *.);
+                  "/", (/.);
+                  "%", mod_float;
+                  "^", ( ** )]
+
+
+let label_table : label_table_t = Hashtbl.create 16
+
+let rec init_label_table program =
+    let rec init program =  match program with
+        | [] -> ()
+        | (_, Some label, _)::rest ->
+              (Hashtbl.add label_table label program; init rest)
+        | _::rest -> init rest
+    in (Hashtbl.reset label_table; init program)
+
+let dump_label_table () =
+    let dump key value = match value with
+        | [] -> ()
+        | (line, _, _)::_ ->
+          Printf.fprintf stderr
+              "label_table: \"%s\" -> line %d\n%!" key line
+    in Hashtbl.iter dump label_table
+
+@
+
+
+1.4
+log
+@-
+@
+text
+@d1 1
+a1 1
+(* $Id: tables.ml,v 1.3 2019-01-24 17:08:37-08 - - $ *)
+d10 1
+a10 1
+let _ = List.map (fun (label, value) ->
+d20 1
+a20 1
+let _ = List.map (fun (label, value) ->
+d41 1
+a41 1
+let _ = List.map (fun (label, value) ->
+@
+
+
+1.3
+log
+@-
+@
+text
+@d1 1
+a1 1
+(* $Id: tables.ml,v 1.2 2019-01-24 16:14:37-08 - - $ *)
+d4 5
+a16 1
+type array_table_t = (string, float array) Hashtbl.t
+a18 1
+type unary_fn_table_t = (string, float -> float) Hashtbl.t
+a39 1
+type binary_fn_table_t = (string, float -> float -> float) Hashtbl.t
+a50 1
+type label_table_t = (string, Absyn.program) Hashtbl.t
+@
+
+
+1.2
+log
+@-
+@
+text
+@d1 1
+a1 1
+(* $Id: tables.ml,v 1.1 2019-01-18 11:49:38-08 - - $ *)
+d52 7
+a58 6
+let rec init_label_table program = match program with
+    | [] -> ()
+    | (_, Some label, _)::rest ->
+                (Hashtbl.add label_table label program;
+                 init_label_table rest)
+    | _::rest -> init_label_table rest
+d64 2
+a65 1
+          Printf.printf "label %s: line %d\n%!" key line
+@
+
+
+1.1
+log
+@-
+@
+text
+@d63 1
+a63 1
+          Printf.fprintf stderr "label %s: line %d\n%!" key line
+@

@@ -1,0 +1,264 @@
+head	1.8;
+access;
+symbols;
+locks;
+comment	@; @;
+
+
+1.8
+date	2020.01.24.19.42.24;	author -;	state -;
+branches;
+next	1.7;
+
+1.7
+date	2019.01.30.01.26.15;	author -;	state -;
+branches;
+next	1.6;
+
+1.6
+date	2019.01.25.03.14.14;	author -;	state -;
+branches;
+next	1.5;
+
+1.5
+date	2019.01.25.01.51.18;	author -;	state -;
+branches;
+next	1.4;
+
+1.4
+date	2019.01.25.01.08.37;	author -;	state -;
+branches;
+next	1.3;
+
+1.3
+date	2019.01.25.00.25.00;	author -;	state -;
+branches;
+next	1.2;
+
+1.2
+date	2019.01.25.00.14.37;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2019.01.24.23.47.38;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.8
+log
+@-
+@
+text
+@(* $Id: interp.ml,v 1.7 2019-01-29 17:26:15-08 - - $ *)
+
+open Absyn
+
+exception Unimplemented of string
+let no_expr reason = raise (Unimplemented reason)
+let no_stmt reason continuation = raise (Unimplemented reason)
+
+let want_dump = ref false
+
+let rec eval_expr (expr : Absyn.expr) : float = match expr with
+    | Number number -> number
+    | Memref memref -> no_expr "eval_expr Memref"
+    | Unary (oper, expr) -> no_expr "eval_expr Unary"
+    | Binary (oper, expr1, expr2) -> no_expr "eval_expr Binary"
+
+let rec interpret (program : Absyn.program) = match program with
+    | [] -> ()
+    | firstline::continuation -> match firstline with
+      | _, _, None -> interpret continuation
+      | _, _, Some stmt -> (interp_stmt stmt continuation)
+
+and interp_stmt (stmt : Absyn.stmt) (continuation : Absyn.program) =
+    match stmt with
+    | Dim (ident, expr) -> no_stmt "Dim (ident, expr)" continuation
+    | Let (memref, expr) -> no_stmt "Let (memref, expr)" continuation
+    | Goto label -> no_stmt "Goto label" continuation
+    | If (expr, label) -> no_stmt "If (expr, label)" continuation
+    | Print print_list -> interp_print print_list continuation
+    | Input memref_list -> interp_input memref_list continuation
+
+and interp_print (print_list : Absyn.printable list)
+                 (continuation : Absyn.program) =
+    let print_item item =
+        (print_string " ";
+         match item with
+         | String string ->
+           let regex = Str.regexp "\"\\(.*\\)\""
+           in print_string (Str.replace_first regex "\\1" string)
+         | Printexpr expr ->
+           print_float (eval_expr expr))
+    in (List.iter print_item print_list; print_newline ());
+    interpret continuation
+
+and interp_input (memref_list : Absyn.memref list)
+                 (continuation : Absyn.program)  =
+    let input_number memref =
+        try  let number = Etc.read_number ()
+             in (print_float number; print_newline ())
+        with End_of_file -> 
+             (print_string "End_of_file"; print_newline ())
+    in List.iter input_number memref_list;
+    interpret continuation
+
+let interpret_program program =
+    (Tables.init_label_table program; 
+     if !want_dump then Tables.dump_label_table ();
+     if !want_dump then Dumper.dump_program program;
+     interpret program)
+
+@
+
+
+1.7
+log
+@-
+@
+text
+@d1 1
+a1 1
+(* $Id: interp.ml,v 1.6 2019-01-24 19:14:14-08 - - $ *)
+d6 2
+a7 1
+let unimpl reason = raise (Unimplemented reason)
+d13 3
+a15 3
+    | Memref memref -> unimpl "eval_expr Memref"
+    | Unary (oper, expr) -> unimpl "eval_expr Unary"
+    | Binary (oper, expr1, expr2) -> unimpl "eval_expr Binary"
+d17 17
+a33 1
+let interp_print (print_list : Absyn.printable list) =
+d42 2
+a43 1
+    in (List.iter print_item print_list; print_newline ())
+d45 2
+a46 1
+let interp_input (memref_list : Absyn.memref list) =
+d52 2
+a53 15
+    in List.iter input_number memref_list
+
+let interp_stmt (stmt : Absyn.stmt) = match stmt with
+    | Dim (ident, expr) -> unimpl "Dim (ident, expr)"
+    | Let (memref, expr) -> unimpl "Let (memref, expr)"
+    | Goto label -> unimpl "Goto label"
+    | If (expr, label) -> unimpl "If (expr, label)"
+    | Print print_list -> interp_print print_list
+    | Input memref_list -> interp_input memref_list
+
+let rec interpret (program : Absyn.program) = match program with
+    | [] -> ()
+    | firstline::otherlines -> match firstline with
+      | _, _, None -> interpret otherlines
+      | _, _, Some stmt -> (interp_stmt stmt; interpret otherlines)
+@
+
+
+1.6
+log
+@-
+@
+text
+@d1 1
+a1 1
+(* $Id: interp.ml,v 1.5 2019-01-24 17:51:18-08 - - $ *)
+d38 1
+a38 1
+    | Goto labsl -> unimpl "Goto labsl"
+@
+
+
+1.5
+log
+@-
+@
+text
+@d1 1
+a1 1
+(* $Id: interp.ml,v 1.4 2019-01-24 17:08:37-08 - - $ *)
+d18 1
+a18 1
+        (print_char ' ';
+@
+
+
+1.4
+log
+@-
+@
+text
+@d1 3
+a3 1
+(* $Id: interp.ml,v 1.3 2019-01-24 16:25:00-08 - - $ *)
+d11 4
+a14 4
+    | Absyn.Number number -> number
+    | Absyn.Memref memref -> unimpl "eval_expr Memref"
+    | Absyn.Unary (oper, expr) -> unimpl "eval_expr Unary"
+    | Absyn.Binary (oper, expr1, expr2) -> unimpl "eval_expr Binary"
+d20 1
+a20 1
+         | Absyn.String string ->
+d23 1
+a23 1
+         | Absyn.Printexpr expr ->
+d28 1
+a28 1
+    let input_number (memref : Absyn.memref) =
+d36 6
+a41 6
+    | Absyn.Dim (ident, expr) -> unimpl "Dim (ident, expr)"
+    | Absyn.Let (memref, expr) -> unimpl "Let (memref, expr)"
+    | Absyn.Goto labsl -> unimpl "Goto labsl"
+    | Absyn.If (expr, label) -> unimpl "If (expr, label)"
+    | Absyn.Print print_list -> interp_print print_list
+    | Absyn.Input memref_list -> interp_input memref_list
+@
+
+
+1.3
+log
+@-
+@
+text
+@d1 1
+a1 1
+(* $Id: interp.ml,v 1.6 2019-01-24 13:15:38-08 - - $ *)
+d6 2
+d49 2
+@
+
+
+1.2
+log
+@-
+@
+text
+@a5 2
+let want_dump = ref false
+
+a46 2
+     if !want_dump then Tables.dump_label_table ();
+     if !want_dump then Dumper.dump_program program;
+@
+
+
+1.1
+log
+@-
+@
+text
+@d49 2
+a50 2
+     if !want_dump then (Tables.dump_label_table ();
+                         Dumper.dump_program program);
+@

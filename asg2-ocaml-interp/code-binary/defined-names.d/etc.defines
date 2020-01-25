@@ -1,0 +1,21 @@
+::::::::::::::
+etc.mli.defs
+::::::::::::::
+val warn : string list -> unit
+val die : string list -> unit
+val syntax_error : Lexing.position -> string list -> unit
+val usage_exit : string list -> unit
+val read_number : unit -> float
+::::::::::::::
+etc.ml.defs
+::::::::::::::
+val execname : string
+val exit_status_ref : int ref
+val quit : unit -> unit
+val eprint_list : string list -> unit
+val warn : string list -> unit
+val die : string list -> unit
+val syntax_error : Lexing.position -> string list -> unit
+val usage_exit : string list -> unit
+val buffer : string list ref
+val read_number : unit -> float

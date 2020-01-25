@@ -1,0 +1,734 @@
+head	1.16;
+access;
+symbols;
+locks;
+comment	@; @;
+
+
+1.16
+date	2020.01.24.22.55.58;	author -;	state -;
+branches;
+next	1.15;
+
+1.15
+date	2019.01.26.01.43.51;	author -;	state -;
+branches;
+next	1.14;
+
+1.14
+date	2019.01.26.00.58.01;	author -;	state -;
+branches;
+next	1.13;
+
+1.13
+date	2019.01.26.00.55.32;	author -;	state -;
+branches;
+next	1.12;
+
+1.12
+date	2019.01.26.00.48.22;	author -;	state -;
+branches;
+next	1.11;
+
+1.11
+date	2019.01.26.00.42.31;	author -;	state -;
+branches;
+next	1.10;
+
+1.10
+date	2019.01.25.03.14.14;	author -;	state -;
+branches;
+next	1.9;
+
+1.9
+date	2019.01.25.02.39.05;	author -;	state -;
+branches;
+next	1.8;
+
+1.8
+date	2019.01.25.02.36.49;	author -;	state -;
+branches;
+next	1.7;
+
+1.7
+date	2019.01.25.02.35.15;	author -;	state -;
+branches;
+next	1.6;
+
+1.6
+date	2019.01.25.02.32.00;	author -;	state -;
+branches;
+next	1.5;
+
+1.5
+date	2019.01.25.01.51.18;	author -;	state -;
+branches;
+next	1.4;
+
+1.4
+date	2019.01.25.01.42.06;	author -;	state -;
+branches;
+next	1.3;
+
+1.3
+date	2019.01.25.01.08.37;	author -;	state -;
+branches;
+next	1.2;
+
+1.2
+date	2019.01.24.23.47.38;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2019.01.24.23.16.22;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.16
+log
+@-
+@
+text
+@(* $Id: dumper.ml,v 1.15 2019-01-25 17:43:51-08 - - $ *)
+
+let quote string =
+    let regex = Str.regexp "\""
+    and subst _ = "\\\""
+    in  "\"" ^ Str.global_substitute regex subst string ^ "\""
+
+let join start sep stop list =
+    let rec join' list' = match list' with
+        | [] -> stop
+        | [unit] -> unit ^ stop
+        | head::tail -> head ^ sep ^ " " ^ join' tail
+    in match list with
+        | [] -> start ^ stop
+        | _::_ -> start ^ join' list
+
+let string_of_option str_fn item = match item with
+    | None -> "None"
+    | Some thing -> "Some (" ^ str_fn thing ^ ")"
+
+let string_of_ctor ctor args =
+    join (ctor ^ " (") "," ")" args
+
+let string_of_list str_fn list =
+    join "[" ";" "]" (List.map str_fn list)
+
+let rec string_of_printable printable = match printable with
+    | Absyn.Printexpr expr ->
+          string_of_ctor "Printexpr" [string_of_expr expr]
+    | Absyn.String string ->
+          string_of_ctor "String" [quote string]
+
+and string_of_memref memref = match memref with
+    | Absyn.Arrayref (ident, expr) ->
+          string_of_ctor "Arrayref" [quote ident; string_of_expr expr]
+    | Absyn.Variable ident -> string_of_ctor "Variable" [quote ident]
+
+and string_of_expr expr = match expr with
+    | Absyn.Number number ->
+          string_of_ctor "Number" [string_of_float number]
+    | Absyn.Memref memref ->
+          string_of_ctor "Memref" [string_of_memref memref]
+    | Absyn.Unary (oper, expr) ->
+          string_of_ctor "Unary" [quote oper; string_of_expr expr]
+    | Absyn.Binary (oper, expr1, expr2) ->
+          string_of_ctor "Binary"
+              [quote oper; string_of_expr expr1; string_of_expr expr2]
+
+
+let string_of_stmt (stmt: Absyn.stmt) = match stmt with
+    | Absyn.Dim (ident, expr) ->
+          string_of_ctor "Dim"
+              [quote ident ^ ", " ^ string_of_expr expr]
+    | Absyn.Let (memref, expr) ->
+          string_of_ctor "Let"
+              [string_of_memref memref; string_of_expr expr]
+    | Absyn.Goto label ->
+          string_of_ctor "Goto" [quote label]
+    | Absyn.If (expr, label) ->
+          string_of_ctor "If" [string_of_expr expr; quote label]
+    | Absyn.Print printable'list ->
+          string_of_ctor "Print"
+              [string_of_list string_of_printable printable'list]
+    | Absyn.Input memref'list ->
+          string_of_ctor "Input"
+              [string_of_list string_of_memref memref'list]
+
+let dump_progline (linenr, label'option, stmt'option) =
+    Printf.fprintf stderr "program: %d %s: %s\n%!" linenr
+        (string_of_option quote label'option)
+        (string_of_option string_of_stmt stmt'option)
+
+let dump_program (program : Absyn.program) =
+    List.iter dump_progline program
+
+@
+
+
+1.15
+log
+@-
+@
+text
+@d1 1
+a1 1
+(* $Id: dumper.ml,v 1.14 2019-01-25 16:58:01-08 - - $ *)
+d69 1
+a69 1
+    Printf.fprintf stderr "%d %s: %s\n%!" linenr
+@
+
+
+1.14
+log
+@-
+@
+text
+@d1 1
+a1 1
+(* $Id: dumper.ml,v 1.13 2019-01-25 16:55:32-08 - - $ *)
+d69 2
+a70 2
+    Printf.fprintf stderr "%3d %s: %s\n%!" linenr
+        (string_of_option (fun x -> x) label'option)
+@
+
+
+1.13
+log
+@-
+@
+text
+@d1 1
+a1 1
+(* $Id: dumper.ml,v 1.12 2019-01-25 16:48:22-08 - - $ *)
+d13 1
+a13 1
+     in match list with
+d21 2
+a22 1
+let string_of_ctor ctor args = join (ctor ^ " (") "," ")" args
+d24 2
+a25 1
+let string_of_list str_fn list = join "[" ";" "]" (List.map str_fn list)
+@
+
+
+1.12
+log
+@-
+@
+text
+@d1 1
+a1 1
+(* $Id: dumper.ml,v 1.11 2019-01-25 16:42:31-08 - - $ *)
+d21 1
+a21 1
+let str_ctor ctor args = join (ctor ^ " (") "," ")" args
+d26 4
+a29 2
+    | Absyn.Printexpr expr -> str_ctor "Printexpr" [string_of_expr expr]
+    | Absyn.String string -> str_ctor "String" [quote string]
+d33 2
+a34 2
+          str_ctor "Arrayref" [quote ident; string_of_expr expr]
+    | Absyn.Variable ident -> str_ctor "Variable" [quote ident]
+d37 4
+a40 2
+    | Absyn.Number number -> str_ctor "Number" [string_of_float number]
+    | Absyn.Memref memref -> str_ctor "Memref" [string_of_memref memref]
+d42 1
+a42 1
+          str_ctor "Unary" [quote oper; string_of_expr expr]
+d44 1
+a44 1
+          str_ctor "Binary" 
+d47 1
+d50 2
+a51 1
+          str_ctor "Dim" [quote ident ^ ", " ^ string_of_expr expr]
+d53 4
+a56 2
+          str_ctor "Let" [string_of_memref memref; string_of_expr expr]
+    | Absyn.Goto label -> str_ctor "Goto" [quote label]
+d58 1
+a58 1
+          str_ctor "If" [string_of_expr expr; quote label]
+d60 1
+a60 1
+          str_ctor "Print"
+d63 2
+a64 1
+          str_ctor "Input" [string_of_list string_of_memref memref'list]
+@
+
+
+1.11
+log
+@-
+@
+text
+@d1 1
+a1 1
+(* $Id: dumper.ml,v 1.10 2019-01-24 19:14:14-08 - - $ *)
+d25 2
+a26 2
+let rec str_printable printable = match printable with
+    | Absyn.Printexpr expr -> str_ctor "Printexpr" [str_expr expr]
+d29 1
+a29 1
+and str_memref memref = match memref with
+d31 1
+a31 1
+          str_ctor "Arrayref" [quote ident; str_expr expr]
+d34 1
+a34 1
+and str_expr expr = match expr with
+d36 1
+a36 1
+    | Absyn.Memref memref -> str_ctor "Memref" [str_memref memref]
+d38 1
+a38 1
+          str_ctor "Unary" [quote oper; str_expr expr]
+d40 2
+a41 1
+          str_ctor "Binary" [quote oper; str_expr expr1; str_expr expr2]
+d43 1
+a43 1
+let str_stmt (stmt: Absyn.stmt) = match stmt with
+d45 1
+a45 1
+          str_ctor "Dim" [quote ident ^ ", " ^ str_expr expr]
+d47 1
+a47 1
+          str_ctor "Let" [str_memref memref; str_expr expr]
+d50 1
+a50 1
+          str_ctor "If" [str_expr expr; quote label]
+d52 2
+a53 1
+          str_ctor "Print" [string_of_list str_printable printable'list]
+d55 1
+a55 1
+          str_ctor "Input" [string_of_list str_memref memref'list]
+d57 1
+a57 1
+let dump_progline (linenr, label'opt, stmt'opt) =
+d59 2
+a60 2
+        (string_of_option (fun x -> x) label'opt)
+        (string_of_option str_stmt stmt'opt)
+@
+
+
+1.10
+log
+@-
+@
+text
+@d1 1
+a1 3
+(* $Id: dumper.ml,v 1.9 2019-01-24 18:39:05-08 - - $ *)
+
+open Absyn
+d17 1
+a17 1
+let str_opt str_fn item = match item with
+d23 1
+a23 1
+let str_list str_fn list = join "[" ";" "]" (List.map str_fn list)
+a24 1
+
+d26 2
+a27 2
+    | Printexpr expr -> str_ctor "Printexpr" [str_expr expr]
+    | String string -> str_ctor "String" [quote string]
+d30 1
+a30 1
+    | Arrayref (ident, expr) ->
+d32 1
+a32 1
+    | Variable ident -> str_ctor "Variable" [quote ident]
+d35 5
+a39 4
+    | Number number -> str_ctor "Number" [string_of_float number]
+    | Memref memref -> str_ctor "Memref" [str_memref memref]
+    | Unary (oper, expr) -> str_ctor "Unary" [quote oper; str_expr expr]
+    | Binary (oper, expr1, expr2) ->
+d42 2
+a43 2
+let str_stmt (stmt: stmt) = match stmt with
+    | Dim (ident, expr) ->
+d45 1
+a45 1
+    | Let (memref, expr) ->
+d47 7
+a53 6
+    | Goto label -> str_ctor "Goto" [quote label]
+    | If (expr, label) -> str_ctor "If" [str_expr expr; quote label]
+    | Print printable'list ->
+          str_ctor "Print" [str_list str_printable printable'list]
+    | Input memref'list ->
+          str_ctor "Input" [str_list str_memref memref'list]
+d57 2
+a58 2
+        (str_opt (fun x -> x) label'opt)
+        (str_opt str_stmt stmt'opt)
+d60 1
+a60 1
+let dump_program (program : program) =
+@
+
+
+1.9
+log
+@-
+@
+text
+@d1 1
+a1 1
+(* $Id: dumper.ml,v 1.8 2019-01-24 18:36:49-08 - - $ *)
+d19 1
+a19 1
+let str'opt str'fn item = match item with
+d21 1
+a21 1
+    | Some thing -> "Some (" ^ str'fn thing ^ ")"
+d23 1
+a23 1
+let str'ctor ctor args = join (ctor ^ " (") "," ")" args
+d25 1
+a25 1
+let str'list str'fn list = join "[" ";" "]" (List.map str'fn list)
+d28 3
+a30 3
+let rec str'printable printable = match printable with
+    | Printexpr expr -> str'ctor "Printexpr" [str'expr expr]
+    | String string -> str'ctor "String" [quote string]
+d32 1
+a32 1
+and str'memref memref = match memref with
+d34 2
+a35 2
+          str'ctor "Arrayref" [quote ident; str'expr expr]
+    | Variable ident -> str'ctor "Variable" [quote ident]
+d37 4
+a40 4
+and str'expr expr = match expr with
+    | Number number -> str'ctor "Number" [string_of_float number]
+    | Memref memref -> str'ctor "Memref" [str'memref memref]
+    | Unary (oper, expr) -> str'ctor "Unary" [quote oper; str'expr expr]
+d42 1
+a42 1
+          str'ctor "Binary" [quote oper; str'expr expr1; str'expr expr2]
+d44 1
+a44 1
+let str'stmt (stmt: stmt) = match stmt with
+d46 1
+a46 1
+          str'ctor "Dim" [quote ident ^ ", " ^ str'expr expr]
+d48 3
+a50 3
+          str'ctor "Let" [str'memref memref; str'expr expr]
+    | Goto label -> str'ctor "Goto" [quote label]
+    | If (expr, label) -> str'ctor "If" [str'expr expr; quote label]
+d52 1
+a52 1
+          str'ctor "Print" [str'list str'printable printable'list]
+d54 1
+a54 1
+          str'ctor "Input" [str'list str'memref memref'list]
+d58 2
+a59 2
+        (str'opt (fun x -> x) label'opt)
+        (str'opt str'stmt stmt'opt)
+@
+
+
+1.8
+log
+@-
+@
+text
+@d1 1
+a1 1
+(* $Id: dumper.ml,v 1.7 2019-01-24 18:35:15-08 - - $ *)
+a18 2
+let ctor ctor args = join (ctor ^ " (") "," ")" args
+
+d23 2
+d27 1
+d29 2
+a30 2
+    | Printexpr expr -> ctor "Printexpr" [str'expr expr]
+    | String string -> ctor "String" [quote string]
+d34 2
+a35 2
+          ctor "Arrayref" [quote ident; str'expr expr]
+    | Variable ident -> ctor "Variable" [quote ident]
+d38 3
+a40 3
+    | Number number -> ctor "Number" [string_of_float number]
+    | Memref memref -> ctor "Memref" [str'memref memref]
+    | Unary (oper, expr) -> ctor "Unary" [quote oper; str'expr expr]
+d42 1
+a42 2
+          ctor "Binary" [quote oper; str'expr expr1; str'expr expr2]
+
+d46 1
+a46 1
+          ctor "Dim" [quote ident ^ ", " ^ str'expr expr]
+d48 3
+a50 3
+          ctor "Let" [str'memref memref; str'expr expr]
+    | Goto label -> ctor "Goto" [quote label]
+    | If (expr, label) -> ctor "If" [str'expr expr; quote label]
+d52 1
+a52 1
+          ctor "Print" [str'list str'printable printable'list]
+d54 1
+a54 1
+          ctor "Input" [str'list str'memref memref'list]
+@
+
+
+1.7
+log
+@-
+@
+text
+@d1 1
+a1 1
+(* $Id: dumper.ml,v 1.6 2019-01-24 18:32:00-08 - - $ *)
+d32 2
+a33 1
+    | Arrayref (ident, expr) -> ctor "Arrayref" [quote ident; str'expr expr]
+d40 2
+a41 1
+    | Binary (oper, expr1, expr2) -> ctor "Binary" [quote oper; str'expr expr1; str'expr expr2]
+d45 4
+a48 2
+    | Dim (ident, expr) -> ctor "Dim" [quote ident ^ ", " ^ str'expr expr]
+    | Let (memref, expr) -> ctor "Let" [str'memref memref; str'expr expr]
+d51 4
+a54 2
+    | Print printable'list -> ctor "Print" [str'list str'printable printable'list]
+    | Input memref'list -> ctor "Input" [str'list str'memref memref'list]
+a59 1
+
+@
+
+
+1.6
+log
+@-
+@
+text
+@d1 1
+a1 1
+(* $Id: dumper.ml,v 1.5 2019-01-24 17:51:18-08 - - $ *)
+a4 2
+let str'float = string_of_float
+
+d36 1
+a36 1
+    | Number number -> ctor "Number" [str'float number]
+@
+
+
+1.5
+log
+@-
+@
+text
+@d1 3
+a3 1
+(* $Id: dumper.ml,v 1.4 2019-01-24 17:42:06-08 - - $ *)
+d7 15
+a21 1
+open Absyn
+d23 1
+a23 1
+let str'opt stringify item = match item with
+d25 1
+a25 1
+    | Some thing -> "Some (" ^ stringify thing ^ ")"
+d27 1
+a27 8
+let str'list stringify list =
+    let rec stringify' list = match list with
+        | [] -> "]"
+        | [unit] -> stringify unit ^ "]"
+        | head::tail -> stringify head ^ "; " ^ stringify' tail
+    in match list with
+        | [] -> "[]"
+        | _::_ as list -> "[" ^ stringify' list
+d30 2
+a31 2
+    | Printexpr expr -> "Printexpr (" ^ str'expr expr ^ ")"
+    | String string -> "String (" ^ string ^ ")"
+d34 2
+a35 2
+    | Arrayref (ident, expr) -> "Arrayref (" ^ ident ^ ", " ^ str'expr expr
+    | Variable ident -> "Variable (" ^ ident ^ ")"
+d38 4
+a41 4
+    | Number number -> "Number (" ^ str'float number ^ ")"
+    | Memref memref -> "Memref (" ^ str'memref memref ^ ")"
+    | Unary (oper, expr) -> "Unary (" ^ oper ^ ", " ^ str'expr expr ^ ")"
+    | Binary (oper, expr1, expr2) -> "Binary (" ^ oper ^ ", " ^ str'expr expr1 ^ ", " ^ str'expr expr2 ^ ")"
+d45 6
+a50 6
+    | Dim (ident, expr) -> "Dim (" ^ ident ^ ", " ^ str'expr expr ^ ")"
+    | Let (memref, expr) -> "Let (" ^ str'memref memref ^ ", " ^ str'expr expr ^ ")"
+    | Goto label -> "Goto (" ^ label ^ ")"
+    | If (expr, label) -> "If (" ^ str'expr expr ^ ", " ^ label ^ ")"
+    | Print printable'list -> str'list str'printable printable'list
+    | Input memref'list -> str'list str'memref memref'list
+@
+
+
+1.4
+log
+@-
+@
+text
+@d1 3
+a3 1
+(* $Id: dumper.ml,v 1.3 2019-01-24 17:08:37-08 - - $ *)
+d7 1
+a7 3
+let ident x = x
+
+let string_of_opt stringify item = match item with
+d11 1
+a11 1
+let string_of_list stringify list =
+d20 2
+a21 2
+let rec string_of_printable printable = match printable with
+    | Printexpr expr -> "Printexpr (" ^ string_of_expr expr ^ ")"
+d24 2
+a25 2
+and string_of_memref memref = match memref with
+    | Arrayref (ident, expr) -> "Arrayref (" ^ ident ^ ", " ^ string_of_expr expr
+d28 5
+a32 5
+and string_of_expr expr = match expr with
+    | Number number -> "Number (" ^ string_of_float number ^ ")"
+    | Memref memref -> "Memref (" ^ string_of_memref memref ^ ")"
+    | Unary (oper, expr) -> "Unary (" ^ oper ^ ", " ^ string_of_expr expr ^ ")"
+    | Binary (oper, expr1, expr2) -> "Binary (" ^ oper ^ ", " ^ string_of_expr expr1 ^ ", " ^ string_of_expr expr2 ^ ")"
+d35 3
+a37 3
+let string_of_stmt (stmt: stmt) = match stmt with
+    | Dim (ident, expr) -> "Dim (" ^ ident ^ ", " ^ string_of_expr expr ^ ")"
+    | Let (memref, expr) -> "Let (" ^ string_of_memref memref ^ ", " ^ string_of_expr expr ^ ")"
+d39 3
+a41 3
+    | If (expr, label) -> "If (" ^ string_of_expr expr ^ ", " ^ label ^ ")"
+    | Print printable'list -> string_of_list string_of_printable printable'list
+    | Input memref'list -> string_of_list string_of_memref memref'list
+d45 2
+a46 2
+        (string_of_opt ident label'opt)
+        (string_of_opt string_of_stmt stmt'opt)
+@
+
+
+1.3
+log
+@-
+@
+text
+@d1 1
+a1 1
+(* $Id: dumper.ml,v 1.2 2019-01-24 15:47:38-08 - - $ *)
+d3 1
+a3 1
+(*
+d9 1
+a9 1
+    | Some thing -> "Some (" ^ (stringify thing) ^ ")"
+d14 2
+a15 1
+        | head::tail -> (stringify head) ^ "; " ^ (stringify' tail)
+d18 1
+a18 1
+        | (_::_) as list -> "[" ^ stringify' list
+d20 13
+a32 1
+let string_of_printable printable = "printable"
+a33 3
+let string_of_memref memref = "memref"
+
+let string_of_expr expr = "expr"
+d36 2
+a37 2
+    | Dim (ident, expr) -> "Dim (" ^ ident ^ ", " ^ (string_of_expr expr) ^ ")"
+    | Let (memref, expr) -> "Let (" ^ (string_of_memref memref) ^ ", " ^ (string_of_expr expr) ^ ")"
+d39 1
+a39 1
+    | If (expr, label) -> "If (" ^ (string_of_expr expr) ^ ", " ^ label ^ ")"
+d44 1
+a44 1
+    Printf.fprintf stderr "%3d %-12s: %s\n%!" linenr
+a47 1
+*)
+d49 2
+a50 2
+let dump_program (program : Absyn.program) =
+    List.iter (fun x -> ()) program
+@
+
+
+1.2
+log
+@-
+@
+text
+@d1 1
+a1 1
+(* $Id: dumper.ml,v 1.1 2019-01-24 15:16:22-08 - - $ *)
+d3 1
+a3 1
+open Absyn
+d38 4
+a41 2
+let dump_program program =
+    List.iter dump_progline program
+@
+
+
+1.1
+log
+@-
+@
+text
+@d1 1
+a1 1
+(* $Id$ *)
+a4 1
+let dumpf = Printf.fprintf stderr
+a6 2
+let string_of_stmt (stmt: stmt) = ""
+
+d11 26
+a36 4
+let dump'progline (linenr, label'opt, stmt'opt) =
+    dumpf "%3d %-12s: %s\n%!" linenr
+          (string_of_opt ident label'opt)
+          (string_of_opt string_of_stmt stmt'opt)
+d38 2
+a39 2
+let dump'program channel program =
+    List.iter dump'progline program
+@

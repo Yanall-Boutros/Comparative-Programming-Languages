@@ -1,0 +1,18 @@
+::::::::::::::
+interp.mli.defs
+::::::::::::::
+val want_dump : bool ref
+val interpret_program : Absyn.program -> unit
+::::::::::::::
+interp.ml.defs
+::::::::::::::
+exception Unimplemented of string
+val no_expr : string -> 'a
+val no_stmt : string -> 'a -> 'b
+val want_dump : bool ref
+val eval_expr : Absyn.expr -> float
+val interpret : Absyn.program -> unit
+val interp_stmt : Absyn.stmt -> Absyn.program -> unit
+val interp_print : Absyn.printable list -> Absyn.program -> unit
+val interp_input : Absyn.memref list -> Absyn.program -> unit
+val interpret_program : Absyn.program -> unit

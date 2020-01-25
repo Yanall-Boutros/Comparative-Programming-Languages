@@ -1,0 +1,501 @@
+head	1.15;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.15
+date	2020.01.24.20.54.40;	author -;	state -;
+branches;
+next	1.14;
+
+1.14
+date	2020.01.24.20.43.15;	author -;	state -;
+branches;
+next	1.13;
+
+1.13
+date	2020.01.24.19.50.00;	author -;	state -;
+branches;
+next	1.12;
+
+1.12
+date	2020.01.17.22.21.56;	author -;	state -;
+branches;
+next	1.11;
+
+1.11
+date	2019.02.15.00.13.28;	author -;	state -;
+branches;
+next	1.10;
+
+1.10
+date	2019.02.15.00.13.05;	author -;	state -;
+branches;
+next	1.9;
+
+1.9
+date	2019.02.15.00.10.09;	author -;	state -;
+branches;
+next	1.8;
+
+1.8
+date	2019.01.26.00.48.22;	author -;	state -;
+branches;
+next	1.7;
+
+1.7
+date	2019.01.26.00.42.31;	author -;	state -;
+branches;
+next	1.6;
+
+1.6
+date	2019.01.25.22.50.51;	author -;	state -;
+branches;
+next	1.5;
+
+1.5
+date	2019.01.25.01.51.18;	author -;	state -;
+branches;
+next	1.4;
+
+1.4
+date	2019.01.25.01.08.37;	author -;	state -;
+branches;
+next	1.3;
+
+1.3
+date	2019.01.25.00.25.00;	author -;	state -;
+branches;
+next	1.2;
+
+1.2
+date	2019.01.25.00.14.37;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2019.01.24.23.47.38;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.15
+log
+@-
+@
+text
+@# $Id: Makefile,v 1.14 2020-01-24 12:43:15-08 - - $
+
+#
+# General useful macros
+#
+
+MKFILE     = Makefile
+MAKEFLAGS += --no-builtin-rules
+DEPSFILE   = ${MKFILE}.deps
+NOINCLUDE  = ci clean spotless
+NEEDINCL   = ${filter ${NOINCLUDE}, ${MAKECMDGOALS}}
+GMAKE      = ${MAKE} --no-print-directory
+OCAMLOPT   = ocamlopt -g
+
+#
+# File macros
+#
+
+EXECBIN    = sbinterp
+OBJCMX     = etc.cmx parser.cmx scanner.cmx tables.cmx \
+             dumper.cmx interp.cmx main.cmx
+OBJCMI     = ${OBJCMX:.cmx=.cmi} absyn.cmi
+OBJBIN     = ${OBJCMX:.cmx=.o}
+MLSOURCE   = absyn.mli etc.mli etc.ml tables.mli tables.ml \
+             dumper.mli dumper.ml interp.mli interp.ml main.ml
+GENLEXYACC = parser.mli parser.ml scanner.ml
+GENSOURCE  = dumper.mli tables.mli ${GENLEXYACC}
+GENFILES   = ${GENSOURCE} parser.output ${DEPSFILE}
+OTHERFILES = ${MKFILE} ${DEPSFILE} using .ocamlinit
+ALLSOURCES = ${MLSOURCE} parser.mly scanner.mll ${OTHERFILES}
+LISTING    = Listing.ps
+
+#
+# General targets
+#
+
+all : ${EXECBIN}
+
+${EXECBIN} : ${OBJCMX}
+	${OCAMLOPT} str.cmxa ${OBJCMX} -o ${EXECBIN}
+
+%.cmi : %.mli
+	${OCAMLOPT} -c $<
+
+%.cmx : %.ml
+	${OCAMLOPT} -c $<
+
+%.ml : %.mll
+	ocamllex $<
+
+%.mli %.ml : %.mly
+	ocamlyacc -v $<
+
+
+MAKEMLI    = (echo "(* Generated: $$(date) *)"; ${OCAMLOPT} -i $<) >$@@
+
+tables.mli : tables.ml absyn.cmi
+	${call MAKEMLI}
+
+dumper.mli : dumper.ml absyn.cmi
+	${call MAKEMLI}
+
+#
+# Misc targets
+#
+
+clean :
+	- rm ${OBJCMI} ${OBJCMX} ${OBJBIN} ${GENSOURCE}
+
+spotless : clean
+	- rm ${EXECBIN} ${GENFILES} ${LISTING} ${LISTING:.ps=.pdf} 
+
+ci : ${ALLSOURCES}
+	- checksource ${ALLSOURCES}
+	cid + ${ALLSOURCES}
+
+deps : ${MLSOURCE} ${GENSOURCE}
+	@@ echo "# Generated: $$(date)" >${DEPSFILE}
+	ocamldep ${MLSOURCE} ${GENSOURCE} >>${DEPSFILE}
+
+${DEPSFILE} : tables.mli
+	@@touch ${DEPSFILE}
+	${GMAKE} deps
+
+lis : ${ALLSOURCES}
+	mkpspdf ${LISTING} ${ALLSOURCES}
+
+again :
+	${GMAKE} spotless
+	${GMAKE} deps
+	${GMAKE} ci
+	${GMAKE} all
+	${GMAKE} lis
+
+ifeq "${NEEDINCL}" ""
+include ${DEPSFILE}
+endif
+
+@
+
+
+1.14
+log
+@-
+@
+text
+@d1 1
+a1 1
+# $Id: Makefile,v 1.13 2020-01-24 11:50:00-08 - - $
+d19 2
+a20 2
+EXECBIN	   = sbinterp
+OBJCMX	   = etc.cmx parser.cmx scanner.cmx tables.cmx \
+d22 2
+a23 2
+OBJCMI	   = ${OBJCMX:.cmx=.cmi} absyn.cmi
+OBJBIN	   = ${OBJCMX:.cmx=.o}
+@
+
+
+1.13
+log
+@-
+@
+text
+@d1 1
+a1 1
+# $Id: Makefile,v 1.12 2020-01-17 14:21:56-08 - - $
+d26 2
+a27 1
+GENSOURCE  = dumper.mli tables.mli parser.mli parser.ml scanner.ml
+@
+
+
+1.12
+log
+@-
+@
+text
+@d1 1
+a1 1
+# $Id: Makefile,v 1.11 2019-02-14 16:13:28-08 - - $
+d13 1
+d39 1
+a39 1
+	ocamlopt str.cmxa ${OBJCMX} -o ${EXECBIN}
+d42 1
+a42 1
+	ocamlopt -c $<
+d45 1
+a45 1
+	ocamlopt -c $<
+d54 1
+a54 1
+MAKEMLI    = (echo "(* Generated: $$(date) *)"; ocamlopt -i $<) >$@@
+@
+
+
+1.11
+log
+@-
+@
+text
+@d1 1
+a1 1
+# $Id: Makefile,v 1.8 2019-01-25 16:48:22-08 - - $
+d19 4
+a22 4
+OBJCMO	   = etc.cmo parser.cmo scanner.cmo tables.cmo \
+             dumper.cmo interp.cmo main.cmo
+OBJCMI	   = ${OBJCMO:.cmo=.cmi} absyn.cmi
+OBJBIN	   = ${OBJCMO:.cmo=.o}
+d37 2
+a38 2
+${EXECBIN} : ${OBJCMO}
+	ocamlc str.cma ${OBJCMO} -o ${EXECBIN}
+d41 1
+a41 1
+	ocamlc -c $<
+d43 2
+a44 2
+%.cmo : %.ml
+	ocamlc -c $<
+d53 1
+a53 1
+MAKEMLI    = (echo "(* Generated: $$(date) *)"; ocamlc -i $<) >$@@
+d66 1
+a66 1
+	- rm ${OBJCMI} ${OBJCMO} ${OBJBIN} ${GENSOURCE}
+@
+
+
+1.10
+log
+@-
+@
+text
+@d1 1
+a1 1
+# $Id: Makefile,v 1.9 2019-02-14 16:10:09-08 - - $
+d87 5
+a91 1
+	${GMAKE} spotless deps ci all lis
+a95 2
+
+etc.ml : etc.cmi
+@
+
+
+1.9
+log
+@-
+@
+text
+@d1 1
+a1 1
+# $Id: Makefile,v 1.8 2019-01-25 16:48:22-08 - - $
+d92 2
+@
+
+
+1.8
+log
+@-
+@
+text
+@d1 1
+a1 1
+# $Id: Makefile,v 1.7 2019-01-25 16:42:31-08 - - $
+d87 1
+a87 5
+	${GMAKE} spotless
+	${GMAKE} deps
+	${GMAKE} ci
+	${GMAKE} all
+	${GMAKE} lis
+@
+
+
+1.7
+log
+@-
+@
+text
+@d1 1
+a1 1
+# $Id: Makefile,v 1.6 2019-01-25 14:50:51-08 - - $
+d72 1
+@
+
+
+1.6
+log
+@-
+@
+text
+@d1 1
+a1 1
+# $Id: Makefile,v 1.2 2019-01-25 14:44:50-08 - - $
+d53 1
+a53 1
+MAKEMLI    = (echo "(* Created $$(date) *)"; ocamlc -i $<) >$@@
+d75 1
+a75 1
+	@@ echo "# Created $$(date)" >${DEPSFILE}
+@
+
+
+1.5
+log
+@-
+@
+text
+@d1 1
+a1 1
+# $Id: Makefile,v 1.4 2019-01-24 17:08:37-08 - - $
+d15 1
+a15 1
+# File list macros
+d53 2
+d56 1
+a56 2
+	@@ echo "(* Created $$(date) *)" >tables.mli
+	ocamlc -i tables.ml | sed 's/^type/\n&/' >>tables.mli
+d59 1
+a59 2
+	@@ echo "(* Created $$(date) *)" >dumper.mli
+	ocamlc -i dumper.ml >>dumper.mli
+@
+
+
+1.4
+log
+@-
+@
+text
+@d1 1
+a1 1
+# $Id: Makefile,v 1.3 2019-01-24 16:25:00-08 - - $
+d54 2
+a55 3
+	( echo "(* Created $$(date) *)" \
+	; ocamlc -i tables.ml | sed 's/^type/\n&/' \
+	) >tables.mli
+d58 2
+a59 3
+	( echo "(* Created $$(date) *)" \
+	; ocamlc -i dumper.ml \
+	) >dumper.mli
+d75 2
+a76 3
+	( echo "# Created $$(date)" \
+	; ocamldep ${MLSOURCE} ${GENSOURCE} \
+	) >${DEPSFILE}
+@
+
+
+1.3
+log
+@-
+@
+text
+@d1 1
+a1 1
+# $Id: Makefile,v 1.14 2019-01-24 14:04:36-08 - - $
+d19 2
+a20 2
+OBJCMO	   = etc.cmo parser.cmo scanner.cmo \
+             tables.cmo interp.cmo main.cmo
+d24 2
+a25 2
+             interp.mli interp.ml main.ml
+GENSOURCE  = tables.mli parser.mli parser.ml scanner.ml
+d27 1
+a27 1
+OTHERFILES = ${MKFILE} ${DEPSFILE} using
+d58 5
+d68 1
+a68 1
+	- rm ${OBJCMI} ${OBJCMO} ${OBJBIN} tables.mli
+@
+
+
+1.2
+log
+@-
+@
+text
+@d19 2
+a20 2
+OBJCMO	   = etc.cmo parser.cmo scanner.cmo tables.cmo \
+             dumper.cmo interp.cmo main.cmo
+d24 1
+a24 1
+             dumper.mli dumper.ml interp.mli interp.ml main.ml
+a57 5
+dumper.mli : dumper.ml absyn.cmi
+	( echo "(* Created $$(date) *)" \
+	; ocamlc -i dumper.ml \
+	) >dumper.mli
+
+d63 1
+a63 1
+	- rm ${OBJCMI} ${OBJCMO} ${OBJBIN} ${GENSOURCE}
+a70 2
+GEN_OCAMLDEP = ocamldep ${MLSOURCE} ${GENSOURCE}
+GEN_FORMAT = perl -pe 's/^(.{1,72})\s+(.*)/$$1 \\\n\# $$2/'
+d73 1
+a73 1
+	; ${GEN_OCAMLDEP} \
+d76 1
+a76 1
+${DEPSFILE} : dumper.mli tables.mli
+@
+
+
+1.1
+log
+@-
+@
+text
+@d19 2
+a20 2
+OBJCMO	   = etc.cmo parser.cmo scanner.cmo \
+             tables.cmo dumper.cmo interp.cmo main.cmo
+d24 1
+a24 1
+             dumper.ml interp.mli interp.ml main.ml
+a52 1
+GEN_TABLES_MLI = ocamlc -i tables.ml
+d54 2
+a55 4
+	( echo "(* Generated file: DO NOT EDIT *)" \
+	; echo "(* ${GEN_TABLES_MLI} *)" \
+	; echo "(* Generated $$(date) *)" \
+	; ${GEN_TABLES_MLI} | sed 's/^type/\n&/' \
+d58 5
+d68 1
+a68 1
+	- rm ${OBJCMI} ${OBJCMO} ${OBJBIN} {GENSOURCE}
+d79 1
+a79 3
+	( echo "# Generated file: DO NOT EDIT" \
+	; echo "# ${GEN_OCAMLDEP}" | ${GEN_FORMAT} \
+	; echo "# Generated $$(date)" \
+d83 1
+a83 1
+${DEPSFILE} : ${GENSOURCE}
+@

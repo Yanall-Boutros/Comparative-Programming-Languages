@@ -1,0 +1,2865 @@
+%!PS-Adobe-3.0
+%%BoundingBox: 38 24 574 768
+%%Title: ./Listing.ps
+%%For: Wesley Mackey
+%%Creator: GNU Enscript 1.6.6
+%%CreationDate: Fri Jan 24 14:55:59 2020
+%%Orientation: Portrait
+%%Pages: (atend)
+%%DocumentMedia: Letter 612 792 0 () ()
+%%DocumentNeededResources: (atend)
+%%EndComments
+%%BeginProlog
+%%BeginResource: procset Enscript-Prolog 1.6 6
+%
+% Procedures.
+%
+
+/_S {	% save current state
+  /_s save def
+} def
+/_R {	% restore from saved state
+  _s restore
+} def
+
+/S {	% showpage protecting gstate
+  gsave
+  showpage
+  grestore
+} bind def
+
+/MF {	% fontname newfontname -> -	make a new encoded font
+  /newfontname exch def
+  /fontname exch def
+
+  /fontdict fontname findfont def
+  /newfont fontdict maxlength dict def
+
+  fontdict {
+    exch
+    dup /FID eq {
+      % skip FID pair
+      pop pop
+    } {
+      % copy to the new font dictionary
+      exch newfont 3 1 roll put
+    } ifelse
+  } forall
+
+  newfont /FontName newfontname put
+
+  % insert only valid encoding vectors
+  encoding_vector length 256 eq {
+    newfont /Encoding encoding_vector put
+  } if
+
+  newfontname newfont definefont pop
+} def
+
+/MF_PS { % fontname newfontname -> -	make a new font preserving its enc
+  /newfontname exch def
+  /fontname exch def
+
+  /fontdict fontname findfont def
+  /newfont fontdict maxlength dict def
+
+  fontdict {
+    exch
+    dup /FID eq {
+      % skip FID pair
+      pop pop
+    } {
+      % copy to the new font dictionary
+      exch newfont 3 1 roll put
+    } ifelse
+  } forall
+
+  newfont /FontName newfontname put
+
+  newfontname newfont definefont pop
+} def
+
+/SF { % fontname width height -> -	set a new font
+  /height exch def
+  /width exch def
+
+  findfont
+  [width 0 0 height 0 0] makefont setfont
+} def
+
+/SUF { % fontname width height -> -	set a new user font
+  /height exch def
+  /width exch def
+
+  /F-gs-user-font MF
+  /F-gs-user-font width height SF
+} def
+
+/SUF_PS { % fontname width height -> -	set a new user font preserving its enc
+  /height exch def
+  /width exch def
+
+  /F-gs-user-font MF_PS
+  /F-gs-user-font width height SF
+} def
+
+/M {moveto} bind def
+/s {show} bind def
+
+/Box {	% x y w h -> -			define box path
+  /d_h exch def /d_w exch def /d_y exch def /d_x exch def
+  d_x d_y  moveto
+  d_w 0 rlineto
+  0 d_h rlineto
+  d_w neg 0 rlineto
+  closepath
+} def
+
+/bgs {	% x y height blskip gray str -> -	show string with bg color
+  /str exch def
+  /gray exch def
+  /blskip exch def
+  /height exch def
+  /y exch def
+  /x exch def
+
+  gsave
+    x y blskip sub str stringwidth pop height Box
+    gray setgray
+    fill
+  grestore
+  x y M str s
+} def
+
+/bgcs { % x y height blskip red green blue str -> -  show string with bg color
+  /str exch def
+  /blue exch def
+  /green exch def
+  /red exch def
+  /blskip exch def
+  /height exch def
+  /y exch def
+  /x exch def
+
+  gsave
+    x y blskip sub str stringwidth pop height Box
+    red green blue setrgbcolor
+    fill
+  grestore
+  x y M str s
+} def
+
+% Highlight bars.
+/highlight_bars {	% nlines lineheight output_y_margin gray -> -
+  gsave
+    setgray
+    /ymarg exch def
+    /lineheight exch def
+    /nlines exch def
+
+    % This 2 is just a magic number to sync highlight lines to text.
+    0 d_header_y ymarg sub 2 sub translate
+
+    /cw d_output_w cols div def
+    /nrows d_output_h ymarg 2 mul sub lineheight div cvi def
+
+    % for each column
+    0 1 cols 1 sub {
+      cw mul /xp exch def
+
+      % for each rows
+      0 1 nrows 1 sub {
+        /rn exch def
+        rn lineheight mul neg /yp exch def
+        rn nlines idiv 2 mod 0 eq {
+	  % Draw highlight bar.  4 is just a magic indentation.
+	  xp 4 add yp cw 8 sub lineheight neg Box fill
+	} if
+      } for
+    } for
+
+  grestore
+} def
+
+% Line highlight bar.
+/line_highlight {	% x y width height gray -> -
+  gsave
+    /gray exch def
+    Box gray setgray fill
+  grestore
+} def
+
+% Column separator lines.
+/column_lines {
+  gsave
+    .1 setlinewidth
+    0 d_footer_h translate
+    /cw d_output_w cols div def
+    1 1 cols 1 sub {
+      cw mul 0 moveto
+      0 d_output_h rlineto stroke
+    } for
+  grestore
+} def
+
+% Column borders.
+/column_borders {
+  gsave
+    .1 setlinewidth
+    0 d_footer_h moveto
+    0 d_output_h rlineto
+    d_output_w 0 rlineto
+    0 d_output_h neg rlineto
+    closepath stroke
+  grestore
+} def
+
+% Do the actual underlay drawing
+/draw_underlay {
+  ul_style 0 eq {
+    ul_str true charpath stroke
+  } {
+    ul_str show
+  } ifelse
+} def
+
+% Underlay
+/underlay {	% - -> -
+  gsave
+    0 d_page_h translate
+    d_page_h neg d_page_w atan rotate
+
+    ul_gray setgray
+    ul_font setfont
+    /dw d_page_h dup mul d_page_w dup mul add sqrt def
+    ul_str stringwidth pop dw exch sub 2 div ul_h_ptsize -2 div moveto
+    draw_underlay
+  grestore
+} def
+
+/user_underlay {	% - -> -
+  gsave
+    ul_x ul_y translate
+    ul_angle rotate
+    ul_gray setgray
+    ul_font setfont
+    0 0 ul_h_ptsize 2 div sub moveto
+    draw_underlay
+  grestore
+} def
+
+% Page prefeed
+/page_prefeed {		% bool -> -
+  statusdict /prefeed known {
+    statusdict exch /prefeed exch put
+  } {
+    pop
+  } ifelse
+} def
+
+% Wrapped line markers
+/wrapped_line_mark {	% x y charwith charheight type -> -
+  /type exch def
+  /h exch def
+  /w exch def
+  /y exch def
+  /x exch def
+
+  type 2 eq {
+    % Black boxes (like TeX does)
+    gsave
+      0 setlinewidth
+      x w 4 div add y M
+      0 h rlineto w 2 div 0 rlineto 0 h neg rlineto
+      closepath fill
+    grestore
+  } {
+    type 3 eq {
+      % Small arrows
+      gsave
+        .2 setlinewidth
+        x w 2 div add y h 2 div add M
+        w 4 div 0 rlineto
+        x w 4 div add y lineto stroke
+
+        x w 4 div add w 8 div add y h 4 div add M
+        x w 4 div add y lineto
+	w 4 div h 8 div rlineto stroke
+      grestore
+    } {
+      % do nothing
+    } ifelse
+  } ifelse
+} def
+
+% EPSF import.
+
+/BeginEPSF {
+  /b4_Inc_state save def    		% Save state for cleanup
+  /dict_count countdictstack def	% Count objects on dict stack
+  /op_count count 1 sub def		% Count objects on operand stack
+  userdict begin
+  /showpage { } def
+  0 setgray 0 setlinecap
+  1 setlinewidth 0 setlinejoin
+  10 setmiterlimit [ ] 0 setdash newpath
+  /languagelevel where {
+    pop languagelevel
+    1 ne {
+      false setstrokeadjust false setoverprint
+    } if
+  } if
+} bind def
+
+/EndEPSF {
+  count op_count sub { pos } repeat	% Clean up stacks
+  countdictstack dict_count sub { end } repeat
+  b4_Inc_state restore
+} bind def
+
+% Check PostScript language level.
+/languagelevel where {
+  pop /gs_languagelevel languagelevel def
+} {
+  /gs_languagelevel 1 def
+} ifelse
+%%EndResource
+%%BeginResource: procset Enscript-Encoding-88591 1.6 6
+/encoding_vector [
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/space        	/exclam       	/quotedbl     	/numbersign   	
+/dollar       	/percent      	/ampersand    	/quoteright   	
+/parenleft    	/parenright   	/asterisk     	/plus         	
+/comma        	/hyphen       	/period       	/slash        	
+/zero         	/one          	/two          	/three        	
+/four         	/five         	/six          	/seven        	
+/eight        	/nine         	/colon        	/semicolon    	
+/less         	/equal        	/greater      	/question     	
+/at           	/A            	/B            	/C            	
+/D            	/E            	/F            	/G            	
+/H            	/I            	/J            	/K            	
+/L            	/M            	/N            	/O            	
+/P            	/Q            	/R            	/S            	
+/T            	/U            	/V            	/W            	
+/X            	/Y            	/Z            	/bracketleft  	
+/backslash    	/bracketright 	/asciicircum  	/underscore   	
+/quoteleft    	/a            	/b            	/c            	
+/d            	/e            	/f            	/g            	
+/h            	/i            	/j            	/k            	
+/l            	/m            	/n            	/o            	
+/p            	/q            	/r            	/s            	
+/t            	/u            	/v            	/w            	
+/x            	/y            	/z            	/braceleft    	
+/bar          	/braceright   	/tilde        	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/space        	/exclamdown   	/cent         	/sterling     	
+/currency     	/yen          	/brokenbar    	/section      	
+/dieresis     	/copyright    	/ordfeminine  	/guillemotleft	
+/logicalnot   	/hyphen       	/registered   	/macron       	
+/degree       	/plusminus    	/twosuperior  	/threesuperior	
+/acute        	/mu           	/paragraph    	/bullet       	
+/cedilla      	/onesuperior  	/ordmasculine 	/guillemotright	
+/onequarter   	/onehalf      	/threequarters	/questiondown 	
+/Agrave       	/Aacute       	/Acircumflex  	/Atilde       	
+/Adieresis    	/Aring        	/AE           	/Ccedilla     	
+/Egrave       	/Eacute       	/Ecircumflex  	/Edieresis    	
+/Igrave       	/Iacute       	/Icircumflex  	/Idieresis    	
+/Eth          	/Ntilde       	/Ograve       	/Oacute       	
+/Ocircumflex  	/Otilde       	/Odieresis    	/multiply     	
+/Oslash       	/Ugrave       	/Uacute       	/Ucircumflex  	
+/Udieresis    	/Yacute       	/Thorn        	/germandbls   	
+/agrave       	/aacute       	/acircumflex  	/atilde       	
+/adieresis    	/aring        	/ae           	/ccedilla     	
+/egrave       	/eacute       	/ecircumflex  	/edieresis    	
+/igrave       	/iacute       	/icircumflex  	/idieresis    	
+/eth          	/ntilde       	/ograve       	/oacute       	
+/ocircumflex  	/otilde       	/odieresis    	/divide       	
+/oslash       	/ugrave       	/uacute       	/ucircumflex  	
+/udieresis    	/yacute       	/thorn        	/ydieresis    	
+] def
+%%EndResource
+%%EndProlog
+%%BeginSetup
+%%IncludeResource: font Courier-Bold
+/HFpt_w 10 def
+/HFpt_h 10 def
+/Courier-Bold /HF-gs-font MF
+/HF /HF-gs-font findfont [HFpt_w 0 0 HFpt_h 0 0] makefont def
+/Courier-Bold /F-gs-font MF
+/F-gs-font 11 11 SF
+/#copies 1 def
+% Pagedevice definitions:
+gs_languagelevel 1 gt {
+  <<
+    /PageSize [612 792] 
+  >> setpagedevice
+} if
+%%BeginResource: procset Enscript-Header-enscript-mycolor 1.6 6
+%%IncludeResource: font Times-Bold
+%%IncludeResource: font Times-Roman
+
+% Fonts.
+/Times-Bold /HeaderFont-Bold MF
+/HeaderDateF /HeaderFont-Bold findfont 12 scalefont def
+
+/Times-Roman /HeaderFont-Times MF
+/HeaderHDRF /HeaderFont-Times findfont 14 scalefont def
+
+/HeaderPageNumF /Helvetica-Bold findfont 28.8 scalefont def
+/HeaderPageCountF /Helvetica-Bold findfont 18 scalefont def
+
+/do_header {	% print enscript header
+  gsave
+    d_header_x d_header_y translate
+
+    /dhw d_header_w 4 sub def
+
+    /linecolor {0 0 0 setrgbcolor} bind def  % line color
+    /txcolor   {0 0 0 setrgbcolor} bind def  % text color
+    /fncolor   {0 0 0 setrgbcolor} bind def  % filename line color
+
+    .5 setlinewidth
+
+    % line across bottom of the header area
+    linecolor
+    0 0 moveto dhw 0 lineto
+
+    % side boxes
+    /sbw d_header_h 2 mul def	% side box width
+
+    % left side box
+    0 0 sbw d_header_h Box
+    linecolor
+    stroke
+
+    % date/time in left box
+    txcolor
+    HeaderDateF setfont
+    moddatestr dup stringwidth pop sbw exch sub 2 div
+    d_header_h 2 div 2 add moveto show
+    modtimestr dup stringwidth pop sbw exch sub 2 div
+    d_header_h 5 div moveto show
+
+    % right side box
+    dhw sbw sub 0 sbw d_header_h Box
+    linecolor
+    stroke
+
+    % get width of pagecount
+    HeaderPageCountF setfont
+    pagecountstr stringwidth pop
+
+    txcolor
+    HeaderPageNumF setfont
+    pagenumstr stringwidth pop add  % add to width of pagecount
+    sbw exch sub 2 div dhw sbw sub add
+    d_header_h .2 mul moveto
+
+    pagenumstr show
+
+    HeaderPageCountF setfont
+    pagecountstr show
+
+    % filename
+    fncolor
+    HeaderHDRF setfont
+    dhw fname stringwidth pop sub 2 div d_header_h 8 div moveto
+    fname show
+
+    % user supplied header string.
+    user_header_p {
+      /h d_header_h 8 div 5 mul def
+
+      % HACK around a bug in enscript 1.6.0:
+      % for some reason this is getting set to "(null)" and
+      %
+      user_header_center_str (\(null\)) eq {
+        /user_header_center_str () def
+      } if
+
+      % Implement strict enscript compatibility.
+      user_header_center_str () eq user_header_right_str () eq and {
+        dhw user_header_left_str stringwidth pop sub 2 div
+        h moveto user_header_left_str show
+      } {
+        sbw 5 add h moveto user_header_left_str show
+
+        dhw user_header_center_str stringwidth pop sub 2 div
+        h moveto user_header_center_str show
+
+	dhw sbw sub 5 sub user_header_right_str stringwidth pop
+	sub h moveto user_header_right_str show
+      } ifelse
+    } if
+
+  grestore
+} bind def
+%%EndResource
+/d_page_w 536 def
+/d_page_h 744 def
+/d_header_x 0 def
+/d_header_y 708 def
+/d_header_w 536 def
+/d_header_h 36 def
+/d_footer_x 0 def
+/d_footer_y 0 def
+/d_footer_w 536 def
+/d_footer_h 0 def
+/d_output_w 536 def
+/d_output_h 708 def
+/cols 1 def
+%%EndSetup
+%%Page: (1) 1
+%%BeginPageSetup
+_S
+38 24 translate
+/pagenum 1 def
+/fname (absyn.mli) def
+/fdir (.) def
+/ftail (absyn.mli) def
+% User defined strings:
+/pagenumstr (1) def
+/moddatestr (01/24/20) def
+/pagecountstr (/1) def
+/modtimestr (14:55:58) def
+/user_header_p true def
+/user_header_left_str ($cse112-wm/Assignments/asg2-ocaml-interp/code-binary) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+column_borders
+do_header
+32.4 694 M (1:) s
+52.2 694 M
+(\(* $Id: absyn.mli,v 1.3 2020-01-22 16:07:24-08 - - $ *\)) s
+32.4 682 M (2:) s
+32.4 670 M (3:) s
+52.2 670 M
+(\(*) s
+32.4 658 M (4:) s
+52.2 658 M
+(* Abstract syntax definitions for SB.) s
+32.4 646 M (5:) s
+52.2 646 M
+(*\)) s
+32.4 634 M (6:) s
+32.4 622 M (7:) s
+52.2 622 M
+(type linenr    = int) s
+32.4 610 M (8:) s
+52.2 610 M
+(type ident     = string) s
+32.4 598 M (9:) s
+52.2 598 M
+(type label     = string) s
+25.8 586 M (10:) s
+52.2 586 M
+(type number    = float) s
+25.8 574 M (11:) s
+52.2 574 M
+(type oper      = string) s
+25.8 562 M (12:) s
+25.8 550 M (13:) s
+52.2 550 M
+(and  memref    = Arrayref of ident * expr) s
+25.8 538 M (14:) s
+52.2 538 M
+(               | Variable of ident) s
+25.8 526 M (15:) s
+25.8 514 M (16:) s
+52.2 514 M
+(and  expr      = Number of number) s
+25.8 502 M (17:) s
+52.2 502 M
+(               | Memref of memref) s
+25.8 490 M (18:) s
+52.2 490 M
+(               | Unary of oper * expr) s
+25.8 478 M (19:) s
+52.2 478 M
+(               | Binary of oper * expr * expr) s
+25.8 466 M (20:) s
+25.8 454 M (21:) s
+52.2 454 M
+(type printable = Printexpr of expr) s
+25.8 442 M (22:) s
+52.2 442 M
+(               | String of string) s
+25.8 430 M (23:) s
+25.8 418 M (24:) s
+52.2 418 M
+(type stmt      = Dim of ident * expr) s
+25.8 406 M (25:) s
+52.2 406 M
+(               | Let of memref * expr) s
+25.8 394 M (26:) s
+52.2 394 M
+(               | Goto of label) s
+25.8 382 M (27:) s
+52.2 382 M
+(               | If of expr * label) s
+25.8 370 M (28:) s
+52.2 370 M
+(               | Print of printable list) s
+25.8 358 M (29:) s
+52.2 358 M
+(               | Input of memref list) s
+25.8 346 M (30:) s
+25.8 334 M (31:) s
+52.2 334 M
+(type progline  = linenr * label option * stmt option) s
+25.8 322 M (32:) s
+25.8 310 M (33:) s
+52.2 310 M
+(type program   = progline list) s
+25.8 298 M (34:) s
+_R
+S
+%%Page: (1) 2
+%%BeginPageSetup
+_S
+38 24 translate
+/pagenum 1 def
+/fname (etc.mli) def
+/fdir (.) def
+/ftail (etc.mli) def
+% User defined strings:
+/pagenumstr (1) def
+/moddatestr (01/24/20) def
+/pagecountstr (/1) def
+/modtimestr (14:55:58) def
+/user_header_p true def
+/user_header_left_str ($cse112-wm/Assignments/asg2-ocaml-interp/code-binary) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+column_borders
+do_header
+32.4 694 M (1:) s
+52.2 694 M
+(\(* $Id: etc.mli,v 1.1 2019-01-24 15:47:38-08 - - $ *\)) s
+32.4 682 M (2:) s
+32.4 670 M (3:) s
+52.2 670 M
+(\(*) s
+32.4 658 M (4:) s
+52.2 658 M
+(* Main program and system access.) s
+32.4 646 M (5:) s
+52.2 646 M
+(*\)) s
+32.4 634 M (6:) s
+32.4 622 M (7:) s
+52.2 622 M
+(val warn : string list -> unit) s
+32.4 610 M (8:) s
+32.4 598 M (9:) s
+52.2 598 M
+(val die : string list -> unit) s
+25.8 586 M (10:) s
+25.8 574 M (11:) s
+52.2 574 M
+(val syntax_error : Lexing.position -> string list -> unit) s
+25.8 562 M (12:) s
+25.8 550 M (13:) s
+52.2 550 M
+(val usage_exit : string list -> unit) s
+25.8 538 M (14:) s
+25.8 526 M (15:) s
+52.2 526 M
+(val read_number : unit -> float) s
+25.8 514 M (16:) s
+_R
+S
+%%Page: (1) 3
+%%BeginPageSetup
+_S
+38 24 translate
+/pagenum 1 def
+/fname (etc.ml) def
+/fdir (.) def
+/ftail (etc.ml) def
+% User defined strings:
+/pagenumstr (1) def
+/moddatestr (01/24/20) def
+/pagecountstr (/1) def
+/modtimestr (14:55:58) def
+/user_header_p true def
+/user_header_left_str ($cse112-wm/Assignments/asg2-ocaml-interp/code-binary) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+column_borders
+do_header
+32.4 694 M (1:) s
+52.2 694 M
+(\(* $Id: etc.ml,v 1.3 2020-01-22 16:07:24-08 - - $ *\)) s
+32.4 682 M (2:) s
+32.4 670 M (3:) s
+52.2 670 M
+(let execname = Filename.basename Sys.argv.\(0\)) s
+32.4 658 M (4:) s
+32.4 646 M (5:) s
+52.2 646 M
+(let exit_status_ref : int ref = ref 0) s
+32.4 634 M (6:) s
+32.4 622 M (7:) s
+52.2 622 M
+(let quit \(\) =) s
+32.4 610 M (8:) s
+52.2 610 M
+(    if !Sys.interactive) s
+32.4 598 M (9:) s
+52.2 598 M
+(    then Printf.printf "quit \(\): exit %d\\n%!" !exit_status_ref) s
+25.8 586 M (10:) s
+52.2 586 M
+(    else exit !exit_status_ref) s
+25.8 574 M (11:) s
+25.8 562 M (12:) s
+52.2 562 M
+(let eprint_list message =) s
+25.8 550 M (13:) s
+52.2 550 M
+(    \(exit_status_ref := 1;) s
+25.8 538 M (14:) s
+52.2 538 M
+(     flush_all \(\);) s
+25.8 526 M (15:) s
+52.2 526 M
+(     List.iter prerr_string message;) s
+25.8 514 M (16:) s
+52.2 514 M
+(     prerr_newline \(\);) s
+25.8 502 M (17:) s
+52.2 502 M
+(     flush_all \(\)\)) s
+25.8 490 M (18:) s
+25.8 478 M (19:) s
+52.2 478 M
+(let warn message = eprint_list \(execname :: ": " :: message\)) s
+25.8 466 M (20:) s
+25.8 454 M (21:) s
+52.2 454 M
+(let die message = \(warn message; quit \(\)\)) s
+25.8 442 M (22:) s
+25.8 430 M (23:) s
+52.2 430 M
+(let syntax_error position message =) s
+25.8 418 M (24:) s
+52.2 418 M
+(    warn \(position.Lexing.pos_fname :: ": ") s
+25.8 406 M (25:) s
+52.2 406 M
+(            :: string_of_int position.Lexing.pos_lnum :: ": ") s
+25.8 394 M (26:) s
+52.2 394 M
+(            :: message\)) s
+25.8 382 M (27:) s
+25.8 370 M (28:) s
+52.2 370 M
+(let usage_exit message =) s
+25.8 358 M (29:) s
+52.2 358 M
+(    \(eprint_list \("Usage: " :: execname :: " " :: message\); quit \(\)\)) s
+25.8 346 M (30:) s
+25.8 334 M (31:) s
+52.2 334 M
+(let buffer : string list ref = ref []) s
+25.8 322 M (32:) s
+25.8 310 M (33:) s
+52.2 310 M
+(let rec read_number \(\) = match !buffer with) s
+25.8 298 M (34:) s
+52.2 298 M
+(    | head::tail -> \(buffer := tail;) s
+25.8 286 M (35:) s
+52.2 286 M
+(                     try float_of_string head) s
+25.8 274 M (36:) s
+52.2 274 M
+(                     with Failure _ -> nan\)) s
+25.8 262 M (37:) s
+52.2 262 M
+(    | [] -> let line = input_line stdin) s
+25.8 250 M (38:) s
+52.2 250 M
+(            in \(buffer := Str.split \(Str.regexp "[ \\\\t]+"\) line;) s
+25.8 238 M (39:) s
+52.2 238 M
+(                read_number \(\)\)) s
+25.8 226 M (40:) s
+_R
+S
+%%Page: (1) 4
+%%BeginPageSetup
+_S
+38 24 translate
+/pagenum 1 def
+/fname (tables.mli) def
+/fdir (.) def
+/ftail (tables.mli) def
+% User defined strings:
+/pagenumstr (1) def
+/moddatestr (01/24/20) def
+/pagecountstr (/1) def
+/modtimestr (14:55:58) def
+/user_header_p true def
+/user_header_left_str ($cse112-wm/Assignments/asg2-ocaml-interp/code-binary) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+column_borders
+do_header
+32.4 694 M (1:) s
+52.2 694 M
+(\(* Generated: Fri Jan 24 14:55:58 PST 2020 *\)) s
+32.4 682 M (2:) s
+52.2 682 M
+(type variable_table_t = \(string, float\) Hashtbl.t) s
+32.4 670 M (3:) s
+52.2 670 M
+(type array_table_t = \(string, float array\) Hashtbl.t) s
+32.4 658 M (4:) s
+52.2 658 M
+(type unary_fn_table_t = \(string, float -> float\) Hashtbl.t) s
+32.4 646 M (5:) s
+52.2 646 M
+(type binary_fn_table_t = \(string, float -> float -> float\) Hashtbl.t) s
+32.4 634 M (6:) s
+52.2 634 M
+(type label_table_t = \(string, Absyn.program\) Hashtbl.t) s
+32.4 622 M (7:) s
+52.2 622 M
+(val variable_table : variable_table_t) s
+32.4 610 M (8:) s
+52.2 610 M
+(val array_table : array_table_t) s
+32.4 598 M (9:) s
+52.2 598 M
+(val unary_fn_table : unary_fn_table_t) s
+25.8 586 M (10:) s
+52.2 586 M
+(val binary_fn_table : binary_fn_table_t) s
+25.8 574 M (11:) s
+52.2 574 M
+(val label_table : label_table_t) s
+25.8 562 M (12:) s
+52.2 562 M
+(val init_label_table : Absyn.program -> unit) s
+25.8 550 M (13:) s
+52.2 550 M
+(val dump_label_table : unit -> unit) s
+_R
+S
+%%Page: (1) 5
+%%BeginPageSetup
+_S
+38 24 translate
+/pagenum 1 def
+/fname (tables.ml) def
+/fdir (.) def
+/ftail (tables.ml) def
+% User defined strings:
+/pagenumstr (1) def
+/moddatestr (01/24/20) def
+/pagecountstr (/2) def
+/modtimestr (14:55:58) def
+/user_header_p true def
+/user_header_left_str ($cse112-wm/Assignments/asg2-ocaml-interp/code-binary) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+column_borders
+do_header
+32.4 694 M (1:) s
+52.2 694 M
+(\(* $Id: tables.ml,v 1.5 2019-01-29 17:26:15-08 - - $ *\)) s
+32.4 682 M (2:) s
+32.4 670 M (3:) s
+52.2 670 M
+(type variable_table_t = \(string, float\) Hashtbl.t) s
+32.4 658 M (4:) s
+52.2 658 M
+(type array_table_t = \(string, float array\) Hashtbl.t) s
+32.4 646 M (5:) s
+52.2 646 M
+(type unary_fn_table_t = \(string, float -> float\) Hashtbl.t) s
+32.4 634 M (6:) s
+52.2 634 M
+(type binary_fn_table_t = \(string, float -> float -> float\) Hashtbl.t) s
+32.4 622 M (7:) s
+52.2 622 M
+(type label_table_t = \(string, Absyn.program\) Hashtbl.t) s
+32.4 610 M (8:) s
+32.4 598 M (9:) s
+52.2 598 M
+(let variable_table : variable_table_t = Hashtbl.create 16) s
+25.8 586 M (10:) s
+52.2 586 M
+(let _ = List.iter \(fun \(label, value\) ->) s
+25.8 574 M (11:) s
+52.2 574 M
+(                  Hashtbl.add variable_table label value\)) s
+25.8 562 M (12:) s
+52.2 562 M
+(                 ["e"  , exp 1.0;) s
+25.8 550 M (13:) s
+52.2 550 M
+(                  "eof", 0.0;) s
+25.8 538 M (14:) s
+52.2 538 M
+(                  "pi" , acos ~-.1.0;) s
+25.8 526 M (15:) s
+52.2 526 M
+(                  "nan", nan]) s
+25.8 514 M (16:) s
+25.8 502 M (17:) s
+52.2 502 M
+(let array_table : array_table_t = Hashtbl.create 16) s
+25.8 490 M (18:) s
+25.8 478 M (19:) s
+52.2 478 M
+(let unary_fn_table : unary_fn_table_t = Hashtbl.create 16) s
+25.8 466 M (20:) s
+52.2 466 M
+(let _ = List.iter \(fun \(label, value\) ->) s
+25.8 454 M (21:) s
+52.2 454 M
+(                  Hashtbl.add unary_fn_table label value\)) s
+25.8 442 M (22:) s
+52.2 442 M
+(                 ["+"    , \(~+.\);) s
+25.8 430 M (23:) s
+52.2 430 M
+(                  "-"    , \(~-.\);) s
+25.8 418 M (24:) s
+52.2 418 M
+(                  "abs"  , abs_float;) s
+25.8 406 M (25:) s
+52.2 406 M
+(                  "acos" , acos;) s
+25.8 394 M (26:) s
+52.2 394 M
+(                  "asin" , asin;) s
+25.8 382 M (27:) s
+52.2 382 M
+(                  "atan" , atan;) s
+25.8 370 M (28:) s
+52.2 370 M
+(                  "ceil" , ceil;) s
+25.8 358 M (29:) s
+52.2 358 M
+(                  "cos"  , cos;) s
+25.8 346 M (30:) s
+52.2 346 M
+(                  "exp"  , exp;) s
+25.8 334 M (31:) s
+52.2 334 M
+(                  "floor", floor;) s
+25.8 322 M (32:) s
+52.2 322 M
+(                  "log"  , log;) s
+25.8 310 M (33:) s
+52.2 310 M
+(                  "log10", log10;) s
+25.8 298 M (34:) s
+52.2 298 M
+(                  "log2" , \(fun x -> log x /. log 2.0\);) s
+25.8 286 M (35:) s
+52.2 286 M
+(                  "round", \(fun x -> floor \(x +. 0.5\)\);) s
+25.8 274 M (36:) s
+52.2 274 M
+(                  "sin"  , sin;) s
+25.8 262 M (37:) s
+52.2 262 M
+(                  "sqrt" , sqrt;) s
+25.8 250 M (38:) s
+52.2 250 M
+(                  "tan"  , tan]) s
+25.8 238 M (39:) s
+25.8 226 M (40:) s
+52.2 226 M
+(let binary_fn_table : binary_fn_table_t = Hashtbl.create 16) s
+25.8 214 M (41:) s
+52.2 214 M
+(let _ = List.iter \(fun \(label, value\) ->) s
+25.8 202 M (42:) s
+52.2 202 M
+(                  Hashtbl.add binary_fn_table label value\)) s
+25.8 190 M (43:) s
+52.2 190 M
+(                 ["+", \(+.\);) s
+25.8 178 M (44:) s
+52.2 178 M
+(                  "-", \(-.\);) s
+25.8 166 M (45:) s
+52.2 166 M
+(                  "*", \( *.\);) s
+25.8 154 M (46:) s
+52.2 154 M
+(                  "/", \(/.\);) s
+25.8 142 M (47:) s
+52.2 142 M
+(                  "%", mod_float;) s
+25.8 130 M (48:) s
+52.2 130 M
+(                  "^", \( ** \)]) s
+25.8 118 M (49:) s
+_R
+S
+%%Page: (2) 6
+%%BeginPageSetup
+_S
+38 24 translate
+/pagenum 2 def
+/fname (tables.ml) def
+/fdir (.) def
+/ftail (tables.ml) def
+% User defined strings:
+/pagenumstr (2) def
+/moddatestr (01/24/20) def
+/pagecountstr (/2) def
+/modtimestr (14:55:58) def
+/user_header_p true def
+/user_header_left_str ($cse112-wm/Assignments/asg2-ocaml-interp/code-binary) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+column_borders
+do_header
+25.8 694 M (50:) s
+25.8 682 M (51:) s
+52.2 682 M
+(let label_table : label_table_t = Hashtbl.create 16) s
+25.8 670 M (52:) s
+25.8 658 M (53:) s
+52.2 658 M
+(let rec init_label_table program =) s
+25.8 646 M (54:) s
+52.2 646 M
+(    let rec init program =  match program with) s
+25.8 634 M (55:) s
+52.2 634 M
+(        | [] -> \(\)) s
+25.8 622 M (56:) s
+52.2 622 M
+(        | \(_, Some label, _\)::rest ->) s
+25.8 610 M (57:) s
+52.2 610 M
+(              \(Hashtbl.add label_table label program; init rest\)) s
+25.8 598 M (58:) s
+52.2 598 M
+(        | _::rest -> init rest) s
+25.8 586 M (59:) s
+52.2 586 M
+(    in \(Hashtbl.reset label_table; init program\)) s
+25.8 574 M (60:) s
+25.8 562 M (61:) s
+52.2 562 M
+(let dump_label_table \(\) =) s
+25.8 550 M (62:) s
+52.2 550 M
+(    let dump key value = match value with) s
+25.8 538 M (63:) s
+52.2 538 M
+(        | [] -> \(\)) s
+25.8 526 M (64:) s
+52.2 526 M
+(        | \(line, _, _\)::_ ->) s
+25.8 514 M (65:) s
+52.2 514 M
+(          Printf.fprintf stderr) s
+25.8 502 M (66:) s
+52.2 502 M
+(              "label_table: \\"%s\\" -> line %d\\n%!" key line) s
+25.8 490 M (67:) s
+52.2 490 M
+(    in Hashtbl.iter dump label_table) s
+25.8 478 M (68:) s
+_R
+S
+%%Page: (1) 7
+%%BeginPageSetup
+_S
+38 24 translate
+/pagenum 1 def
+/fname (dumper.mli) def
+/fdir (.) def
+/ftail (dumper.mli) def
+% User defined strings:
+/pagenumstr (1) def
+/moddatestr (01/24/20) def
+/pagecountstr (/1) def
+/modtimestr (14:55:58) def
+/user_header_p true def
+/user_header_left_str ($cse112-wm/Assignments/asg2-ocaml-interp/code-binary) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+column_borders
+do_header
+32.4 694 M (1:) s
+52.2 694 M
+(\(* Generated: Fri Jan 24 14:55:58 PST 2020 *\)) s
+32.4 682 M (2:) s
+52.2 682 M
+(val quote : string -> string) s
+32.4 670 M (3:) s
+52.2 670 M
+(val join : string -> string -> string -> string list -> string) s
+32.4 658 M (4:) s
+52.2 658 M
+(val string_of_option : \('a -> string\) -> 'a option -> string) s
+32.4 646 M (5:) s
+52.2 646 M
+(val string_of_ctor : string -> string list -> string) s
+32.4 634 M (6:) s
+52.2 634 M
+(val string_of_list : \('a -> string\) -> 'a list -> string) s
+32.4 622 M (7:) s
+52.2 622 M
+(val string_of_printable : Absyn.printable -> string) s
+32.4 610 M (8:) s
+52.2 610 M
+(val string_of_memref : Absyn.memref -> string) s
+32.4 598 M (9:) s
+52.2 598 M
+(val string_of_expr : Absyn.expr -> string) s
+25.8 586 M (10:) s
+52.2 586 M
+(val string_of_stmt : Absyn.stmt -> string) s
+25.8 574 M (11:) s
+52.2 574 M
+(val dump_progline : int * string option * Absyn.stmt option -> unit) s
+25.8 562 M (12:) s
+52.2 562 M
+(val dump_program : Absyn.program -> unit) s
+_R
+S
+%%Page: (1) 8
+%%BeginPageSetup
+_S
+38 24 translate
+/pagenum 1 def
+/fname (dumper.ml) def
+/fdir (.) def
+/ftail (dumper.ml) def
+% User defined strings:
+/pagenumstr (1) def
+/moddatestr (01/24/20) def
+/pagecountstr (/2) def
+/modtimestr (14:55:58) def
+/user_header_p true def
+/user_header_left_str ($cse112-wm/Assignments/asg2-ocaml-interp/code-binary) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+column_borders
+do_header
+32.4 694 M (1:) s
+52.2 694 M
+(\(* $Id: dumper.ml,v 1.16 2020-01-24 14:55:58-08 - - $ *\)) s
+32.4 682 M (2:) s
+32.4 670 M (3:) s
+52.2 670 M
+(let quote string =) s
+32.4 658 M (4:) s
+52.2 658 M
+(    let regex = Str.regexp "\\"") s
+32.4 646 M (5:) s
+52.2 646 M
+(    and subst _ = "\\\\\\"") s
+32.4 634 M (6:) s
+52.2 634 M
+(    in  "\\"" ^ Str.global_substitute regex subst string ^ "\\"") s
+32.4 622 M (7:) s
+32.4 610 M (8:) s
+52.2 610 M
+(let join start sep stop list =) s
+32.4 598 M (9:) s
+52.2 598 M
+(    let rec join' list' = match list' with) s
+25.8 586 M (10:) s
+52.2 586 M
+(        | [] -> stop) s
+25.8 574 M (11:) s
+52.2 574 M
+(        | [unit] -> unit ^ stop) s
+25.8 562 M (12:) s
+52.2 562 M
+(        | head::tail -> head ^ sep ^ " " ^ join' tail) s
+25.8 550 M (13:) s
+52.2 550 M
+(    in match list with) s
+25.8 538 M (14:) s
+52.2 538 M
+(        | [] -> start ^ stop) s
+25.8 526 M (15:) s
+52.2 526 M
+(        | _::_ -> start ^ join' list) s
+25.8 514 M (16:) s
+25.8 502 M (17:) s
+52.2 502 M
+(let string_of_option str_fn item = match item with) s
+25.8 490 M (18:) s
+52.2 490 M
+(    | None -> "None") s
+25.8 478 M (19:) s
+52.2 478 M
+(    | Some thing -> "Some \(" ^ str_fn thing ^ "\)") s
+25.8 466 M (20:) s
+25.8 454 M (21:) s
+52.2 454 M
+(let string_of_ctor ctor args =) s
+25.8 442 M (22:) s
+52.2 442 M
+(    join \(ctor ^ " \("\) "," "\)" args) s
+25.8 430 M (23:) s
+25.8 418 M (24:) s
+52.2 418 M
+(let string_of_list str_fn list =) s
+25.8 406 M (25:) s
+52.2 406 M
+(    join "[" ";" "]" \(List.map str_fn list\)) s
+25.8 394 M (26:) s
+25.8 382 M (27:) s
+52.2 382 M
+(let rec string_of_printable printable = match printable with) s
+25.8 370 M (28:) s
+52.2 370 M
+(    | Absyn.Printexpr expr ->) s
+25.8 358 M (29:) s
+52.2 358 M
+(          string_of_ctor "Printexpr" [string_of_expr expr]) s
+25.8 346 M (30:) s
+52.2 346 M
+(    | Absyn.String string ->) s
+25.8 334 M (31:) s
+52.2 334 M
+(          string_of_ctor "String" [quote string]) s
+25.8 322 M (32:) s
+25.8 310 M (33:) s
+52.2 310 M
+(and string_of_memref memref = match memref with) s
+25.8 298 M (34:) s
+52.2 298 M
+(    | Absyn.Arrayref \(ident, expr\) ->) s
+25.8 286 M (35:) s
+52.2 286 M
+(          string_of_ctor "Arrayref" [quote ident; string_of_expr expr]) s
+25.8 274 M (36:) s
+52.2 274 M
+(    | Absyn.Variable ident -> string_of_ctor "Variable" [quote ident]) s
+25.8 262 M (37:) s
+25.8 250 M (38:) s
+52.2 250 M
+(and string_of_expr expr = match expr with) s
+25.8 238 M (39:) s
+52.2 238 M
+(    | Absyn.Number number ->) s
+25.8 226 M (40:) s
+52.2 226 M
+(          string_of_ctor "Number" [string_of_float number]) s
+25.8 214 M (41:) s
+52.2 214 M
+(    | Absyn.Memref memref ->) s
+25.8 202 M (42:) s
+52.2 202 M
+(          string_of_ctor "Memref" [string_of_memref memref]) s
+25.8 190 M (43:) s
+52.2 190 M
+(    | Absyn.Unary \(oper, expr\) ->) s
+25.8 178 M (44:) s
+52.2 178 M
+(          string_of_ctor "Unary" [quote oper; string_of_expr expr]) s
+25.8 166 M (45:) s
+52.2 166 M
+(    | Absyn.Binary \(oper, expr1, expr2\) ->) s
+25.8 154 M (46:) s
+52.2 154 M
+(          string_of_ctor "Binary") s
+25.8 142 M (47:) s
+52.2 142 M
+(              [quote oper; string_of_expr expr1; string_of_expr expr2]) s
+25.8 130 M (48:) s
+_R
+S
+%%Page: (2) 9
+%%BeginPageSetup
+_S
+38 24 translate
+/pagenum 2 def
+/fname (dumper.ml) def
+/fdir (.) def
+/ftail (dumper.ml) def
+% User defined strings:
+/pagenumstr (2) def
+/moddatestr (01/24/20) def
+/pagecountstr (/2) def
+/modtimestr (14:55:58) def
+/user_header_p true def
+/user_header_left_str ($cse112-wm/Assignments/asg2-ocaml-interp/code-binary) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+column_borders
+do_header
+25.8 694 M (49:) s
+25.8 682 M (50:) s
+52.2 682 M
+(let string_of_stmt \(stmt: Absyn.stmt\) = match stmt with) s
+25.8 670 M (51:) s
+52.2 670 M
+(    | Absyn.Dim \(ident, expr\) ->) s
+25.8 658 M (52:) s
+52.2 658 M
+(          string_of_ctor "Dim") s
+25.8 646 M (53:) s
+52.2 646 M
+(              [quote ident ^ ", " ^ string_of_expr expr]) s
+25.8 634 M (54:) s
+52.2 634 M
+(    | Absyn.Let \(memref, expr\) ->) s
+25.8 622 M (55:) s
+52.2 622 M
+(          string_of_ctor "Let") s
+25.8 610 M (56:) s
+52.2 610 M
+(              [string_of_memref memref; string_of_expr expr]) s
+25.8 598 M (57:) s
+52.2 598 M
+(    | Absyn.Goto label ->) s
+25.8 586 M (58:) s
+52.2 586 M
+(          string_of_ctor "Goto" [quote label]) s
+25.8 574 M (59:) s
+52.2 574 M
+(    | Absyn.If \(expr, label\) ->) s
+25.8 562 M (60:) s
+52.2 562 M
+(          string_of_ctor "If" [string_of_expr expr; quote label]) s
+25.8 550 M (61:) s
+52.2 550 M
+(    | Absyn.Print printable'list ->) s
+25.8 538 M (62:) s
+52.2 538 M
+(          string_of_ctor "Print") s
+25.8 526 M (63:) s
+52.2 526 M
+(              [string_of_list string_of_printable printable'list]) s
+25.8 514 M (64:) s
+52.2 514 M
+(    | Absyn.Input memref'list ->) s
+25.8 502 M (65:) s
+52.2 502 M
+(          string_of_ctor "Input") s
+25.8 490 M (66:) s
+52.2 490 M
+(              [string_of_list string_of_memref memref'list]) s
+25.8 478 M (67:) s
+25.8 466 M (68:) s
+52.2 466 M
+(let dump_progline \(linenr, label'option, stmt'option\) =) s
+25.8 454 M (69:) s
+52.2 454 M
+(    Printf.fprintf stderr "program: %d %s: %s\\n%!" linenr) s
+25.8 442 M (70:) s
+52.2 442 M
+(        \(string_of_option quote label'option\)) s
+25.8 430 M (71:) s
+52.2 430 M
+(        \(string_of_option string_of_stmt stmt'option\)) s
+25.8 418 M (72:) s
+25.8 406 M (73:) s
+52.2 406 M
+(let dump_program \(program : Absyn.program\) =) s
+25.8 394 M (74:) s
+52.2 394 M
+(    List.iter dump_progline program) s
+25.8 382 M (75:) s
+_R
+S
+%%Page: (1) 10
+%%BeginPageSetup
+_S
+38 24 translate
+/pagenum 1 def
+/fname (interp.mli) def
+/fdir (.) def
+/ftail (interp.mli) def
+% User defined strings:
+/pagenumstr (1) def
+/moddatestr (01/24/20) def
+/pagecountstr (/1) def
+/modtimestr (14:55:58) def
+/user_header_p true def
+/user_header_left_str ($cse112-wm/Assignments/asg2-ocaml-interp/code-binary) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+column_borders
+do_header
+32.4 694 M (1:) s
+52.2 694 M
+(\(* $Id: interp.mli,v 1.7 2020-01-24 12:57:06-08 - - $ *\)) s
+32.4 682 M (2:) s
+32.4 670 M (3:) s
+52.2 670 M
+(\(*) s
+32.4 658 M (4:) s
+52.2 658 M
+(* Interpreter for Silly Basic) s
+32.4 646 M (5:) s
+52.2 646 M
+(*\)) s
+32.4 634 M (6:) s
+32.4 622 M (7:) s
+52.2 622 M
+(val want_dump : bool ref) s
+32.4 610 M (8:) s
+32.4 598 M (9:) s
+52.2 598 M
+(val interpret_program : Absyn.program -> unit) s
+25.8 586 M (10:) s
+_R
+S
+%%Page: (1) 11
+%%BeginPageSetup
+_S
+38 24 translate
+/pagenum 1 def
+/fname (interp.ml) def
+/fdir (.) def
+/ftail (interp.ml) def
+% User defined strings:
+/pagenumstr (1) def
+/moddatestr (01/24/20) def
+/pagecountstr (/2) def
+/modtimestr (14:55:58) def
+/user_header_p true def
+/user_header_left_str ($cse112-wm/Assignments/asg2-ocaml-interp/code-binary) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+column_borders
+do_header
+32.4 694 M (1:) s
+52.2 694 M
+(\(* $Id: interp.ml,v 1.8 2020-01-24 11:42:24-08 - - $ *\)) s
+32.4 682 M (2:) s
+32.4 670 M (3:) s
+52.2 670 M
+(open Absyn) s
+32.4 658 M (4:) s
+32.4 646 M (5:) s
+52.2 646 M
+(exception Unimplemented of string) s
+32.4 634 M (6:) s
+52.2 634 M
+(let no_expr reason = raise \(Unimplemented reason\)) s
+32.4 622 M (7:) s
+52.2 622 M
+(let no_stmt reason continuation = raise \(Unimplemented reason\)) s
+32.4 610 M (8:) s
+32.4 598 M (9:) s
+52.2 598 M
+(let want_dump = ref false) s
+25.8 586 M (10:) s
+25.8 574 M (11:) s
+52.2 574 M
+(let rec eval_expr \(expr : Absyn.expr\) : float = match expr with) s
+25.8 562 M (12:) s
+52.2 562 M
+(    | Number number -> number) s
+25.8 550 M (13:) s
+52.2 550 M
+(    | Memref memref -> no_expr "eval_expr Memref") s
+25.8 538 M (14:) s
+52.2 538 M
+(    | Unary \(oper, expr\) -> no_expr "eval_expr Unary") s
+25.8 526 M (15:) s
+52.2 526 M
+(    | Binary \(oper, expr1, expr2\) -> no_expr "eval_expr Binary") s
+25.8 514 M (16:) s
+25.8 502 M (17:) s
+52.2 502 M
+(let rec interpret \(program : Absyn.program\) = match program with) s
+25.8 490 M (18:) s
+52.2 490 M
+(    | [] -> \(\)) s
+25.8 478 M (19:) s
+52.2 478 M
+(    | firstline::continuation -> match firstline with) s
+25.8 466 M (20:) s
+52.2 466 M
+(      | _, _, None -> interpret continuation) s
+25.8 454 M (21:) s
+52.2 454 M
+(      | _, _, Some stmt -> \(interp_stmt stmt continuation\)) s
+25.8 442 M (22:) s
+25.8 430 M (23:) s
+52.2 430 M
+(and interp_stmt \(stmt : Absyn.stmt\) \(continuation : Absyn.program\) =) s
+25.8 418 M (24:) s
+52.2 418 M
+(    match stmt with) s
+25.8 406 M (25:) s
+52.2 406 M
+(    | Dim \(ident, expr\) -> no_stmt "Dim \(ident, expr\)" continuation) s
+25.8 394 M (26:) s
+52.2 394 M
+(    | Let \(memref, expr\) -> no_stmt "Let \(memref, expr\)" continuation) s
+25.8 382 M (27:) s
+52.2 382 M
+(    | Goto label -> no_stmt "Goto label" continuation) s
+25.8 370 M (28:) s
+52.2 370 M
+(    | If \(expr, label\) -> no_stmt "If \(expr, label\)" continuation) s
+25.8 358 M (29:) s
+52.2 358 M
+(    | Print print_list -> interp_print print_list continuation) s
+25.8 346 M (30:) s
+52.2 346 M
+(    | Input memref_list -> interp_input memref_list continuation) s
+25.8 334 M (31:) s
+25.8 322 M (32:) s
+52.2 322 M
+(and interp_print \(print_list : Absyn.printable list\)) s
+25.8 310 M (33:) s
+52.2 310 M
+(                 \(continuation : Absyn.program\) =) s
+25.8 298 M (34:) s
+52.2 298 M
+(    let print_item item =) s
+25.8 286 M (35:) s
+52.2 286 M
+(        \(print_string " ";) s
+25.8 274 M (36:) s
+52.2 274 M
+(         match item with) s
+25.8 262 M (37:) s
+52.2 262 M
+(         | String string ->) s
+25.8 250 M (38:) s
+52.2 250 M
+(           let regex = Str.regexp "\\"\\\\\(.*\\\\\)\\"") s
+25.8 238 M (39:) s
+52.2 238 M
+(           in print_string \(Str.replace_first regex "\\\\1" string\)) s
+25.8 226 M (40:) s
+52.2 226 M
+(         | Printexpr expr ->) s
+25.8 214 M (41:) s
+52.2 214 M
+(           print_float \(eval_expr expr\)\)) s
+25.8 202 M (42:) s
+52.2 202 M
+(    in \(List.iter print_item print_list; print_newline \(\)\);) s
+25.8 190 M (43:) s
+52.2 190 M
+(    interpret continuation) s
+25.8 178 M (44:) s
+25.8 166 M (45:) s
+52.2 166 M
+(and interp_input \(memref_list : Absyn.memref list\)) s
+25.8 154 M (46:) s
+52.2 154 M
+(                 \(continuation : Absyn.program\)  =) s
+25.8 142 M (47:) s
+52.2 142 M
+(    let input_number memref =) s
+25.8 130 M (48:) s
+52.2 130 M
+(        try  let number = Etc.read_number \(\)) s
+25.8 118 M (49:) s
+52.2 118 M
+(             in \(print_float number; print_newline \(\)\)) s
+25.8 106 M (50:) s
+52.2 106 M
+(        with End_of_file -> ) s
+25.8 94 M (51:) s
+52.2 94 M
+(             \(print_string "End_of_file"; print_newline \(\)\)) s
+25.8 82 M (52:) s
+52.2 82 M
+(    in List.iter input_number memref_list;) s
+25.8 70 M (53:) s
+52.2 70 M
+(    interpret continuation) s
+25.8 58 M (54:) s
+25.8 46 M (55:) s
+52.2 46 M
+(let interpret_program program =) s
+25.8 34 M (56:) s
+52.2 34 M
+(    \(Tables.init_label_table program; ) s
+25.8 22 M (57:) s
+52.2 22 M
+(     if !want_dump then Tables.dump_label_table \(\);) s
+25.8 10 M (58:) s
+52.2 10 M
+(     if !want_dump then Dumper.dump_program program;) s
+_R
+S
+%%Page: (2) 12
+%%BeginPageSetup
+_S
+38 24 translate
+/pagenum 2 def
+/fname (interp.ml) def
+/fdir (.) def
+/ftail (interp.ml) def
+% User defined strings:
+/pagenumstr (2) def
+/moddatestr (01/24/20) def
+/pagecountstr (/2) def
+/modtimestr (14:55:58) def
+/user_header_p true def
+/user_header_left_str ($cse112-wm/Assignments/asg2-ocaml-interp/code-binary) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+column_borders
+do_header
+25.8 694 M (59:) s
+52.2 694 M
+(     interpret program\)) s
+25.8 682 M (60:) s
+_R
+S
+%%Page: (1) 13
+%%BeginPageSetup
+_S
+38 24 translate
+/pagenum 1 def
+/fname (main.ml) def
+/fdir (.) def
+/ftail (main.ml) def
+% User defined strings:
+/pagenumstr (1) def
+/moddatestr (01/24/20) def
+/pagecountstr (/1) def
+/modtimestr (14:55:58) def
+/user_header_p true def
+/user_header_left_str ($cse112-wm/Assignments/asg2-ocaml-interp/code-binary) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+column_borders
+do_header
+32.4 694 M (1:) s
+52.2 694 M
+(\(* $Id: main.ml,v 1.3 2020-01-24 12:57:06-08 - - $ *\)) s
+32.4 682 M (2:) s
+32.4 670 M (3:) s
+52.2 670 M
+(\(*) s
+32.4 658 M (4:) s
+52.2 658 M
+(* Main program reads a file and prints to stdout.) s
+32.4 646 M (5:) s
+52.2 646 M
+(*\)) s
+32.4 634 M (6:) s
+32.4 622 M (7:) s
+52.2 622 M
+(let interpret_source filename =) s
+32.4 610 M (8:) s
+52.2 610 M
+(    try \(let sourcefile =) s
+32.4 598 M (9:) s
+52.2 598 M
+(             if filename = "-") s
+25.8 586 M (10:) s
+52.2 586 M
+(             then stdin) s
+25.8 574 M (11:) s
+52.2 574 M
+(             else open_in filename in) s
+25.8 562 M (12:) s
+52.2 562 M
+(         let lexbuf = Lexing.from_channel sourcefile in) s
+25.8 550 M (13:) s
+52.2 550 M
+(         let abstract_syntax = Parser.program Scanner.token lexbuf in) s
+25.8 538 M (14:) s
+52.2 538 M
+(         Interp.interpret_program abstract_syntax\)) s
+25.8 526 M (15:) s
+52.2 526 M
+(    with Sys_error \(string\) -> Etc.die [string]) s
+25.8 514 M (16:) s
+25.8 502 M (17:) s
+52.2 502 M
+(let _ = if !Sys.interactive) s
+25.8 490 M (18:) s
+52.2 490 M
+(        then \(\)) s
+25.8 478 M (19:) s
+52.2 478 M
+(        else match Array.length Sys.argv with) s
+25.8 466 M (20:) s
+52.2 466 M
+(             | 1 -> interpret_source "-") s
+25.8 454 M (21:) s
+52.2 454 M
+(             | 2 -> interpret_source Sys.argv.\(1\)) s
+25.8 442 M (22:) s
+52.2 442 M
+(             | _ -> Etc.usage_exit ["[filename.sb]"]) s
+25.8 430 M (23:) s
+_R
+S
+%%Page: (1) 14
+%%BeginPageSetup
+_S
+38 24 translate
+/pagenum 1 def
+/fname (parser.mly) def
+/fdir (.) def
+/ftail (parser.mly) def
+% User defined strings:
+/pagenumstr (1) def
+/moddatestr (01/24/20) def
+/pagecountstr (/2) def
+/modtimestr (14:55:58) def
+/user_header_p true def
+/user_header_left_str ($cse112-wm/Assignments/asg2-ocaml-interp/code-binary) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+column_borders
+do_header
+32.4 694 M (1:) s
+52.2 694 M
+(/* $Id: parser.mly,v 1.2 2019-01-25 16:49:38-08 - - $ */) s
+32.4 682 M (2:) s
+32.4 670 M (3:) s
+52.2 670 M
+(%{) s
+32.4 658 M (4:) s
+32.4 646 M (5:) s
+52.2 646 M
+(let linenr \(\) = \(symbol_start_pos \(\)\).Lexing.pos_lnum) s
+32.4 634 M (6:) s
+32.4 622 M (7:) s
+52.2 622 M
+(let syntax \(\) = Etc.syntax_error \(symbol_start_pos \(\)\) ["syntax error"]) s
+32.4 610 M (8:) s
+32.4 598 M (9:) s
+52.2 598 M
+(%}) s
+25.8 586 M (10:) s
+25.8 574 M (11:) s
+52.2 574 M
+(%token <string> RELOP EQUAL ADDOP MULOP POWOP) s
+25.8 562 M (12:) s
+52.2 562 M
+(%token <string> IDENT NUMBER STRING) s
+25.8 550 M (13:) s
+52.2 550 M
+(%token COLON COMMA LPAR RPAR LSUB RSUB EOL EOF) s
+25.8 538 M (14:) s
+52.2 538 M
+(%token DIM LET GOTO IF PRINT INPUT) s
+25.8 526 M (15:) s
+25.8 514 M (16:) s
+52.2 514 M
+(%type <Absyn.program> program) s
+25.8 502 M (17:) s
+25.8 490 M (18:) s
+52.2 490 M
+(%start program) s
+25.8 478 M (19:) s
+25.8 466 M (20:) s
+52.2 466 M
+(%%) s
+25.8 454 M (21:) s
+25.8 442 M (22:) s
+52.2 442 M
+(program    : stmt_list EOF           {List.rev $1}) s
+25.8 430 M (23:) s
+25.8 418 M (24:) s
+52.2 418 M
+(stmt_list  : stmt_list stmt EOL      {$2::$1}) s
+25.8 406 M (25:) s
+52.2 406 M
+(           | stmt_list error EOL     {syntax \(\); $1}) s
+25.8 394 M (26:) s
+52.2 394 M
+(           |                         {[]}) s
+25.8 382 M (27:) s
+25.8 370 M (28:) s
+52.2 370 M
+(stmt       : label action            {\(linenr \(\), Some $1, Some $2\)}) s
+25.8 358 M (29:) s
+52.2 358 M
+(           | action                  {\(linenr \(\), None, Some $1\)}) s
+25.8 346 M (30:) s
+52.2 346 M
+(           | label                   {\(linenr \(\), Some $1, None\)}) s
+25.8 334 M (31:) s
+52.2 334 M
+(           |                         {\(linenr \(\), None, None\)}) s
+25.8 322 M (32:) s
+25.8 310 M (33:) s
+52.2 310 M
+(label      : IDENT COLON             {$1}) s
+25.8 298 M (34:) s
+25.8 286 M (35:) s
+52.2 286 M
+(action     : DIM IDENT LSUB expr RSUB {Absyn.Dim \($2, $4\)}) s
+25.8 274 M (36:) s
+52.2 274 M
+(           | LET memref EQUAL expr   {Absyn.Let \($2, $4\)}) s
+25.8 262 M (37:) s
+52.2 262 M
+(           | GOTO IDENT              {Absyn.Goto $2}) s
+25.8 250 M (38:) s
+52.2 250 M
+(           | IF relexpr GOTO IDENT   {Absyn.If \($2, $4\)}) s
+25.8 238 M (39:) s
+52.2 238 M
+(           | PRINT print_list        {Absyn.Print $2}) s
+25.8 226 M (40:) s
+52.2 226 M
+(           | PRINT                   {Absyn.Print \([]\)}) s
+25.8 214 M (41:) s
+52.2 214 M
+(           | INPUT input_list        {Absyn.Input $2}) s
+25.8 202 M (42:) s
+25.8 190 M (43:) s
+52.2 190 M
+(print_list : print COMMA print_list  {$1::$3}) s
+25.8 178 M (44:) s
+52.2 178 M
+(           | print                   {[$1]}) s
+25.8 166 M (45:) s
+25.8 154 M (46:) s
+52.2 154 M
+(print      : expr                    {Absyn.Printexpr $1}) s
+25.8 142 M (47:) s
+52.2 142 M
+(           | STRING                  {Absyn.String $1}) s
+25.8 130 M (48:) s
+25.8 118 M (49:) s
+52.2 118 M
+(input_list : memref COMMA input_list {$1::$3}) s
+25.8 106 M (50:) s
+52.2 106 M
+(           | memref                  {[$1]}) s
+25.8 94 M (51:) s
+_R
+S
+%%Page: (2) 15
+%%BeginPageSetup
+_S
+38 24 translate
+/pagenum 2 def
+/fname (parser.mly) def
+/fdir (.) def
+/ftail (parser.mly) def
+% User defined strings:
+/pagenumstr (2) def
+/moddatestr (01/24/20) def
+/pagecountstr (/2) def
+/modtimestr (14:55:58) def
+/user_header_p true def
+/user_header_left_str ($cse112-wm/Assignments/asg2-ocaml-interp/code-binary) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+column_borders
+do_header
+25.8 694 M (52:) s
+25.8 682 M (53:) s
+52.2 682 M
+(memref     : IDENT                   {Absyn.Variable $1}) s
+25.8 670 M (54:) s
+52.2 670 M
+(           | IDENT LSUB expr RSUB    {Absyn.Arrayref \($1, $3\)}) s
+25.8 658 M (55:) s
+25.8 646 M (56:) s
+52.2 646 M
+(relexpr    : expr RELOP expr         {Absyn.Binary \($2, $1, $3\)}) s
+25.8 634 M (57:) s
+52.2 634 M
+(           | expr EQUAL expr         {Absyn.Binary \($2, $1, $3\)}) s
+25.8 622 M (58:) s
+25.8 610 M (59:) s
+52.2 610 M
+(expr       : expr ADDOP term         {Absyn.Binary \($2, $1, $3\)}) s
+25.8 598 M (60:) s
+52.2 598 M
+(           | term                    {$1}) s
+25.8 586 M (61:) s
+25.8 574 M (62:) s
+52.2 574 M
+(term       : term MULOP factor       {Absyn.Binary \($2, $1, $3\)}) s
+25.8 562 M (63:) s
+52.2 562 M
+(           | factor                  {$1}) s
+25.8 550 M (64:) s
+25.8 538 M (65:) s
+52.2 538 M
+(factor     : primary POWOP factor    {Absyn.Binary \($2, $1, $3\)}) s
+25.8 526 M (66:) s
+52.2 526 M
+(           | primary                 {$1}) s
+25.8 514 M (67:) s
+25.8 502 M (68:) s
+52.2 502 M
+(primary    : LPAR expr RPAR          {$2}) s
+25.8 490 M (69:) s
+52.2 490 M
+(           | ADDOP primary           {Absyn.Unary \($1, $2\)}) s
+25.8 478 M (70:) s
+52.2 478 M
+(           | NUMBER                  {Absyn.Number \(float_of_string $1\)}) s
+25.8 466 M (71:) s
+52.2 466 M
+(           | memref                  {Absyn.Memref $1}) s
+25.8 454 M (72:) s
+52.2 454 M
+(           | IDENT LPAR expr RPAR    {Absyn.Unary \($1, $3\)}) s
+25.8 442 M (73:) s
+_R
+S
+%%Page: (1) 16
+%%BeginPageSetup
+_S
+38 24 translate
+/pagenum 1 def
+/fname (scanner.mll) def
+/fdir (.) def
+/ftail (scanner.mll) def
+% User defined strings:
+/pagenumstr (1) def
+/moddatestr (01/24/20) def
+/pagecountstr (/2) def
+/modtimestr (14:55:58) def
+/user_header_p true def
+/user_header_left_str ($cse112-wm/Assignments/asg2-ocaml-interp/code-binary) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+column_borders
+do_header
+32.4 694 M (1:) s
+52.2 694 M
+(\(* $Id: scanner.mll,v 1.2 2019-11-26 14:09:51-08 - - $ *\)) s
+32.4 682 M (2:) s
+32.4 670 M (3:) s
+52.2 670 M
+({) s
+32.4 658 M (4:) s
+32.4 646 M (5:) s
+52.2 646 M
+(let lexerror lexbuf =) s
+32.4 634 M (6:) s
+52.2 634 M
+(    Etc.syntax_error \(Lexing.lexeme_start_p lexbuf\)) s
+32.4 622 M (7:) s
+52.2 622 M
+(            ["invalid character `" ^ \(Lexing.lexeme lexbuf\) ^ "'"]) s
+32.4 610 M (8:) s
+32.4 598 M (9:) s
+52.2 598 M
+(let newline lexbuf =) s
+25.8 586 M (10:) s
+52.2 586 M
+(    let incr pos =) s
+25.8 574 M (11:) s
+52.2 574 M
+(        {pos with Lexing.pos_lnum = pos.Lexing.pos_lnum + 1;) s
+25.8 562 M (12:) s
+52.2 562 M
+(                  Lexing.pos_bol = pos.Lexing.pos_cnum}) s
+25.8 550 M (13:) s
+52.2 550 M
+(    in  \(lexbuf.Lexing.lex_start_p <- incr lexbuf.Lexing.lex_start_p;) s
+25.8 538 M (14:) s
+52.2 538 M
+(         lexbuf.Lexing.lex_curr_p <- incr lexbuf.Lexing.lex_curr_p\)) s
+25.8 526 M (15:) s
+25.8 514 M (16:) s
+52.2 514 M
+(let lexeme = Lexing.lexeme) s
+25.8 502 M (17:) s
+25.8 490 M (18:) s
+52.2 490 M
+(}) s
+25.8 478 M (19:) s
+25.8 466 M (20:) s
+52.2 466 M
+(let letter          = ['a'-'z' 'A'-'Z' '_']) s
+25.8 454 M (21:) s
+52.2 454 M
+(let digit           = ['0'-'9']) s
+25.8 442 M (22:) s
+52.2 442 M
+(let fraction        = \(digit+ '.'? digit* | '.' digit+\)) s
+25.8 430 M (23:) s
+52.2 430 M
+(let exponent        = \(['E' 'e'] ['+' '-']? digit+\)) s
+25.8 418 M (24:) s
+25.8 406 M (25:) s
+52.2 406 M
+(let comment         = \('#' [^'\\n']*\)) s
+25.8 394 M (26:) s
+52.2 394 M
+(let ident           = \(letter \(letter | digit\)*\)) s
+25.8 382 M (27:) s
+52.2 382 M
+(let number          = \(fraction exponent?\)) s
+25.8 370 M (28:) s
+52.2 370 M
+(let string          = '"' [^'\\n' '"']* '"') s
+25.8 358 M (29:) s
+_R
+S
+%%Page: (2) 17
+%%BeginPageSetup
+_S
+38 24 translate
+/pagenum 2 def
+/fname (scanner.mll) def
+/fdir (.) def
+/ftail (scanner.mll) def
+% User defined strings:
+/pagenumstr (2) def
+/moddatestr (01/24/20) def
+/pagecountstr (/2) def
+/modtimestr (14:55:58) def
+/user_header_p true def
+/user_header_left_str ($cse112-wm/Assignments/asg2-ocaml-interp/code-binary) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+column_borders
+do_header
+25.8 694 M (30:) s
+25.8 682 M (31:) s
+52.2 682 M
+(rule token     = parse) s
+25.8 670 M (32:) s
+52.2 670 M
+(    | eof           { Parser.EOF }) s
+25.8 658 M (33:) s
+52.2 658 M
+(    | [' ' '\\t']    { token lexbuf }) s
+25.8 646 M (34:) s
+52.2 646 M
+(    | comment       { token lexbuf }) s
+25.8 634 M (35:) s
+52.2 634 M
+(    | "\\n"          { newline lexbuf; Parser.EOL }) s
+25.8 622 M (36:) s
+52.2 622 M
+(    | ":"           { Parser.COLON }) s
+25.8 610 M (37:) s
+52.2 610 M
+(    | ","           { Parser.COMMA }) s
+25.8 598 M (38:) s
+52.2 598 M
+(    | "\("           { Parser.LPAR }) s
+25.8 586 M (39:) s
+52.2 586 M
+(    | "\)"           { Parser.RPAR }) s
+25.8 574 M (40:) s
+52.2 574 M
+(    | "["           { Parser.LSUB }) s
+25.8 562 M (41:) s
+52.2 562 M
+(    | "]"           { Parser.RSUB }) s
+25.8 550 M (42:) s
+52.2 550 M
+(    | "="           { Parser.EQUAL \(lexeme lexbuf\) }) s
+25.8 538 M (43:) s
+52.2 538 M
+(    | "!="          { Parser.RELOP \(lexeme lexbuf\) }) s
+25.8 526 M (44:) s
+52.2 526 M
+(    | "<"           { Parser.RELOP \(lexeme lexbuf\) }) s
+25.8 514 M (45:) s
+52.2 514 M
+(    | "<="          { Parser.RELOP \(lexeme lexbuf\) }) s
+25.8 502 M (46:) s
+52.2 502 M
+(    | ">"           { Parser.RELOP \(lexeme lexbuf\) }) s
+25.8 490 M (47:) s
+52.2 490 M
+(    | ">="          { Parser.RELOP \(lexeme lexbuf\) }) s
+25.8 478 M (48:) s
+52.2 478 M
+(    | "+"           { Parser.ADDOP \(lexeme lexbuf\) }) s
+25.8 466 M (49:) s
+52.2 466 M
+(    | "-"           { Parser.ADDOP \(lexeme lexbuf\) }) s
+25.8 454 M (50:) s
+52.2 454 M
+(    | "*"           { Parser.MULOP \(lexeme lexbuf\) }) s
+25.8 442 M (51:) s
+52.2 442 M
+(    | "/"           { Parser.MULOP \(lexeme lexbuf\) }) s
+25.8 430 M (52:) s
+52.2 430 M
+(    | "%"           { Parser.MULOP \(lexeme lexbuf\) }) s
+25.8 418 M (53:) s
+52.2 418 M
+(    | "^"           { Parser.POWOP \(lexeme lexbuf\) }) s
+25.8 406 M (54:) s
+52.2 406 M
+(    | "dim"         { Parser.DIM }) s
+25.8 394 M (55:) s
+52.2 394 M
+(    | "goto"        { Parser.GOTO }) s
+25.8 382 M (56:) s
+52.2 382 M
+(    | "if"          { Parser.IF }) s
+25.8 370 M (57:) s
+52.2 370 M
+(    | "input"       { Parser.INPUT }) s
+25.8 358 M (58:) s
+52.2 358 M
+(    | "let"         { Parser.LET }) s
+25.8 346 M (59:) s
+52.2 346 M
+(    | "print"       { Parser.PRINT }) s
+25.8 334 M (60:) s
+52.2 334 M
+(    | number        { Parser.NUMBER \(lexeme lexbuf\) }) s
+25.8 322 M (61:) s
+52.2 322 M
+(    | string        { Parser.STRING \(lexeme lexbuf\) }) s
+25.8 310 M (62:) s
+52.2 310 M
+(    | ident         { Parser.IDENT \(lexeme lexbuf\) }) s
+25.8 298 M (63:) s
+52.2 298 M
+(    | _             { lexerror lexbuf; token lexbuf }) s
+25.8 286 M (64:) s
+_R
+S
+%%Page: (1) 18
+%%BeginPageSetup
+_S
+38 24 translate
+/pagenum 1 def
+/fname (Makefile) def
+/fdir (.) def
+/ftail (Makefile) def
+% User defined strings:
+/pagenumstr (1) def
+/moddatestr (01/24/20) def
+/pagecountstr (/2) def
+/modtimestr (14:55:58) def
+/user_header_p true def
+/user_header_left_str ($cse112-wm/Assignments/asg2-ocaml-interp/code-binary) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+column_borders
+do_header
+32.4 694 M (1:) s
+52.2 694 M
+(# $Id: Makefile,v 1.15 2020-01-24 12:54:40-08 - - $) s
+32.4 682 M (2:) s
+32.4 670 M (3:) s
+52.2 670 M
+(#) s
+32.4 658 M (4:) s
+52.2 658 M
+(# General useful macros) s
+32.4 646 M (5:) s
+52.2 646 M
+(#) s
+32.4 634 M (6:) s
+32.4 622 M (7:) s
+52.2 622 M
+(MKFILE     = Makefile) s
+32.4 610 M (8:) s
+52.2 610 M
+(MAKEFLAGS += --no-builtin-rules) s
+32.4 598 M (9:) s
+52.2 598 M
+(DEPSFILE   = ${MKFILE}.deps) s
+25.8 586 M (10:) s
+52.2 586 M
+(NOINCLUDE  = ci clean spotless) s
+25.8 574 M (11:) s
+52.2 574 M
+(NEEDINCL   = ${filter ${NOINCLUDE}, ${MAKECMDGOALS}}) s
+25.8 562 M (12:) s
+52.2 562 M
+(GMAKE      = ${MAKE} --no-print-directory) s
+25.8 550 M (13:) s
+52.2 550 M
+(OCAMLOPT   = ocamlopt -g) s
+25.8 538 M (14:) s
+25.8 526 M (15:) s
+52.2 526 M
+(#) s
+25.8 514 M (16:) s
+52.2 514 M
+(# File macros) s
+25.8 502 M (17:) s
+52.2 502 M
+(#) s
+25.8 490 M (18:) s
+25.8 478 M (19:) s
+52.2 478 M
+(EXECBIN    = sbinterp) s
+25.8 466 M (20:) s
+52.2 466 M
+(OBJCMX     = etc.cmx parser.cmx scanner.cmx tables.cmx \\) s
+25.8 454 M (21:) s
+52.2 454 M
+(             dumper.cmx interp.cmx main.cmx) s
+25.8 442 M (22:) s
+52.2 442 M
+(OBJCMI     = ${OBJCMX:.cmx=.cmi} absyn.cmi) s
+25.8 430 M (23:) s
+52.2 430 M
+(OBJBIN     = ${OBJCMX:.cmx=.o}) s
+25.8 418 M (24:) s
+52.2 418 M
+(MLSOURCE   = absyn.mli etc.mli etc.ml tables.mli tables.ml \\) s
+25.8 406 M (25:) s
+52.2 406 M
+(             dumper.mli dumper.ml interp.mli interp.ml main.ml) s
+25.8 394 M (26:) s
+52.2 394 M
+(GENLEXYACC = parser.mli parser.ml scanner.ml) s
+25.8 382 M (27:) s
+52.2 382 M
+(GENSOURCE  = dumper.mli tables.mli ${GENLEXYACC}) s
+25.8 370 M (28:) s
+52.2 370 M
+(GENFILES   = ${GENSOURCE} parser.output ${DEPSFILE}) s
+25.8 358 M (29:) s
+52.2 358 M
+(OTHERFILES = ${MKFILE} ${DEPSFILE} using .ocamlinit) s
+25.8 346 M (30:) s
+52.2 346 M
+(ALLSOURCES = ${MLSOURCE} parser.mly scanner.mll ${OTHERFILES}) s
+25.8 334 M (31:) s
+52.2 334 M
+(LISTING    = Listing.ps) s
+25.8 322 M (32:) s
+25.8 310 M (33:) s
+52.2 310 M
+(#) s
+25.8 298 M (34:) s
+52.2 298 M
+(# General targets) s
+25.8 286 M (35:) s
+52.2 286 M
+(#) s
+25.8 274 M (36:) s
+25.8 262 M (37:) s
+52.2 262 M
+(all : ${EXECBIN}) s
+25.8 250 M (38:) s
+25.8 238 M (39:) s
+52.2 238 M
+(${EXECBIN} : ${OBJCMX}) s
+25.8 226 M (40:) s
+52.2 226 M
+(        ${OCAMLOPT} str.cmxa ${OBJCMX} -o ${EXECBIN}) s
+25.8 214 M (41:) s
+25.8 202 M (42:) s
+52.2 202 M
+(%.cmi : %.mli) s
+25.8 190 M (43:) s
+52.2 190 M
+(        ${OCAMLOPT} -c $<) s
+25.8 178 M (44:) s
+25.8 166 M (45:) s
+52.2 166 M
+(%.cmx : %.ml) s
+25.8 154 M (46:) s
+52.2 154 M
+(        ${OCAMLOPT} -c $<) s
+25.8 142 M (47:) s
+25.8 130 M (48:) s
+52.2 130 M
+(%.ml : %.mll) s
+25.8 118 M (49:) s
+52.2 118 M
+(        ocamllex $<) s
+25.8 106 M (50:) s
+25.8 94 M (51:) s
+52.2 94 M
+(%.mli %.ml : %.mly) s
+25.8 82 M (52:) s
+52.2 82 M
+(        ocamlyacc -v $<) s
+25.8 70 M (53:) s
+_R
+S
+%%Page: (2) 19
+%%BeginPageSetup
+_S
+38 24 translate
+/pagenum 2 def
+/fname (Makefile) def
+/fdir (.) def
+/ftail (Makefile) def
+% User defined strings:
+/pagenumstr (2) def
+/moddatestr (01/24/20) def
+/pagecountstr (/2) def
+/modtimestr (14:55:58) def
+/user_header_p true def
+/user_header_left_str ($cse112-wm/Assignments/asg2-ocaml-interp/code-binary) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+column_borders
+do_header
+25.8 694 M (54:) s
+25.8 682 M (55:) s
+52.2 682 M
+(MAKEMLI    = \(echo "\(* Generated: $$\(date\) *\)"; ${OCAMLOPT} -i $<\) >$@) s
+25.8 670 M (56:) s
+25.8 658 M (57:) s
+52.2 658 M
+(tables.mli : tables.ml absyn.cmi) s
+25.8 646 M (58:) s
+52.2 646 M
+(        ${call MAKEMLI}) s
+25.8 634 M (59:) s
+25.8 622 M (60:) s
+52.2 622 M
+(dumper.mli : dumper.ml absyn.cmi) s
+25.8 610 M (61:) s
+52.2 610 M
+(        ${call MAKEMLI}) s
+25.8 598 M (62:) s
+25.8 586 M (63:) s
+52.2 586 M
+(#) s
+25.8 574 M (64:) s
+52.2 574 M
+(# Misc targets) s
+25.8 562 M (65:) s
+52.2 562 M
+(#) s
+25.8 550 M (66:) s
+25.8 538 M (67:) s
+52.2 538 M
+(clean :) s
+25.8 526 M (68:) s
+52.2 526 M
+(        - rm ${OBJCMI} ${OBJCMX} ${OBJBIN} ${GENSOURCE}) s
+25.8 514 M (69:) s
+25.8 502 M (70:) s
+52.2 502 M
+(spotless : clean) s
+25.8 490 M (71:) s
+52.2 490 M
+(        - rm ${EXECBIN} ${GENFILES} ${LISTING} ${LISTING:.ps=.pdf} ) s
+25.8 478 M (72:) s
+25.8 466 M (73:) s
+52.2 466 M
+(ci : ${ALLSOURCES}) s
+25.8 454 M (74:) s
+52.2 454 M
+(        - checksource ${ALLSOURCES}) s
+25.8 442 M (75:) s
+52.2 442 M
+(        cid + ${ALLSOURCES}) s
+25.8 430 M (76:) s
+25.8 418 M (77:) s
+52.2 418 M
+(deps : ${MLSOURCE} ${GENSOURCE}) s
+25.8 406 M (78:) s
+52.2 406 M
+(        @ echo "# Generated: $$\(date\)" >${DEPSFILE}) s
+25.8 394 M (79:) s
+52.2 394 M
+(        ocamldep ${MLSOURCE} ${GENSOURCE} >>${DEPSFILE}) s
+25.8 382 M (80:) s
+25.8 370 M (81:) s
+52.2 370 M
+(${DEPSFILE} : tables.mli) s
+25.8 358 M (82:) s
+52.2 358 M
+(        @touch ${DEPSFILE}) s
+25.8 346 M (83:) s
+52.2 346 M
+(        ${GMAKE} deps) s
+25.8 334 M (84:) s
+25.8 322 M (85:) s
+52.2 322 M
+(lis : ${ALLSOURCES}) s
+25.8 310 M (86:) s
+52.2 310 M
+(        mkpspdf ${LISTING} ${ALLSOURCES}) s
+25.8 298 M (87:) s
+25.8 286 M (88:) s
+52.2 286 M
+(again :) s
+25.8 274 M (89:) s
+52.2 274 M
+(        ${GMAKE} spotless) s
+25.8 262 M (90:) s
+52.2 262 M
+(        ${GMAKE} deps) s
+25.8 250 M (91:) s
+52.2 250 M
+(        ${GMAKE} ci) s
+25.8 238 M (92:) s
+52.2 238 M
+(        ${GMAKE} all) s
+25.8 226 M (93:) s
+52.2 226 M
+(        ${GMAKE} lis) s
+25.8 214 M (94:) s
+25.8 202 M (95:) s
+52.2 202 M
+(ifeq "${NEEDINCL}" "") s
+25.8 190 M (96:) s
+52.2 190 M
+(include ${DEPSFILE}) s
+25.8 178 M (97:) s
+52.2 178 M
+(endif) s
+25.8 166 M (98:) s
+_R
+S
+%%Page: (1) 20
+%%BeginPageSetup
+_S
+38 24 translate
+/pagenum 1 def
+/fname (Makefile.deps) def
+/fdir (.) def
+/ftail (Makefile.deps) def
+% User defined strings:
+/pagenumstr (1) def
+/moddatestr (01/24/20) def
+/pagecountstr (/2) def
+/modtimestr (14:55:58) def
+/user_header_p true def
+/user_header_left_str ($cse112-wm/Assignments/asg2-ocaml-interp/code-binary) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+column_borders
+do_header
+32.4 694 M (1:) s
+52.2 694 M
+(# Generated: Fri Jan 24 14:55:58 PST 2020) s
+32.4 682 M (2:) s
+52.2 682 M
+(absyn.cmi :) s
+32.4 670 M (3:) s
+52.2 670 M
+(dumper.cmo : \\) s
+32.4 658 M (4:) s
+52.2 658 M
+(    absyn.cmi \\) s
+32.4 646 M (5:) s
+52.2 646 M
+(    dumper.cmi) s
+32.4 634 M (6:) s
+52.2 634 M
+(dumper.cmx : \\) s
+32.4 622 M (7:) s
+52.2 622 M
+(    absyn.cmi \\) s
+32.4 610 M (8:) s
+52.2 610 M
+(    dumper.cmi) s
+32.4 598 M (9:) s
+52.2 598 M
+(dumper.cmi : \\) s
+25.8 586 M (10:) s
+52.2 586 M
+(    absyn.cmi) s
+25.8 574 M (11:) s
+52.2 574 M
+(dumper.cmi : \\) s
+25.8 562 M (12:) s
+52.2 562 M
+(    absyn.cmi) s
+25.8 550 M (13:) s
+52.2 550 M
+(etc.cmo : \\) s
+25.8 538 M (14:) s
+52.2 538 M
+(    etc.cmi) s
+25.8 526 M (15:) s
+52.2 526 M
+(etc.cmx : \\) s
+25.8 514 M (16:) s
+52.2 514 M
+(    etc.cmi) s
+25.8 502 M (17:) s
+52.2 502 M
+(etc.cmi :) s
+25.8 490 M (18:) s
+52.2 490 M
+(interp.cmo : \\) s
+25.8 478 M (19:) s
+52.2 478 M
+(    tables.cmi \\) s
+25.8 466 M (20:) s
+52.2 466 M
+(    etc.cmi \\) s
+25.8 454 M (21:) s
+52.2 454 M
+(    dumper.cmi \\) s
+25.8 442 M (22:) s
+52.2 442 M
+(    absyn.cmi \\) s
+25.8 430 M (23:) s
+52.2 430 M
+(    interp.cmi) s
+25.8 418 M (24:) s
+52.2 418 M
+(interp.cmx : \\) s
+25.8 406 M (25:) s
+52.2 406 M
+(    tables.cmx \\) s
+25.8 394 M (26:) s
+52.2 394 M
+(    etc.cmx \\) s
+25.8 382 M (27:) s
+52.2 382 M
+(    dumper.cmx \\) s
+25.8 370 M (28:) s
+52.2 370 M
+(    absyn.cmi \\) s
+25.8 358 M (29:) s
+52.2 358 M
+(    interp.cmi) s
+25.8 346 M (30:) s
+52.2 346 M
+(interp.cmi : \\) s
+25.8 334 M (31:) s
+52.2 334 M
+(    absyn.cmi) s
+25.8 322 M (32:) s
+52.2 322 M
+(main.cmo : \\) s
+25.8 310 M (33:) s
+52.2 310 M
+(    scanner.cmo \\) s
+25.8 298 M (34:) s
+52.2 298 M
+(    parser.cmi \\) s
+25.8 286 M (35:) s
+52.2 286 M
+(    interp.cmi \\) s
+25.8 274 M (36:) s
+52.2 274 M
+(    etc.cmi) s
+25.8 262 M (37:) s
+52.2 262 M
+(main.cmx : \\) s
+25.8 250 M (38:) s
+52.2 250 M
+(    scanner.cmx \\) s
+25.8 238 M (39:) s
+52.2 238 M
+(    parser.cmx \\) s
+25.8 226 M (40:) s
+52.2 226 M
+(    interp.cmx \\) s
+25.8 214 M (41:) s
+52.2 214 M
+(    etc.cmx) s
+25.8 202 M (42:) s
+52.2 202 M
+(parser.cmo : \\) s
+25.8 190 M (43:) s
+52.2 190 M
+(    etc.cmi \\) s
+25.8 178 M (44:) s
+52.2 178 M
+(    absyn.cmi \\) s
+25.8 166 M (45:) s
+52.2 166 M
+(    parser.cmi) s
+25.8 154 M (46:) s
+52.2 154 M
+(parser.cmx : \\) s
+25.8 142 M (47:) s
+52.2 142 M
+(    etc.cmx \\) s
+25.8 130 M (48:) s
+52.2 130 M
+(    absyn.cmi \\) s
+25.8 118 M (49:) s
+52.2 118 M
+(    parser.cmi) s
+25.8 106 M (50:) s
+52.2 106 M
+(parser.cmi : \\) s
+25.8 94 M (51:) s
+52.2 94 M
+(    absyn.cmi) s
+25.8 82 M (52:) s
+52.2 82 M
+(scanner.cmo : \\) s
+25.8 70 M (53:) s
+52.2 70 M
+(    parser.cmi \\) s
+25.8 58 M (54:) s
+52.2 58 M
+(    etc.cmi) s
+25.8 46 M (55:) s
+52.2 46 M
+(scanner.cmx : \\) s
+25.8 34 M (56:) s
+52.2 34 M
+(    parser.cmx \\) s
+25.8 22 M (57:) s
+52.2 22 M
+(    etc.cmx) s
+25.8 10 M (58:) s
+52.2 10 M
+(tables.cmo : \\) s
+_R
+S
+%%Page: (2) 21
+%%BeginPageSetup
+_S
+38 24 translate
+/pagenum 2 def
+/fname (Makefile.deps) def
+/fdir (.) def
+/ftail (Makefile.deps) def
+% User defined strings:
+/pagenumstr (2) def
+/moddatestr (01/24/20) def
+/pagecountstr (/2) def
+/modtimestr (14:55:58) def
+/user_header_p true def
+/user_header_left_str ($cse112-wm/Assignments/asg2-ocaml-interp/code-binary) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+column_borders
+do_header
+25.8 694 M (59:) s
+52.2 694 M
+(    absyn.cmi \\) s
+25.8 682 M (60:) s
+52.2 682 M
+(    tables.cmi) s
+25.8 670 M (61:) s
+52.2 670 M
+(tables.cmx : \\) s
+25.8 658 M (62:) s
+52.2 658 M
+(    absyn.cmi \\) s
+25.8 646 M (63:) s
+52.2 646 M
+(    tables.cmi) s
+25.8 634 M (64:) s
+52.2 634 M
+(tables.cmi : \\) s
+25.8 622 M (65:) s
+52.2 622 M
+(    absyn.cmi) s
+25.8 610 M (66:) s
+52.2 610 M
+(tables.cmi : \\) s
+25.8 598 M (67:) s
+52.2 598 M
+(    absyn.cmi) s
+_R
+S
+%%Page: (1) 22
+%%BeginPageSetup
+_S
+38 24 translate
+/pagenum 1 def
+/fname (using) def
+/fdir (.) def
+/ftail (using) def
+% User defined strings:
+/pagenumstr (1) def
+/moddatestr (01/24/20) def
+/pagecountstr (/1) def
+/modtimestr (14:55:58) def
+/user_header_p true def
+/user_header_left_str ($cse112-wm/Assignments/asg2-ocaml-interp/code-binary) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+column_borders
+do_header
+32.4 694 M (1:) s
+52.2 694 M
+(let rcs = "\(* $Id: using,v 1.3 2019-01-24 17:15:07-08 - - $ *\)";;) s
+32.4 682 M (2:) s
+32.4 670 M (3:) s
+52.2 670 M
+(print_endline rcs;;) s
+32.4 658 M (4:) s
+32.4 646 M (5:) s
+52.2 646 M
+(#load "str.cma";;) s
+32.4 634 M (6:) s
+32.4 622 M (7:) s
+52.2 622 M
+(#mod_use "absyn.mli";;) s
+32.4 610 M (8:) s
+52.2 610 M
+(#mod_use "etc.ml";;) s
+32.4 598 M (9:) s
+25.8 586 M (10:) s
+52.2 586 M
+(#mod_use "parser.ml";;) s
+25.8 574 M (11:) s
+52.2 574 M
+(#mod_use "scanner.ml";;) s
+25.8 562 M (12:) s
+25.8 550 M (13:) s
+52.2 550 M
+(#mod_use "tables.ml";;) s
+25.8 538 M (14:) s
+52.2 538 M
+(#mod_use "dumper.ml";;) s
+25.8 526 M (15:) s
+25.8 514 M (16:) s
+52.2 514 M
+(#mod_use "interp.ml";;) s
+25.8 502 M (17:) s
+52.2 502 M
+(#mod_use "main.ml";;) s
+25.8 490 M (18:) s
+25.8 478 M (19:) s
+52.2 478 M
+(open Interp;;) s
+25.8 466 M (20:) s
+52.2 466 M
+(open Main;;) s
+25.8 454 M (21:) s
+25.8 442 M (22:) s
+52.2 442 M
+(want_dump := true;;) s
+25.8 430 M (23:) s
+_R
+S
+%%Page: (1) 23
+%%BeginPageSetup
+_S
+38 24 translate
+/pagenum 1 def
+/fname (.ocamlinit) def
+/fdir (.) def
+/ftail (.ocamlinit) def
+% User defined strings:
+/pagenumstr (1) def
+/moddatestr (01/24/20) def
+/pagecountstr (/1) def
+/modtimestr (14:55:58) def
+/user_header_p true def
+/user_header_left_str ($cse112-wm/Assignments/asg2-ocaml-interp/code-binary) def
+/user_header_center_str () def
+/user_header_right_str () def
+/user_footer_p false def
+%%EndPageSetup
+column_borders
+do_header
+32.4 694 M (1:) s
+52.2 694 M
+(let rcs = "\(* $Id: .ocamlinit,v 1.6 2019-01-24 18:40:26-08 - - $ *\)";;) s
+32.4 682 M (2:) s
+32.4 670 M (3:) s
+52.2 670 M
+(print_endline rcs;;) s
+32.4 658 M (4:) s
+32.4 646 M (5:) s
+52.2 646 M
+(#load "str.cma";;) s
+32.4 634 M (6:) s
+32.4 622 M (7:) s
+52.2 622 M
+(#mod_use "absyn.mli";;) s
+32.4 610 M (8:) s
+52.2 610 M
+(#mod_use "etc.ml";;) s
+32.4 598 M (9:) s
+25.8 586 M (10:) s
+52.2 586 M
+(#mod_use "parser.ml";;) s
+25.8 574 M (11:) s
+52.2 574 M
+(#mod_use "scanner.ml";;) s
+25.8 562 M (12:) s
+25.8 550 M (13:) s
+52.2 550 M
+(#mod_use "tables.ml";;) s
+25.8 538 M (14:) s
+52.2 538 M
+(#mod_use "dumper.ml";;) s
+25.8 526 M (15:) s
+25.8 514 M (16:) s
+52.2 514 M
+(#mod_use "interp.ml";;) s
+25.8 502 M (17:) s
+52.2 502 M
+(#mod_use "main.ml";;) s
+25.8 490 M (18:) s
+25.8 478 M (19:) s
+52.2 478 M
+(open Interp;;) s
+25.8 466 M (20:) s
+52.2 466 M
+(open Main;;) s
+25.8 454 M (21:) s
+25.8 442 M (22:) s
+52.2 442 M
+(want_dump := true;;) s
+25.8 430 M (23:) s
+_R
+S
+%%Trailer
+%%Pages: 23
+%%DocumentNeededResources: font Times-Roman Courier-Bold Times-Bold 
+%%EOF
