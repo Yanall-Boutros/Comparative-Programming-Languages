@@ -64,7 +64,9 @@
      ))
 
 (define asub (lambda (a . i)
-  (vector-ref (hash-ref array_table a) i)
+  (if (hash-has-key? array_table a) 
+      (vector-ref (hash-ref array_table a) i)
+      (printf "No such key"))
 )
 )
 
@@ -74,7 +76,7 @@
                                           [(string? (car l))(display (car l))(PRINT (cdr l))]
                                           [(number? (car l))(display (car l))(PRINT (cdr l))]
                ;; If the element is not a string, evaluate the expression and print
-                                          [(list? (car l))(display (EVAL_EXPR (car l) ))(PRINT (cdr l))]
+                                          [else (display (EVAL_EXPR (car l) ))(PRINT (cdr l))]
                                           ) 
                ;; otherwise, -- if the first element is string print string.
                (newline)
@@ -84,14 +86,9 @@
 )
 (define (EVAL_EXPR expr)
 ;; Starter Code taking from mackeys evalexpr.scm
-    (newline)
-    (display "in EVAL_EXPR")
-    (newline)
-    (display "Expr = ")
-    (display expr)
-    (newline)
     (cond ((number? expr) (+ 0.0 expr))
-          ((vector? expr) (hash-ref array_table expr))
+          ((vector? expr) ( hash-ref array_table expr))
+          ((and (pair? expr) (eq? (car expr) 'asub)) (vector-ref (hash-ref array_table (cadr expr)) (exact-round (EVAL_EXPR (caddr expr)))))
           ((symbol? expr) (EVAL_EXPR (hash-ref var_table expr)))
           (else (let ((fn (hash-ref func_table (car expr)))
                       (args (map EVAL_EXPR (cdr expr))))
@@ -103,10 +100,9 @@
 ;; All values in the array are initialized to 0. The expression is rounded to
 ;; the nearest integer before being used as the bound, which must be positive
 (define DIM (lambda (l)
-             (define var_name (cadar l))
-             (define var_size (caddar l))
-             (define vec (make-vector (exact-round (EVAL_EXPR var_size))))
-             (hash-set! array_table var_name vec)
+             (hash-set! array_table (cadar l)
+                (make-vector (exact-round (EVAL_EXPR (caddar l))))
+             )
              '()
              )
 )
@@ -122,20 +118,15 @@
 ;; since I implemented this program in a different order I had to change 
 ;; some of the logic surrouding evaluating expressions
 (define LET (lambda (l)
-             (newline)
-             (display "IN LET")
-             (newline)
-             (display "l = ")
-             (display l)
-             (newline)
              (cond
              ;; Determine if array or variable
              [(symbol? (car l))(hash-set! var_table (car l) (EVAL_EXPR (cadr l)))]
              ;; If not variable, figure out what to do for array
              [(pair? (car l))
-             ;; If it is a pair, then check to see if the array is in the table,
-             ;; and check to see if the array is in bounds
-             ;; check to see if it's in table
+               (if (eq? (car (car l)) 'asub)
+                   (vector-ref (hash-ref array_table (car (cdr (car l)))
+                               ) (exact-round (EVAL_EXPR (car(cdr(cdr(car l))))))
+                   ) 
                (if (and (hash-has-key? array_table (car l))
                          (<= (- (EVAL_EXPR (cadr l)) 1)
                              (vector-length (car l))
@@ -149,6 +140,10 @@
                     )
                     (printf "Vector not found or array out of bounds")
                )
+               )
+             ;; If it is a pair, then check to see if the array is in the table,
+             ;; and check to see if the array is in bounds
+             ;; check to see if it's in table
              ]
              [else (printf "Error, improper LET usage")]
              )
@@ -171,12 +166,6 @@
 ;; Example code taken from mackeys example folder
 (define INPUT(lambda (l)
              (define cur_symbol (car l))
-             (newline)
-             (display "IN INPUT")
-             (newline)
-             (display "l = ")
-             (display l)
-             (newline)
              (let ((object (read)))
              (cond [(eof-object? object) object]
                    [(number? object)
@@ -185,8 +174,7 @@
                    ;; then update set array sub value to object.
                    ;; Take the cdr of input args and repeat
                        (cond 
-                          [(symbol? cur_symbol)(newline)(display "cur_symbol = ")(display cur_symbol)(newline)
-                                               (hash-set! var_table cur_symbol object) (newline)(display "var_table = ")(display var_table)(newline)]
+                          [(symbol? cur_symbol) (hash-set! var_table cur_symbol object)]
                           [else (begin (if
                                          (and (hash-has-key? array_table (car l))
                                               (<= (- (EVAL_EXPR (cadr l)) 1)
@@ -219,17 +207,10 @@
 (define IF (lambda (l)
              (define relexpr (car l))
              (define target (cadr l))
-             (newline)
-             (display "IN IF")
-             (newline)
-             (display "relexpr = ")
-             (display relexpr)
-             (newline)
-             (display "target = ")
-             (display target)
-             (newline)
-             (define e (EVAL_EXPR relexpr))
-             '()
+             (if (EVAL_EXPR relexpr)
+                 (hash-ref label_hash target)
+                 '()
+             )
           )
  )
 (define GOTO (lambda (l)
@@ -254,6 +235,7 @@
   ;; if the car of the list is of type other, append the cadr
   ;; else, recur
   (cond 
+   [(null? l) (hash-set! label_hash '() '())]
    [(null? (cdr l) ) (hash-set! label_hash (car l) '())]
    ;; if the next element is null, append and break
    [(eq? (what-kind (car l)) 'other) (hash-set! label_hash (car l) (cadr l)) (insert_labels (cdr l))]
@@ -307,7 +289,7 @@
       (+  ,+) 
       (-  ,-) 
       (*  ,*)
-      (/ , (lambda (x y) (/ x  y )))
+      (/ , /)
       (% , (lambda (x y) (- (+ x 0.0) 
       (* (truncate (/ (+ x 0.0) (+ y 0.0))) (+ y 0.0)))))
       (^ , expt)
@@ -320,7 +302,7 @@
       (<= , <=)
       ;; math functions 
       (exp , exp)
-      (ceil , ceiling)
+      (ceiling , ceiling)
       (floor , floor)
       (sqrt , sqrt)
       (abs , abs)
@@ -336,7 +318,11 @@
       (log10 , (lambda (x) (/ (log (+ x 0.0)) (log 10.0))))
       (log2 , (lambda (x) (/ (log (+ x 0.0)) (log 2.0))))
       (asub, asub)
-      (eof,  eof)
+      (log10_2 0.301029995663981195213738894724493026768189881)
+      (sqrt_2  1.414213562373095048801688724209698078569671875)
+      (e       2.718281828459045235360287471352662497757247093)
+      (pi      3.141592653589793238462643383279502884197169399)
+      (eof,  0)
   )
 )
  
@@ -346,6 +332,10 @@
       ("lines" , '())
       ("ret-val" 0)
       (eof,      0)
+      (log10_2 0.301029995663981195213738894724493026768189881)
+      (sqrt_2  1.414213562373095048801688724209698078569671875)
+      (e       2.718281828459045235360287471352662497757247093)
+      (pi      3.141592653589793238462643383279502884197169399)
       )
 )
 
@@ -394,9 +384,9 @@
                (program (readlist-from-inputfile sbprogfile)))
               (write-program-by-line sbprogfile program))))
 
-(if (terminal-port? *stdin*)
+;;(if (terminal-port? *stdin*)
     (main (vector->list (current-command-line-arguments)))
-    (printf "sbi.scm: interactive mode~n"))
+;;    (printf "sbi.scm: interactive mode~n"))
 
 ;; (display (hash-ref var_table "lines"))
 ;; Build the table which contains all key values such that
