@@ -1,0 +1,56 @@
+#!/usr/bin/perl
+# $Id: mkreadme,v 1.4 2020-01-13 17:00:05-08 - - $
+#
+# NAME
+#    mkreadme
+#
+# SYNOPSIS
+#    mkreadme Readme-all-txt
+#
+# DESCRIPTION
+#    Looks for a file matching "Readme.all.*.txt" and copies all
+#    non-comment lines into "Readme.new.*.txt", then calls
+#    txt2html to format the text file into html, and txthtpspdf
+#    to create Postcript and PDF files from each.
+#
+
+$0 =~ s|^(.*/)?([^/]+)/*$|$2|;
+@ARGV == 1 and $all = $ARGV[0] or die "Usage: $0 Readme-all-txt\n";
+system "cid $all";
+
+$new = $all;
+$new =~ s/\.all\./\.new\./;
+open ALL, "<$all" or die "$0: $new: $!\n";
+open NEW, ">$new" or die "$0: $new: $!\n";
+
+while (<ALL>) {
+   if (m/^\s*#/) {$mark = "=="}
+            else {printf NEW "%6d%-2s%s", $., $mark, $_; $mark = ""}
+}
+
+close ALL;
+close NEW;
+
+for $file ($all, $new) {
+   system "txt2html $file";
+   $psfile = $file;
+   $psfile =~ s/\.txt$/.ps/;
+   $lines = $file =~ m/new/ ? "-N" : "";
+   system "mkpspdf $lines $psfile $file";
+}
+
+sub mklink ($$) {
+   my ($file, $link) = @_;
+   @glob = glob $file;
+   warn "$0: glob $file: not unique\n" and return unless @glob == 1;
+   $file = $glob[0];
+   unlink $link;
+   symlink $file, $link or warn "$0: link $file, $link: $!\n";
+}
+
+mklink "Readme.new.*.html", "README.html";
+mklink "Readme.new.*.txt", "README.txt";
+
+system "cat $new";
+system "echo Post.* $new";
+

@@ -1,0 +1,63 @@
+head	1.1;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.1
+date	2019.10.31.20.32.24;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@-
+@
+text
+@#!/bin/bash
+# $Id: elimcr,v 1.7 2015-01-07 16:37:32-08 - - $
+#
+# NAME
+#    elimcr - fix basic formatting in a text file
+#
+# SYNOPSIS
+#    elimcr filename...
+#
+# DESCRIPTION
+#    Backs up the original file.
+#    Fixes basic formatting on a text file:
+#    - Expands tabs using expand(1), except for Makefile.
+#    - Deletes trailing carriage return characters.
+#    - Adds a final newline if missing from the file.
+#    Does not fix lines longer than 72 characters.
+#
+
+exim='/usr/bin/vim -E'
+
+if [ $# -eq 0 ]
+then
+   grep '^#' $0
+   exit 1
+fi
+
+for file in $*
+do
+   if /bin/cp $file $file~~
+   then
+      { [[ $file != *Makefile ]] && echo '1,$!expand'
+        echo 'g/\r/s///'
+        echo w
+        echo q
+      } | $exim $file
+      echo $exim status: $?
+      ls -goa $file $file~~
+   fi
+done
+
+@

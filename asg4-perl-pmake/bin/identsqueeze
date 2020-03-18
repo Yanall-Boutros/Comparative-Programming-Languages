@@ -1,0 +1,4 @@
+#!/bin/sh
+# $Id: identsqueeze,v 1.1 2019-12-17 14:23:25-08 - - $
+# Squeeze output of ident
+perl -pe 'BEGIN{undef $/}s/:\n+\s+/: /gs;s/\n+/\n/gs'

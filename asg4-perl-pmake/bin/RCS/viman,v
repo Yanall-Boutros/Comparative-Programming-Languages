@@ -1,0 +1,55 @@
+head	1.1;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.1
+date	2019.10.31.20.32.24;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@-
+@
+text
+@#!/bin/sh
+# $Id: viman,v 1.1 2008-10-01 14:50:48-07 - - $
+
+mansedcat(){
+   echo Executing ...
+   echo $* \> $MANFILE
+   $* | perl -ne '
+      for(;;){
+         next if s/(.)[\b]\1/$1/g;
+         next if s/_[\b]|[\b]_//g;
+         next if s/o[\b]\+|\+[\b]o/\+/g;
+         last;
+      };
+      /\S/ ? ( $n = 0 ) : $n++;
+      print if $n < 2;
+   ' > $MANFILE
+}
+
+MANDIR=${TMPDIR:=/tmp}
+if [ ! -d $MANDIR ] ; then mkdir $MANDIR ; fi
+if [ ! -d $MANDIR ] ; then MANDIR=/tmp ; fi
+MANFILE=$MANDIR/=man=.`echo $* | sed 's/ /./g'`
+PERL=/usr/local/perl5.003/man
+if [ ! -r $MANFILE ] ; then
+   echo $MANFILE
+   echo $1
+   case $1 in
+      perl*) mansedcat nroff -man $PERL/*/* ;;
+      *) mansedcat man $* ;;
+   esac
+fi
+view $MANFILE
+@

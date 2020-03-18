@@ -1,0 +1,26 @@
+#!/bin/bash
+# $id$
+#
+# NAME
+#    enscript-title - edit the %%Title in a Postscript file
+#
+# SYNOPSIS
+#    enscript-title postscriptfile titlewords...
+#
+# DESCRIPTION
+#    Edit a Postscript file created by enscript and change the
+#    %%Title comment from Enscript Output to the name of the
+#    file.
+#
+# OPERANDS
+#    postscriptfile - name of postscript file to edit
+#    titlewords...  - words to replace in %%Title
+#
+
+psfile=$1
+shift
+
+(echo "/^%%Title: Enscript Output\$/s||%%Title: $*|"
+ echo w
+ echo q) | ed $psfile
+

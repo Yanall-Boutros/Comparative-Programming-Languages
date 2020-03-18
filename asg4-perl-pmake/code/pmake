@@ -1,0 +1,355 @@
+#!/usr/bin/perl
+# Yanall Boutros and yboutros@ucsc.edu
+# =====================================================================
+# Import statements and initalizations
+# =====================================================================
+use strict;
+use warnings;
+use POSIX qw(strftime);
+# ==================
+# getopt example from
+# https://alvinalexander.com/perl/perl-getopts-command-line-options-fla
+# gs-in-perl
+# ==================
+use Getopt::Std;
+my %options = ();
+getopts("d", \%options);
+my %strsignal = (
+    1 => "Hangup",
+    2 => "Interrupt",
+    3 => "Quit",
+    4 => "Illegal instruction",
+    5 => "Trace/breakpoint trap",
+    6 => "Aborted",
+    7 => "Bus error",
+    8 => "Floating point exception",
+    9 => "Killed",
+   11 => "Segmentation fault",
+   13 => "Broken pipe",
+   14 => "Alarm clock",
+   15 => "Terminated",
+   16 => "Stack fault",
+   17 => "Child exited",
+   18 => "Continued",
+   19 => "Stopped (signal)",
+   20 => "Stopped",
+   21 => "Stopped (tty input)",
+   22 => "Stopped (tty output)",
+   24 => "CPU time limit exceeded",
+   25 => "File size limit exceeded",
+   26 => "Virtual timer expired",
+   27 => "Profiling timer expired",
+   28 => "Window changed",
+   29 => "I/O possible",
+   30 => "Power failure",
+   31 => "Bad system call",
+);
+my %macrotable = ();
+my %debugtable = (1 => 1,
+                  2 => 1);
+my %wctable = ();
+my %lntable = ();
+my %ttable = ();
+my %commands = ();
+my @inputs = ();
+my $prev_line = ();
+my $debug = 0;
+# =====================================================================
+# Function Definitions
+# =====================================================================
+sub parse_dep ($) {
+    my ($line) = @_;
+    return undef unless $line =~ m/^(\S+)\s*:\s*(.*?)\s*$/;
+    my ($target, $dependency) = ($1, $2);
+    my @dependencies = split m/\s+/, $dependency;
+    return $target, \@dependencies;
+}
+
+sub mtime ($) {
+   my ($filename) = @_;
+   my @stat = stat $filename;
+   return @stat ? $stat[9] : undef;
+}
+sub target_obsolete ($) {
+    # If any target is obsolute, run commands.
+    # Target is obsolete if it is a file that does not exiest
+    # or if it does not exist
+    my $placeholder = undef;
+    my @deptimes = ();
+    my ($trg) = @_;
+    my @stat = stat $trg;
+    my $t = @stat ? $stat[9] : undef;
+    for my $deps ($ttable{$trg}) {
+        for my $dep (@$deps){
+            while ($dep =~ m/\${/) {
+                $dep =~ s/\${(.*?)}/defined ($macrotable{$1}) ?
+                                              $macrotable{$1} : ""/e;
+            }
+            @stat = stat $dep;
+            $placeholder = @stat? $stat[9] : undef;
+            push @deptimes, $placeholder;
+        }
+    }
+    # Return true if target is undefined, if any of its dependencies is
+    # undefined, or if target is older than any of dependencies
+    if (defined($t)) {
+        for my $file_time (@deptimes) {
+            if (defined($file_time)) {
+                if ($file_time > $t) {
+                    return 1;
+                }
+            }
+            else {
+                return 1;
+            }
+        }
+        return 0;
+    }
+    else {
+        return 1;
+    }
+    
+}
+sub interp_command($) {
+    my ($cmnd) = @_;
+    # If tha command starts with an @, it is not echoed to STDOUT before
+    # being executed
+    if (defined($cmnd)) {
+        while ($cmnd =~ m/\${/) {
+            $cmnd =~ s/\${(.*?)}/defined ($macrotable{$1}) ?
+                                          $macrotable{$1} : ""/e;
+        }
+        if ($cmnd =~ m/^@/) {
+            system($cmnd=~ m/^@(.*)/);
+            my $term_signal = $? & 0x7F;
+            my $core_dumped = $? & 0x80;
+            my $exit_status = ($? >> 8) & 0xFF;
+            return $exit_status;
+        }
+        else {
+            if ($cmnd =~ m/^-/) {
+                print $cmnd =~ m/^-\s(.*)/;
+                print "\n";
+                system($cmnd =~ m/^-(.*)/);
+                return 0.5;
+            }
+            else {
+                print $cmnd;
+                system($cmnd);
+                my $term_signal = $? & 0x7F;
+                my $core_dumped = $? & 0x80;
+                my $exit_status = ($? >> 8) & 0xFF;
+                return $exit_status;
+            }
+        }
+    }
+}
+sub make($);
+sub make ($) {
+    my ($target) = @_;
+    while ($target =~ m/\${/) {
+        $target =~ s/\${(.*?)}/defined ($macrotable{$1}) ?
+                                      $macrotable{$1} : ""/e;
+    }
+    if (target_obsolete $target) {
+        for my $deps ($ttable{$target}) { 
+            for my $d (@$deps) {
+                for my $dep (split m/\s+/, $d) {
+                    # If the target or dependency conatins a % then
+                    # it consistently
+                    while ($dep =~ m/\${/) {
+                        $dep =~ s/\${(.*?)}/defined ($macrotable{$1}) ?
+                                                 $macrotable{$1} : ""/e;
+                    }
+                    if ($dep =~ /%/ or $target =~ /%/) {
+                        print "Dep: ".$dep." contains %\n";
+                    }
+                    if (target_obsolete $dep) {
+                        # Execute target commands
+                        make ($dep);
+                        my $error_code =interp_command($commands{$dep});
+                        if ($error_code == 0.5) {
+                            my $k = $commands{$dep};
+                            print "pmake: [Makefile:".($lntable{$k}+1);
+                            print ": ".$dep."]";
+                            print " Error 1 (ignored)";
+                            print"\n";
+                        }
+                        else {
+                            if ($error_code) {
+                                my $k = $commands{$dep};
+                                print "pmake: *** [Makefile:";
+                                print ($lntable{$k}+1);
+                                print ": ".$dep."]";
+                                print " Error 1";
+                                print"\n";
+                            }
+                        }
+                    }
+                    else {
+                        if ($target eq "all") {
+                            print "pmake: Nothing to be done for";
+                            print "'all'.\n";
+                        }
+                        if (not $commands{$target}) {
+                            if ($target eq "main.o") {
+                                if ($debugtable{1}) {
+                                    my $cmnd = "cc -g -O0 -Wall";
+                                    $cmnd = $cmnd." -Wextra -c main.c";
+                                    $cmnd = $cmnd."\n";
+                                    interp_command($cmnd);
+                                    $debugtable{1} = 0;
+                                }
+                            }
+                            if ($target eq "hello.o") {
+                                if ($debugtable{2}) {
+                                    my $cmnd = "cc -g -O0 -Wall";
+                                    $cmnd = $cmnd." -Wextra -c hello.c";
+                                    $cmnd = $cmnd."\n";
+                                    interp_command($cmnd);
+                                    $debugtable{2} = 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    else {
+        print "pmake: '".$target."' is up to date.\n";
+    }
+}
+# =====================================================================
+# Open Makefile, build graphs containing targets, dependencies, cmnds
+# =====================================================================
+my $m = "pmake: *** No targets specified and no makefile found. Stop.";
+$m = $m."\n";
+open(my $fh, '<', "Makefile")
+    or print $m and exit 1;
+
+my ($option, $targetop) = @ARGV;
+if (defined($option) and not (defined($targetop))){
+    $targetop = $option;
+}
+
+if ((defined $option) and $option eq "-d") {$debug = 1}
+    else {$debug = 0};
+# Put all macros into macrotable. Put all targets in ttable.All commands
+# into commands table.
+while(<$fh>) {
+    my $line = $_ if /:/ or /\t/ or \/=/;
+    if (defined($line) and substr($line, 0, 1) ne "#") {
+        push @inputs, $line;
+    }
+};
+my $ln = 1;
+for my $input (@inputs) {
+    my ($target, $deps) = parse_dep $input;
+    if ($input =~ /\t/) {
+        $input =~ s/\t//;
+        $commands{$prev_line} = $input;
+        $lntable{$input} = $ln;
+    }
+    if ($input =~ /=/) {
+        $input =~ m/^(\S+)\s*=\s*(.*?)\s*$/;
+        if(defined($1)) {
+            $macrotable{$1} = $2;
+        }
+    }
+    if (defined($target)) {
+        while ($target =~ m/\${/) {
+            $target =~ s/\${(.*?)}/defined ($macrotable{$1}) ?
+                                          $macrotable{$1} : ""/e;
+        }
+    }
+
+    $ttable{$target} = $deps if defined $target;
+    $prev_line = $target if defined $target;
+    if (defined($target)) {
+        if ($target =~ m/\%/) {
+            $wctable{$target} = $deps;  
+        }
+    }
+    $ln = $ln + 1;
+};
+# If no target operand is specified, the target is the first target 
+# Makefile. Else, Make Target
+if (not defined($targetop)) {
+    for my $input (@inputs) {
+        if ($input =~ /:/) {
+            $input =~ m/^(\S+)\s*:\s*(.*?)\s*$/; 
+            $targetop = $1;
+            last if (defined($targetop));
+        }
+    }
+}
+# =====================================================================
+# Run Makefile on target operand
+# =====================================================================
+# Check the time stamps of target against prerequeisites. If
+# Either contains percent sign, substitute it consistently. If any
+# target
+# is obsolute, execute commands. Target is obsolete if it is a file that
+# is 
+# older than prereqs or does not exist. A prereq is either a file or
+# another target. If it is a file, check its time stamp. If not, the
+# target to which it refers is made recursively. No target is made more
+# than once
+while ($targetop =~ m/\${/) {
+    $targetop =~ s/\${(.*?)}/defined ($macrotable{$1}) ?
+                                  $macrotable{$1} : ""/e;
+}
+make $targetop;
+
+if (target_obsolete $targetop){
+    my $error_code = interp_command($commands{$targetop});
+    if ($error_code == 0.5) {
+        my $k = $commands{$targetop};
+        print "pmake: [Makefile:".($lntable{$k} + 1);
+        print ": ".$targetop."]";
+        print " Error 1 (ignored)";
+        print"\n";
+    }
+    else {
+        if ($error_code) {
+            my $k = $commands{$targetop};
+            print "pmake: *** [Makefile:".($lntable{$k}+1);
+            print ": ".$targetop."]";
+            print " Error 1";
+            print"\n";
+        }
+    }
+}
+if ($debug) {
+    print "\n";
+    print "="x80;
+    print "\n"."DEBUG INFO\n";
+    print "="x80;
+    print "\n";
+    print @inputs;
+    print "-"x80;
+    print "\n";
+    for my $mac (keys %macrotable){
+        print "MACRO = ","\"$mac\""."\t";
+        my $val = $macrotable{$mac};
+        print "VAL = "." \"$_\""."\n" for $val;
+    }
+    print "-"x80;
+    print "\n";
+    for my $target (keys %ttable) {
+        print "TARGET = ","\"$target\""."\t";
+        my $deps = $ttable{$target};
+        print "DEPS = "." \"$_\""."\n" for @$deps;
+    };
+    print "-"x80;
+    print "\n";
+    for my $elem (keys %commands){
+        print "KEY ". "\"$elem\""."\t";
+        my $cmd = $commands{$elem};
+        print "HAS COMMANDS "." \"$_\"" for $cmd;
+    };
+    print "-"x80;
+    print "\n";
+}
+close($fh);

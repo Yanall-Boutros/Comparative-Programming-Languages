@@ -1,0 +1,27 @@
+#!/usr/bin/perl
+# $Id: ttman,v 1.1 2019-10-31 13:32:24-07 - - $
+#
+# NAME
+#    ttman - convert man page to a plain text file
+#
+# SYNOPSIS
+#    ttman [manopts] name...
+#
+# DESCRIPTION
+#    Options and arguments are passed to man(1) for formatting
+#    with the text output option.  Line printer overprint
+#    formatting is deleted and multiple empty lines are converted
+#    to a single empty line.
+#
+
+$0 =~ s|^(.*/)?([^/]+)/*$|$1|;
+$/ = "";
+$cmd = "man @ARGV";
+open MANPIPE, "$cmd |" or die "$0: $cmd: $!";
+while (<MANPIPE>) {
+   s/(.)[\b]\1/$1/g;
+   s/_[\b]|[\b]_//g;
+   s/o[\b]\+|\+[\b]o/\+/g;
+   print;
+}
+close MANPIPE;

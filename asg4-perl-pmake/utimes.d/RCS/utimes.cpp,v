@@ -1,0 +1,243 @@
+head	1.10;
+access;
+symbols;
+locks;
+comment	@// @;
+
+
+1.10
+date	2020.02.15.02.01.52;	author -;	state -;
+branches;
+next	1.9;
+
+1.9
+date	2020.02.15.02.00.38;	author -;	state -;
+branches;
+next	1.8;
+
+1.8
+date	2020.02.15.01.56.34;	author -;	state -;
+branches;
+next	1.7;
+
+1.7
+date	2020.02.15.01.56.04;	author -;	state -;
+branches;
+next	1.6;
+
+1.6
+date	2020.02.15.01.55.30;	author -;	state -;
+branches;
+next	1.5;
+
+1.5
+date	2020.02.15.01.54.46;	author -;	state -;
+branches;
+next	1.4;
+
+1.4
+date	2020.02.15.01.48.31;	author -;	state -;
+branches;
+next	1.3;
+
+1.3
+date	2020.02.15.01.46.20;	author -;	state -;
+branches;
+next	1.2;
+
+1.2
+date	2020.02.15.01.43.51;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2020.02.15.01.43.29;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.10
+log
+@-
+@
+text
+@// $Id: utimes.cpp,v 1.9 2020-02-14 18:00:38-08 - - $
+
+#include <iostream>
+#include <limits>
+#include <string>
+#include <map>
+using namespace std;
+
+#include <sys/types.h>
+#include <utime.h>
+
+map<string,time_t> table {
+   {"time-int-max.txt", numeric_limits<int>::max()},
+   {"time-int-min.txt", numeric_limits<int>::min()},
+   {"time-time_t-max.txt", numeric_limits<time_t>::max()},
+   {"time-time_t-min.txt", numeric_limits<time_t>::min()},
+   {"time-zero.txt", 0}, 
+};
+
+int main() {
+   struct utimbuf utimbuf {0, 0};
+   cout << numeric_limits<time_t>::min() << endl;
+   cout << numeric_limits<time_t>::max() << endl;
+   for (const auto& item: table) {
+      system (("cp /dev/null " + item.first).c_str());
+      utimbuf.actime = utimbuf.modtime = item.second;
+      utime (item.first.c_str(), &utimbuf);
+      system (("ls -la " + item.first).c_str());
+   }
+}
+@
+
+
+1.9
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: utimes.cpp,v 1.8 2020-02-14 17:56:34-08 - - $
+d13 5
+a17 5
+   {"utime-int-max.txt", numeric_limits<int>::max()},
+   {"utime-int-min.txt", numeric_limits<int>::min()},
+   {"utime-long-max.txt", numeric_limits<long>::max()},
+   {"utime-long-min.txt", numeric_limits<long>::min()},
+   {"utime-zero.txt", 0}, 
+@
+
+
+1.8
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: utimes.cpp,v 1.7 2020-02-14 17:56:04-08 - - $
+d22 2
+@
+
+
+1.7
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: utimes.cpp,v 1.6 2020-02-14 17:55:30-08 - - $
+d22 5
+a26 5
+   for (const auto& itor: table) {
+      system (("cp /dev/null " + itor->first).c_str());
+      utimbuf.actime = utimbuf.modtime = itor->second;
+      utime (itor->first.c_str(), &utimbuf);
+      system (("ls -la " + itor->first).c_str());
+@
+
+
+1.6
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: utimes.cpp,v 1.5 2020-02-14 17:54:46-08 - - $
+d24 2
+a25 2
+      utimebuf.actime = utimebuf.modtime = itor->second;
+      utime (itor->first.c_str(), &utimebuf);
+@
+
+
+1.5
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: utimes.cpp,v 1.4 2020-02-14 17:48:31-08 - - $
+d12 1
+a12 1
+map<string,time_t> data {
+d22 1
+a22 1
+   for (const auto& itor: data) {
+@
+
+
+1.4
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: utimes.cpp,v 1.3 2020-02-14 17:46:20-08 - - $
+d6 1
+a6 1
+#include <unordered_map>
+d12 5
+a16 1
+unordered_map<string,time_t> data {
+a17 2
+   {"utime_long_max.txt", numeric_limits<long>::max()},
+   {"utime_int_max.txt", numeric_limits<int>::max()},
+d21 7
+a27 1
+   cout << sizeof (time_t) << endl;
+@
+
+
+1.3
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: utimes.cpp,v 1.2 2020-02-14 17:43:51-08 - - $
+d14 2
+a15 2
+   {"utime_long_max.txt", LONG_MAX},
+   {"utime_int_max.txt", INT_MAX},
+@
+
+
+1.2
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: utimes.cpp,v 1.1 2020-02-14 17:43:29-08 - - $
+d4 1
+d12 5
+@
+
+
+1.1
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id$
+d13 1
+a13 1
+   cout << sizeof time_t << endl;
+@

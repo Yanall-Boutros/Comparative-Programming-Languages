@@ -1,0 +1,20 @@
+#!/usr/bin/perl
+# $Id: xtheight,v 1.1 2019-10-31 13:32:24-07 - - $
+#
+# NAME
+#    xtheight - set xterm height to arg and width to 80
+#
+# SYNOPSIS
+#    xtheight [lines]
+#
+# DESCRIPTION
+#    Changes the height of an xterm to the number given
+#    by lines.  Default: 75.  Minimum: 24.
+#
+
+$height = $ARGV[0];
+$height = 75 unless $height =~ m/^\d+$/ and $height > 24;
+$csi = "\e[";
+$widthesc = "${csi}3l";
+$heightesc = "${csi}${height}t";
+print $heightesc;

@@ -1,0 +1,94 @@
+#!/usr/bin/perl -w
+# $Id: gh,v 1.1 2019-10-31 13:32:24-07 - - $
+#
+# NAME
+#    gh - run ghostview on multiple files
+#
+# SYNOPSIS
+#    gh [-] psfiles...
+#
+# DESCRIPTION
+#    Starts up ghostview in the background to display Postscript
+#    files.  Uses filename as X-windows label.  For pdf, use
+#    acroread.
+#
+# OPTIONS
+#    -   don't use gv for all files, whether .ps or .pdf
+#    +   use `-magstep +2' for ghostview
+#
+
+use IO::Handle;
+STDOUT->autoflush(1);
+STDERR->autoflush(1);
+
+$0 =~ s{.*/}{};
+$exitrc = 0;
+
+$usemag2 = shift @ARGV if @ARGV and $ARGV[0] eq '+';
+$usegvonly = 1;
+push @opts, shift @ARGV while @ARGV and $ARGV[0] =~ m/^-/;
+
+unless (@ARGV) {
+   print STDERR "Usage: $0 [-] [-opts]... psfiles...\n";
+   exit 1;
+};
+
+if ($pid = fork) {
+   # Put self in background.
+   print STDOUT "$0: $pid: @ARGV\n";
+   exit 0;
+};
+
+for $index (0 .. $#ARGV) {
+   $file = $ARGV[$index];
+   if ($usegvonly) {
+      @command = ("gv", "-media=Letter", "-center", @opts, $file);
+   }else{
+      if ($file =~ m/\.pdf(\.|$)/) {
+         @command = ("acroread", "+useFrontEndProgram", @opts, $file);
+      }else{
+         @ghostview = ("ghostview");
+         push @ghostview, qw (-magstep +2) if $usemag2;
+         @command = (@ghostview, "-name", "$0: $file", @opts, $file);
+      };
+   };
+   $pid = fork;
+   if (! defined $pid) {
+      print STDERR "$0: fork failed: @command: $!";
+      $exitrc |= 1;
+   }elsif ($pid != 0) {
+      $childprocs{$pid} = "[$index] $pid: @command[0,$#command]";
+      print STDOUT "$0: $childprocs{$pid}\n";
+      sleep 5 if $index < $#ARGV and $command[0] =~ m/acroread/;
+   }else{
+      $SIG{'__WARN__'} = sub{ };
+      print "$0: @command\n";
+      exec @command or die "$0: exec failed: $command[0]: $!\n";
+   };
+};
+
+for(;;) {
+   $pid = wait;
+   last if $pid < 0;
+   $exit   = $? >> 8;
+   $signal = $? & 127;
+   $core   = $? & 128;
+   $message = delete $childprocs{$pid};
+   $message .= ": exit $exit";
+   $message .= ", signal $signal" if $signal;
+   $message .= ", core dumped" if $core;
+   print "\n";
+   map{ print STDOUT "$0: $_: running\n" } sort values %childprocs;
+   print "\n$0: $message\n";
+   $exitrc |= $exit;
+};
+
+for $pid (keys %childprocs) {
+   $exitrc |= 1;
+   $message = delete $childprocs{$pid};
+   print STDERR "$0: $message: Zombie?\n"
+};
+
+print STDOUT "\n$0: exiting with $exitrc\n";
+exit $exitrc;
+

@@ -1,0 +1,171 @@
+#!/bin/bash
+# $Id: mkc,v 1.1 2019-10-31 13:32:24-07 - - $
+SCRIPT=$(basename $0)
+USAGE="$SCRIPT [-Scdghqx] [-l lib]... prog.{c,m,cpp,cc,java}..."
+MANPAGE="#
+# NAME
+#    $SCRIPT - compile a C, C++, or Java program
+#
+# SYNOPSIS
+#    $USAGE
+#
+# DESCRIPTION
+#    Check (ci) each source file into an RCS subdirectory and run
+#    checksource to verify basic formatting.  This script only works
+#    for simple programs entirely contained in one source file.
+#    The object or class file(s) are then removed.
+#
+#    .c       - compile C.
+#    .cc,.cpp - compile C++.
+#    .m       - compiler Objective C.
+#    .java    - compile Java, put in jar, including inner classes.
+#
+# OPTIONS
+#    -S       Do not assemble C/C++, keep assembly file
+#    -c       Do not link C/C++, stop at -c, keep object file
+#    -d       Do not delete the object or class files
+#    -g       Add -lglut -lGLU -lGL -lX11 -lm to LIBS
+#    -h       Print out man page information
+#    -l lib   Add -llib to C/C++ compilation
+#    -q       Quiet mode, no @@@@ chatter.
+#    -x       Do not execute cid or checksource commands
+#"
+
+########################################################################
+# Compilation options and shell variables.
+#
+GCC_WARN="-Wall -Wextra -Wpedantic -Wshadow -fdiagnostics-color=never"
+GCC_DEBUG="-g -O0"
+GCC_ASM="-O6 -fno-asynchronous-unwind-tables"
+GCC="gcc $GCC_WARN -std=gnu11"
+GPP="g++ $GCC_WARN -std=gnu++2a -Wold-style-cast"
+LIBS="-lm"
+
+########################################################################
+# Print a command then run it.  Exit failure if it fails.
+#
+runcmd() {
+   echo $*
+   $* 2>&1
+}
+
+########################################################################
+# Print the manpage and exit.
+#
+manpage() {
+   echo "$MANPAGE" | sed -e 's/^# //' -e 's/^#//'
+   exit 0
+}
+
+########################################################################
+# Print a usage message and exit.
+#
+usage() {
+   echo "Usage: $USAGE" 1>&2
+   exit 2
+}
+
+########################################################################
+# Snip a suffix from a program name.
+#
+snip() {
+   echo $1 | sed 's/\.[^.]*$//'
+}
+
+linkc() {
+   if [ "$no_assemble_c" ]; then echo -S
+   elif [ "$no_link_c" ]; then echo -c
+   else echo $*
+   fi
+}
+
+########################################################################
+# Compile a C program.
+#
+compile_c() {
+   exec=$(snip $source .c)
+   runcmd $GCC $GCC_DEBUG $source $(linkc -o $exec $LIBS)
+   deletions="$exec.o"
+}
+
+########################################################################
+# Compile an Objective-C program.
+#
+compile_objc() {
+   exec=$(snip $source .c)
+   runcmd $GCC $GCC_DEBUG $source $(linkc -o $exec -lobjc $LIBS)
+   deletions="$exec.o"
+}
+
+########################################################################
+# Compile a C++ program.
+#
+compile_gpp() {
+   exec=$(snip $source)
+   runcmd cpplint.py.perl $source
+   runcmd $GPP $GCC_DEBUG $source $(linkc -o $exec $LIBS)
+   deletions="$exec.o"
+}
+
+########################################################################
+# Compile a Java program and put the classes in a jar.
+#
+compile_java() {
+   exec=$(snip $source)
+   runcmd javac -Xlint $source
+   echo Main-class: $exec >Manifest
+   runcmd jar cfm $exec Manifest $exec*.class
+   rm Manifest
+   runcmd chmod +x $exec
+   deletions="$exec*.class"
+}
+
+########################################################################
+# Notify brackets around compilations.
+#
+notify() {
+   [ $quiet ] || echo @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ $SCRIPT: $*
+}
+
+########################################################################
+# Check for options.
+#
+while getopts Scdghl:qx opt; do
+   case $opt in
+      S) no_assemble_c=1; GCC_DEBUG="$GCC_ASM";;
+      c) no_link_c=1; no_delete_obj=1;;
+      d) no_delete_obj=1;;
+      g) LIBS="$LIBS -lglut -lGLU -lGL -lX11 -ldrm -lm";;
+      h) manpage;;
+      l) LIBS="$LIBS -l$OPTARG";;
+      q) quiet=1;;
+      x) no_exec_cid=1;;
+      ?) usage;;
+   esac
+done
+shift $(($OPTIND-1))
+[ $# -ne 0 ] || usage
+
+########################################################################
+# Compile each of the programs.
+#
+for source in $*
+do
+   notify starting $source
+   if [ "$no_exec_cid" = "" ]; then
+      cid + $source
+      runcmd checksource $source
+      runcmd ident $source
+   fi
+   case $source in
+      *.c)        compile_c;;
+      *.m)        compile_objc;;
+      *.cc)       compile_gpp;;
+      *.cpp)      compile_gpp;;
+      *.java)     compile_java;;
+      *)          echo $SCRIPT: $source is not a known program type;;
+   esac
+   [ $no_delete_obj ] || runcmd rm -f $deletions
+   notify finished $source
+done
+

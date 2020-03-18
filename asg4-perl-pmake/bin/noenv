@@ -1,0 +1,15 @@
+#!/usr/bin/perl
+# $Id: noenv,v 1.1 2019-10-31 13:32:24-07 - - $
+#
+# NAME
+#    noenv - run a program with no environment
+#
+# SYNOPSIS
+#    noenv command operands...
+#
+# DESCRIPTION
+#    Eliminates everything from the environment of the current
+#    process then execs the command.
+
+delete $ENV{$_} for keys %ENV;
+exec @ARGV;

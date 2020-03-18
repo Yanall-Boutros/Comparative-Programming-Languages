@@ -1,0 +1,32 @@
+head	1.1;
+access;
+symbols;
+locks;
+comment	@ * @;
+
+
+1.1
+date	2020.02.03.23.27.08;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@-
+@
+text
+@/* $Id: hello.c,v 1.1 2011-03-24 17:25:20-07 - - $ */
+
+#include <stdio.h>
+
+int main (void) {
+   printf ("Hello, world\n");
+   return 0;
+}
+
+@

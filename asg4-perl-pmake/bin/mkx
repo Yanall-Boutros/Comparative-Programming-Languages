@@ -1,0 +1,57 @@
+#!/usr/bin/perl
+# $Id: mkx,v 1.1 2019-10-31 13:32:24-07 - - $
+#
+# NAME
+#    mkx - make simple experiment and cat prog and output
+#
+# SYNOPSIS
+#    mkx prog...
+#
+# DESCRIPTION
+#    Compile a simple program using mkc and then run it,
+#    redirecting output into a file substituting the prog
+#    suffix with lis.  Then make a pspdf of it.
+#
+# PURPOSE
+#    Providing a printout of trivial small programs.
+#
+
+$0 =~ s|.*/||;
+use strict;
+use warnings;
+use IPC::Open2;
+
+print STDERR "Usage: $0 prog..." and exit 1 unless @ARGV;
+
+my $mark = ":" x 80 . "\n";
+sub display($@) {
+   my ($file, @msg) = @_;
+   print $file $mark, @msg, $mark;
+}
+
+for my $prog (@ARGV) {
+   (my $base = $prog) =~ s/\.[^.]*$//;
+   system "mkc $prog";
+   exit if $?;
+   my $lisfile = "$base.lis";
+   open my $file, ">$lisfile" or warn "$0: $lisfile: $!" and next;
+   display $file, "Source: $prog\n";
+   print $file `cat -nv $prog`;
+   display $file, "Output: ./$base 2>&1\n";
+   my $output = `./$base 2>&1`;
+   my $status = $?;
+   if (my $pid = open2 (my $child_out, my $child_in, "cat -nv 2>&1")) {
+      print $child_in $output;
+      close $child_in;
+      my @cat_nv = <$child_out>;
+      print $file @cat_nv;
+      print $file $mark;
+      print $file `pstatus $status`;
+   }else {
+      warn "$0: open2: $!";
+   }
+   close $file;
+   system "cat $lisfile";
+   system "mkpspdf -c $base.ps $lisfile";
+}
+

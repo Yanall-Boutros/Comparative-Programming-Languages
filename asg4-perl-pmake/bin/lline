@@ -1,0 +1,46 @@
+#!/usr/bin/perl -w
+use strict;
+use warnings;
+# $Id: lline,v 1.2 2019-10-31 13:49:46-07 - - $
+#
+# NAME
+#    longestline - print the line numbers and lengths of longest lines
+#
+# SYNOPSIS
+#    longestline [filename...]
+#
+
+$0 =~ s{.*/}{};
+my $EXITCODE = 0;
+END{ exit $EXITCODE; }
+sub note(@){ print STDERR "$0: @_"; };
+$SIG{'__WARN__'} = sub{ note @_; $EXITCODE = 1; };
+$SIG{'__DIE__'} = sub{ warn @_; exit; };
+
+my $ignorelen = -1;
+$ignorelen = $1 and shift if @ARGV and $ARGV[0] =~ m/^-(\d+)$/;
+
+push @ARGV, "-" unless @ARGV;
+
+for my $filename (@ARGV) {
+   open my $file, "<$filename" or warn "<$filename: $!" and next;
+   my $maxnr = 1;
+   my $maxlen = 0;
+   my @lines;
+   while (defined (my $line = <$file>)) {
+      chomp $line;
+      my $linelen = length $line;
+      $maxnr = $. and $maxlen = $linelen if $maxlen < $linelen;
+      $lines[$.] = $line;
+   };
+   close $file;
+   next if $maxlen <= $ignorelen;
+   printf " %7d %7d %s\n", $maxlen, $maxnr, $filename;
+   for my $linenr (1..$#lines) {
+      printf " %7s %7d %s\n", "", $linenr, $lines[$linenr]
+             if (length $lines[$linenr]) >= $maxlen;
+   };
+};
+
+exit $EXITCODE;
+

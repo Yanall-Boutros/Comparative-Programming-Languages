@@ -1,0 +1,99 @@
+#!/bin/bash
+# $Id: mkpspdf,v 1.9 2020-01-13 13:49:03-08 - - $
+
+SCRIPT=$(basename $0)
+MANPAGE="
+#
+# NAME
+#    $SCRIPT - create ps and pdf files from source code
+#
+# SYNOPSIS
+#    $SCRIPT [-2BFGHNTb:c:rs:t:u:] [dirname/]psfilename [filename...]
+#
+# DESCRIPTION
+#    From the [dirname/]psfilename specification, create a Postscript
+#    file of the filenames and bring it up in ghostview.  Also create
+#    a pdf.  If there are no filenames, use stdin.
+#
+# OPTIONS
+#    -2  Two column output
+#    -B  Suppress --borders
+#    -F  Suppress --fancy-header
+#    -G  Suppress calling gv to display the Postscript file
+#    -H  Suppress --header
+#    -N  Suppress the use of --line-numbers
+#    -T  Truncate long lines
+#    -b: Baseline skip in points
+#    -c: Number of columns in output
+#    -r  Rotate 90 degrees to landscape mode
+#    -s: Font size in points
+#    -t: Set header to argument $OPTARG
+#    -u: Font used instead of default
+#
+"
+
+function usage {
+   echo Usage: $(basename $0) [BFGHNrs:t:u:v] \
+        [dirname/]psfilename filename... 1>&2
+   echo "$MANPAGE" | sed -n -e 's/^# \?//' -e '/./p'
+   exit 1
+}
+
+BORDERS=--borders
+FANCY_HEADER=--fancy-header
+FONT=Courier-Bold
+FONT_SIZE=11
+HEADER=--header="$(pwd | sed -e 's|^/afs/cats.ucsc.edu/courses/|$$|' \
+                             -e 's|'$HOME'|~|')"
+LINE_NUMBERS=--line-numbers
+
+while getopts 2BFGHNTb:c:rs:t:u: opt; do
+   case $opt in
+      2) COLUMNS="--columns=2";;
+      B) BORDERS=;;
+      F) FANCY_HEADER=;;
+      G) SUPPRESS_GV=1;;
+      H) HEADER=;;
+      N) LINE_NUMBERS=;;
+      T) TRUNCATE_LINES="--truncate-lines --mark-wrapped-lines=box";;
+      b) BASELINESKIP="--baselineskip=$OPTARG";;
+      c) COLUMNS="--columns=$OPTARG";;
+      r) LANDSCAPE="--landscape";;
+      s) FONT_SIZE="$OPTARG";;
+      t) HEADER="--header='$OPTARG'";;
+      u) FONT="$OPTARG";;
+      *) usage;;
+   esac
+done
+shift $(($OPTIND-1))
+
+dirname=$(dirname $1)
+psfilename=$(basename $1)
+shift
+
+font=$FONT$FONT_SIZE
+psoutfile=$dirname/$psfilename
+
+command="enscript \
+   --media=Letter \
+   $LANDSCAPE \
+   $COLUMNS \
+   $BORDERS \
+   $LINE_NUMBERS \
+   --font=$font \
+   $BASELINESKIP \
+   $TRUNCATE_LINES \
+   $FANCY_HEADER \
+   $HEADER \
+   --output=$psoutfile \
+   $@"
+
+echo $command
+$command
+
+perl -pi -e "s|(^%%Title: )Enscript Output|\$1$psoutfile|" $psoutfile
+
+[ "$SUPPRESS_GV" = "" ] && echo $0: gv $psoutfile && gv $psoutfile &
+
+(cd $dirname; ps2pdf $psfilename)
+

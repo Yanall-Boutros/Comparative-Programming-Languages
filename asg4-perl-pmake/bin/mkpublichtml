@@ -1,0 +1,35 @@
+#!/bin/sh
+# $Id: mkpublichtml,v 1.1 2019-10-31 13:32:24-07 - - $
+
+self=$(basename $0)
+
+pwd=$(pwd)
+basename=$(basename $pwd)
+dirname=$(dirname $pwd)
+if [ $basename != public_html ]
+then
+   echo $self: run only in public_html directory
+   exit 1
+fi
+
+echo $self:
+mkheader
+ln -s .. :
+
+cat >README.html <<__END__
+<A HREF=:>
+Click here to get to the root of the course directory.
+</A>
+<P>
+If you receive a popup asking for a username and password:
+<PRE>
+ssh unix.ucsc.edu
+cd $dirname
+cat .htpasswd
+</PRE>
+The username is in that file.
+<BR>
+Leave the password field empty.
+__END__
+
+ls -la

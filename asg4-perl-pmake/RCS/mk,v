@@ -1,0 +1,41 @@
+head	1.2;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.2
+date	2020.02.03.23.20.49;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2018.11.07.02.53.34;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@-
+@
+text
+@#!/bin/sh
+# $Id$
+cid $0
+mkpspdf pmake-Makefiles.ps .score/*/Makefile*
+@
+
+
+1.1
+log
+@-
+@
+text
+@d2 1
+@

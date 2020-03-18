@@ -1,0 +1,40 @@
+head	1.1;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.1
+date	2019.10.31.20.32.24;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@-
+@
+text
+@<HEAD>
+<TITLE>~cse110a-wm/bin</TITLE>
+<STYLE>
+body {
+   color: #00FF00 !important;
+   background-color: #2F2F2F !important;
+}
+A:link {color: #00FFFF}
+A:visited {color: #FFFF00}
+A:hover {color: #FF0000}
+</STYLE>
+</HEAD>
+<BODY>
+<BIG><B><TT>
+<BR>PWD: /afs/cats.ucsc.edu/courses/cse110a-wm/bin
+<BR>URL: <A HREF=http://www2.ucsc.edu/courses/cse110a-wm/:/bin/>http://www2.ucsc.edu/courses/cse110a-wm/:/bin/</A>
+</TT></B></BIG>
+@

@@ -1,0 +1,77 @@
+head	1.1;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.1
+date	2019.10.31.20.32.24;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@-
+@
+text
+@#!/usr/bin/perl -w
+# $Id: map,v 1.2 2013-07-09 14:38:45-07 - - $
+#
+# NAME
+#    map - map a command onto multiple files
+#
+# SYNOPSIS
+#    map [options] [command ,]... files...
+#
+# DESCRIPTION
+#    Map takes a command and its options as a sequence of words
+#    from the command line and executes the command for each file
+#    given.  It is useful for executing commands on a list when
+#    the command itself does not accept multiple filenames.
+#    A word which is a comma by itself separates the command from
+#    the options.
+#
+# OPTIONS
+#    
+#
+$0 =~ s{.*/}{};
+
+sub usage{
+   print STDERR "Usage: $0 [-q] command [options...] , files...\n";
+   exit 1;
+};
+
+if( @@ARGV and $ARGV[0] =~ s/^-// ){
+   $options = shift @@ARGV;
+   $quiet = 1 if $options =~ s/q//;
+   usage unless $options eq '';
+};
+
+while( $word = shift @@ARGV ){
+   if( $word eq ',' ){
+      push @@commands, [@@argseq];
+      @@argseq = ();
+   }else{;
+      push @@argseq, $word;
+   };
+};
+
+for $argseq( \@@commands, @@commands, \@@argseq ){
+   usage unless( @@$argseq );
+};
+
+for $file( @@argseq ){
+   for $command( @@commands ){
+      print "$0: @@$command $file\n" unless $quiet;
+      system @@$command, $file;
+      print "$0: => status ", $? >> 8, ", signal ", $? & 127,
+            "core dumped" x ($? & 128), "\n" unless $quiet;
+   };
+};
+@

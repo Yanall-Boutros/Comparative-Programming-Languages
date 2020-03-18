@@ -1,0 +1,27 @@
+#!/usr/local/bin/perl
+use POSIX qw( strftime );
+
+sub strdt{
+   my( $file ) = @_;
+   @stat = stat( $file );
+   $mtime = $stat[9];
+   $SIX_MONTHS = 3600 * 24 * 365.2425 / 2;
+   $far_fmt_sw = abs( $^T - $mtime ) > $SIX_MONTHS;
+   $fmt = "%b %e " . ( $far_fmt_sw ? " %Y" : "%H:%M" );
+   $time = strftime( $fmt, localtime( $stat[9] ));
+};
+
+for $file( @ARGV ? @ARGV : <*> ){
+   $rdjpgcom = `rdjpgcom -verbose $file 2>&1`;
+   if( $rdjpgcom =~ m{ JPEG\s+image\s+is\s+(\d+)w\s+\*\s+(\d+)h,
+                       \s+(\d+)\s+color\s+components,
+                       \s+(\d+)\s+bits\s+per\s+sample }x
+   ){
+      @dims = ( $1, $2, $3, $4 );
+      printf "%7d %5dw %5dh %2dc %2db  %s  %s\n",
+             -s $file, @dims, &strdt( $file ), $file;
+   }else{
+      $rdjpgcom =~ s/\s*$//;
+      print STDERR "$file: no match: $rdjpgcom\n";
+   };
+};

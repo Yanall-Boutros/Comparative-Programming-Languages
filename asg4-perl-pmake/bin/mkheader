@@ -1,0 +1,298 @@
+#!/usr/bin/perl
+# $Id: mkheader,v 1.1 2019-10-31 13:32:24-07 - - $
+#
+# NAME
+#    mkheader - make header for root of course directory
+#    
+# SYNOPSIS
+#    mkheader
+#
+# DESCRIPTION
+#    Reads in the file README.txt and tries to detect all due dates
+#    with leading text of the form Ddd Mmm Nn, sorts them into order
+#    by date, assuming the current year and makes a header file
+#    HEADER.html to appear ahead of the default directory listing.
+#    Output in the current directory.
+#
+
+BEGIN {
+   push @INC, "/afs/cats.ucsc.edu/courses/cmps012b-wm/usr/share/perl5"
+}
+
+use strict;
+use warnings;
+
+use Getopt::Std;
+use HTTP::Date qw (str2time);
+use List::Util qw (max);
+use POSIX qw (strftime);
+
+my $status = 0;
+$SIG{'__WARN__'} = sub {print STDERR @_; $status = 1; };
+$SIG{'__DIE__'} = sub {warn @_; exit 1; };
+
+my $daylen = 24 * 60 * 60;
+my %months = qw (Jan 0 Feb 1 Mar 2 Apr 3 May 4 Jun 5
+                 Jul 6 Aug 7 Sep 8 Oct 9 Nov 10 Dec 11);
+my $monthpat = join "|", keys %months;
+my $daypat = join "|", qw (Sun Mon Tue Wed Thu Fri Sat);
+my $datepat = qr {(\.\s+($daypat)\s+($monthpat)\s+(\d+)\.)(.*)};
+my $maybedate = qr {(\.\s+(\w{3})\s+(\w{3})\s+(\d+)\.)(.*)};
+my $timenow = $^T;
+my @localtime_now = localtime $timenow;
+my $year_now = strftime "%Y", @localtime_now;
+my $sec_180days = 180 * 24 * 3600;
+
+sub yearweek(@) {
+   my @time = @_;
+   my $year = strftime "%Y", @time;
+   my $week = strftime "%U", @time;
+   my $dayofweek = strftime "%w", @time;
+   my $yearweek = "$year/$week";
+   if ($week eq "00" and $year > $year_now and $dayofweek > 0) {
+      my @previous = gmtime str2time "Dec 31 $year_now";
+      $yearweek = strftime "%Y/%U", @previous;
+   }
+   return $yearweek;
+}
+
+$0 =~ s|.*/||;
+@ARGV == 0 or die "Usage: $0\n";
+
+my $coursepwd = "/afs/cats.ucsc.edu/courses";
+my $pwd = `pwd`;
+chomp $pwd;
+my $url = `pwd2url`;
+chomp $url;
+my $TITLE = $pwd;
+$TITLE =~ s|/afs/cats.ucsc.edu/courses/|~|;
+print "$0: $TITLE\n";
+
+my $bg_due_color     = "#5F5F00";
+my $bg_test_color    = "#5F005F";
+my $bg_data_color    = "#2F5F5F";
+my $bg_empty_color   = "#2F2F2F";
+
+my $fg_hover_color   = "#FF0000";
+my $fg_link_color    = "#00FFFF";
+my $fg_plain_color   = "#00FF00";
+my $fg_visited_color = "#FFFF00";
+
+sub print_html_head ($;$) {
+   my ($htmlfile, $calendar_table) = @_;
+
+   print $htmlfile "<HEAD>\n";
+   print $htmlfile "<TITLE>$TITLE</TITLE>\n";
+   print $htmlfile "<STYLE>\n";
+   print $htmlfile "body {\n";
+   print $htmlfile "   color: $fg_plain_color !important;\n";
+   print $htmlfile "   background-color: $bg_empty_color !important;\n";
+   print $htmlfile "}\n";
+   if ($calendar_table) {
+      print $htmlfile "table {\n";
+      print $htmlfile "   border: 2px solid;\n";
+      print $htmlfile "   border-spacing: 0px;\n";
+      print $htmlfile "}\n";
+      print $htmlfile "td {\n";
+      print $htmlfile "   border: 2px solid;\n";
+      print $htmlfile "   padding: 3px;\n";
+      print $htmlfile "   width: 14%;\n";
+      print $htmlfile "   vertical-align: top;\n";
+      print $htmlfile "}\n";
+   }
+   print $htmlfile "A:link {color: $fg_link_color}\n";
+   print $htmlfile "A:visited {color: $fg_visited_color}\n";
+   print $htmlfile "A:hover {color: $fg_hover_color}\n";
+   print $htmlfile "</STYLE>\n";
+   print $htmlfile "</HEAD>\n";
+
+}
+
+my $readmename = "README.txt";
+my $readme_opened = open README, "<$readmename";
+my $headerhtml = "HEADER.html";
+my $headertxt = "HEADER.txt";
+unless (defined $readme_opened) {
+   open my $HDRHTML, ">$headerhtml" or die "$0: $headerhtml: $!\n";
+   print_html_head $HDRHTML;
+   print $HDRHTML "<BODY>\n";
+   print $HDRHTML "<BIG><B><TT>\n";
+   print $HDRHTML "<BR>PWD: $pwd\n";
+   print $HDRHTML "<BR>URL: <A HREF=$url>$url</A>\n";
+   print $HDRHTML "</TT></B></BIG>\n";
+   close $HDRHTML;
+   unlink $headertxt or warn "$0: $headertxt: $!\n" if -e $headertxt;
+   exit;
+}
+
+my %duedates;
+my $rcsid = "";
+my $quarter = "";
+my @registrar;
+my $first_time = 1e1000;
+my $last_time = 0;
+my %calendar;
+while (defined (my $line = <README>)) {
+   $rcsid = $& and next if $line =~ m/\$(Id): .*?\$/;
+   $quarter = $1 and next if $line =~ m/\.\s+Quarter:\s+(.*)/;
+   if ($line =~ m/$datepat/) {
+      my ($date, $wday, $month, $mday, $item) = ($1, $2, $3, $4, $5);
+      my $trydate = "$month 1 $year_now";
+      my $trytime = str2time $trydate;
+      my $newyear = $year_now + ($trytime < $^T - $sec_180days);
+      my $duedate = "$month $mday $newyear";
+      my $duetime = str2time $duedate;
+      $first_time = $duetime if $first_time > $duetime;
+      $last_time = $duetime if $last_time < $duetime;
+      print "$duedate - not a valid date\n" and next unless $duetime;
+      my @localduetime = localtime $duetime;
+      my $chkwday = strftime "%a", @localduetime;
+      if ($wday ne $chkwday) {
+         $duedates{$date} = "$date is really $chkwday";
+         warn "$duedates{$date}\n";
+      }
+      my $duetimekey = strftime "%Y-%m-%d", @localduetime;
+      push @{$duedates{$duetimekey}}, "$date$item\n";
+      my $yearweek = yearweek @localduetime;
+      my $daynum = strftime "%w", @localduetime;
+      my $caldate = strftime "%a %b %d", @localduetime;
+      $calendar{$yearweek}[$daynum][0] = $caldate;
+      push @{$calendar{$yearweek}[$daynum]}, $item;
+   }elsif ($line =~ m/$maybedate/) {
+      warn "$1 - not a valid date\n";
+   }
+}
+close README;
+exit $status if $status;
+
+print "$0: quarter $quarter\n";
+
+$first_time -= $daylen while $timenow < $first_time
+                         and $first_time <= $last_time;
+for (my $time = $first_time; $time <= $last_time; $time += $daylen) {
+   my @gmtime = gmtime $time;
+   my $yearweek = yearweek @gmtime;
+   my $day = strftime "%w", @gmtime;
+   my $caldate = strftime "%a %b %d", @gmtime;
+   $calendar{$yearweek}[$day] = [$caldate]
+          unless $calendar{$yearweek}[$day];
+}
+
+$rcsid =~ s/\$(Id): (.*?)(,v(\s+\S+){3}).*/$2$3/;
+
+sub urlify($) {
+   my ($line) = @_;
+   $line =~ s|https:([^,\s])+|<A HREF=$&>$&</A>|
+            unless $line =~ m|https:\S+\*|;
+   return $line;
+}
+
+open my $HDRHTML, ">$headerhtml" or die "$0: $headerhtml: $!\n";
+open my $HDRTXT, ">$headertxt" or die "$0: $headertxt: $!\n";
+
+sub print_both(@) {
+   my (@line) = @_;
+   for my $line (@line) {
+      print $HDRHTML urlify $line;
+      $line =~ s/<.*?>//g;
+      print $HDRTXT $line unless $line =~ m/^\s*$/;
+   }
+}
+
+sub ten_chars($) {
+   my ($chars) = @_;
+   $chars = substr $chars . " " x 10, 0, 10;
+   return $chars;
+}
+
+print_html_head $HDRHTML, 1;
+print $HDRHTML "<BODY>\n";
+print_both     "<B><BIG><TT>\n";
+print_both     "$url\n";
+print_both     "<BR>$pwd\n";
+print $HDRHTML "<PRE>\n";
+print_both     @{$duedates{$_}} for sort keys %duedates;
+print $HDRHTML "</PRE>\n";
+print $HDRTXT  "HEADER: HEADER.txt\n";
+print $HDRHTML urlify "HEADER: https:HEADER.html\n";
+print $HDRTXT  "README: $rcsid\n";
+$rcsid =~ s/\.txt,v/.html,v/;
+print $HDRHTML urlify "<BR>README: https:$rcsid\n";
+my $lecture_log = "Syllabus/README.txt";
+if (-r $lecture_log) {
+   print $HDRTXT "Lectures: $lecture_log\n";
+   print $HDRHTML urlify "<BR>Lectures: https:$lecture_log\n";
+}else {
+   print STDERR "$0: $lecture_log: not readable\n";
+}
+print_both     "<BR>REGISTRAR: $_\n" for @registrar;
+print_both     "<P>\n";
+print $HDRHTML "</TT></BIG></B>\n";
+
+if ($first_time <= $last_time) {
+   print $HDRHTML "<TT>\n";
+   print $HDRHTML "<TABLE>\n";
+   for my $yearweek (sort keys %calendar) {
+      print $HDRHTML "<TR>\n";
+      for my $daynum (0..6) {
+         my $data = $calendar{$yearweek}[$daynum];
+         my $htline = "";
+         my $td_style = "";
+         if (defined $data) {
+            my ($date, @info) = @$data;
+            $date =~ s/\s/&nbsp;/g;
+            $date =~ s/&nbsp;0/&nbsp;&nbsp;/;
+            if (@info) {
+               for my $info (@info) {
+                  $info =~ m/^\s*(.*?)\.\s*(https:\S+)?/;
+                  my ($item, $url) = ($1, $2);
+                  my $shortitem = ten_chars $item;
+                  $shortitem =~ s/\s+$//;
+                  $shortitem =~ s/\s/&nbsp;/g;
+                  $shortitem = "<A HREF=$url>$shortitem</A>"
+                          if $url and $url !~ m/\*$/;
+                  $shortitem = "<B>$shortitem</B>" if $url;
+                  $date = "<B>$date</B>" if $url;
+                  $htline .= "<BR>$shortitem";
+                  my $bg_color = $bg_data_color;
+                  $bg_color = $bg_due_color if $item =~m/LAB|ASG|DUE/;
+                  $bg_color = $bg_test_color if $item =~m/TEST|EXAM/;
+                  $td_style = " background-color: $bg_color;"
+               }
+            }
+            $htline = "\n$date\n" . $htline;
+         }
+         print $HDRHTML "<TD style=\"$td_style\">$htline\n</TD>\n";
+      }
+      print $HDRHTML "</TR>\n";
+   }
+   print $HDRHTML "</TABLE>\n";
+}
+print $HDRHTML "</BODY>\n";
+
+if ($first_time <= $last_time) {
+   sub print_sep_line { print $HDRTXT "+----------" x 7, "+\n" }
+   for my $yearweek (sort keys %calendar) {
+      print_sep_line;
+      my $week = $calendar {$yearweek};
+      my $rowcount = max map {$_ && $#$_ || 0} @$week;
+      for my $row (0 .. $rowcount) {
+         for my $daynum (0..6) {
+            my $day = $week->[$daynum];
+            my $data = $day && $day->[$row] || "";
+            $data =~ s/^\s*(.*?)\..*/$1/;
+            $data =~ s/ 0(\d)/  $1/;
+            print $HDRTXT "|", ten_chars $data;
+         }
+         print $HDRTXT "|\n";
+      }
+   }
+   print_sep_line;
+}
+
+close $HDRHTML;
+close $HDRTXT;
+
+system "ls -la $headerhtml $headertxt";
+system "cat $headertxt";
+

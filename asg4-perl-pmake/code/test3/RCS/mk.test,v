@@ -1,0 +1,29 @@
+head	1.1;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.1
+date	2020.02.03.23.28.10;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@-
+@
+text
+@#!/bin/sh -x
+# $Id: Check,v 1.1 2011-03-24 17:24:36-07 - - $
+rm hello
+pmake spotless    >spotless.log 2>&1
+pmake ci          >ci.log 2>&1
+pmake             >all.log 2>&1
+@

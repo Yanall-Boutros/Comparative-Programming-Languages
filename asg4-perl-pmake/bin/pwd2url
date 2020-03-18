@@ -1,0 +1,28 @@
+#!/usr/bin/perl
+#
+# NAME
+#    pwd2url - convert Unix pwd to URL for /courses/ hierarchy
+#
+# SYNOPSIS
+#    pwd2url
+#
+# DESCRIPTION
+#    Converts an /afs/ Linux pwd to a URL in the
+#    /afs/cats.ucsc.edu/courses/ hierarchy.
+#    ITS policy is to export a subdirectory public_html to
+#    the web.  It is assumed that in any immediate subdirectory
+#    of a course, in public_html, there is a symlink : -> ..
+#    to make the entire hierarchy visible to the web.
+#
+
+$coursepwd = "/afs/cats.ucsc.edu/courses";
+$courseurl = "http://www2.ucsc.edu/courses";
+
+$pwd = `pwd`;
+chomp $pwd;
+
+print "No URL for $pwd\n" and exit
+      unless $pwd =~ m|^$coursepwd/([^/]*)(/(.*))?|;
+($course, $subdir) = ($1, $2);
+print "$courseurl/$course/:$subdir/\n";
+

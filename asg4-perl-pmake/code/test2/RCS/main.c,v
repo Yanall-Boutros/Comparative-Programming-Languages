@@ -1,0 +1,31 @@
+head	1.1;
+access;
+symbols;
+locks;
+comment	@ * @;
+
+
+1.1
+date	2020.02.03.23.27.37;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@-
+@
+text
+@/* $Id: main.c,v 1.1 2011-03-24 17:24:59-07 - - $ */
+
+#include "hello.h"
+
+int main (void) {
+   hello();
+   return 0;
+}
+@

@@ -1,0 +1,53 @@
+#!/bin/bash
+# $Id: mkt,v 1.1 2019-10-31 13:32:24-07 - - $
+SCRIPT=`basename $0`
+MANPAGE="#
+# NAME
+#    $SCRIPT - compile programs with mkc and run tests
+#
+# SYNOPSIS
+#    $SCRIPT [-g] [-o mkcopt]... prog...
+#
+# DESCRIPTION
+#    Compiles a program with the script mkc and then searches for
+#    all lines beginning with //TEST// comments and runs them through
+#    the shell.
+#
+# OPTIONS
+#    -g  Don't kill previous gv processes.
+#    -o  Pass options to mkc.
+#
+# EXAMPLE
+#    The program might contain the test commands:
+#    //TEST// runprogram.perl -x prog.lis ./prog foo bar baz
+#    //TEST// mkpspdf prog.ps prog.cpp prog.lis
+#"
+
+usage() {
+   echo Usage: $0 program... 1>&2
+   echo "$MANPAGE" | sed -r 's/^# ?//'
+   exit 1
+}
+
+while getopts go: opt; do
+   case $opt in
+      g) opt_g=1;;
+      o) MKC_OPTS="$MKC_OPTS -$OPTARG";;
+      ?) usage;;
+   esac
+done
+shift $(($OPTIND-1))
+
+if [ $# == 0 ]; then usage; fi
+
+for prog in $*
+do
+   mkc $MKC_OPTS $prog >$prog.log 2>&1
+   rc=$?
+   cat $prog.log
+   if [ $rc -ne 0 ]; then echo Exit status = $rc; exit 1; fi
+   [ $opt_g ] || pkill -g 0 gv
+   perl -ne 'print if s|^//TEST//\s*||' $prog | /bin/sh -x
+   echo status=$?, PIPESTATUS=\(${PIPESTATUS[*]}\)
+done
+

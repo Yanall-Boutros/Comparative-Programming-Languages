@@ -1,0 +1,107 @@
+head	1.4;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.4
+date	2020.03.06.22.37.44;	author -;	state -;
+branches;
+next	1.3;
+
+1.3
+date	2020.03.06.21.56.10;	author -;	state -;
+branches;
+next	1.2;
+
+1.2
+date	2020.03.06.21.51.09;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2020.03.06.21.49.30;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@-
+@
+text
+@% $Id: formatting.pl,v 1.3 2020-03-06 13:56:10-08 - - $
+% Formatting output in swipl.
+
+pad2( Num, Padded) :- Num < 10, string_concat( '0', Num, Padded).
+pad2( Num, Num).
+
+print_flight( Activity, Code, Name, Hour, Min) :-
+    write( Activity), write( '  '),
+    string_upper( Code, Upper),
+    write( Upper), write( ' '), write( Name), write( ' '),
+    pad2( Hour, Hour2), write( Hour2), write( ':'),
+    pad2( Min, Min2), write( Min2), nl.
+
+test_print :-
+    print_flight( 'depart', lax, 'Los Angeles     ', 14, 22),
+    print_flight( 'arrive', sfo, 'San Francisco   ', 15, 29),
+    print_flight( 'depart', sfo, 'San Francisco   ', 16, 02),
+    print_flight( 'arrive', sea, 'Seattle-Tacoma  ', 17, 42).
+
+@
+
+
+1.3
+log
+@-
+@
+text
+@d1 1
+a1 1
+% $Id: formatting.pl,v 1.2 2020-03-06 13:51:09-08 - - $
+d4 2
+d7 12
+a18 6
+print_info( Atom, Hour, Min) :-
+    write( '['),
+    string_upper( Atom, Upper), write( Upper),
+    write( '] ['),
+    format( '~|~`0t~w~2|:~|~`0t~w~2|', Hour, Min),
+    write( ']'), nl.
+@
+
+
+1.2
+log
+@-
+@
+text
+@d1 1
+a1 1
+% $Id: formatting.pl,v 1.1 2020-03-06 13:49:30-08 - - $
+d4 8
+a11 3
+% Print an atom in upper case.
+print_upper(X) :- write( string_upper( sfo)).
+print_2_digits(X) :- write( format( '~|~`0t~w~2|', X). 
+@
+
+
+1.1
+log
+@-
+@
+text
+@d1 1
+a1 1
+% $Id$
+d5 2
+a6 1
+write( string_upper( sfo)).
+@

@@ -1,0 +1,111 @@
+#!/usr/bin/perl
+# $Id: mkhtaccess,v 1.1 2019-10-31 13:32:24-07 - - $
+
+$0 =~ s|.*/||;
+use strict;
+use warnings;
+
+my @data = <DATA>;
+
+unless (@ARGV) {
+   print STDERR "Usage: $0 course-root-directory...\n";
+   exit 1;
+}
+
+for my $rootdir (@ARGV) {
+   $rootdir =~ s|/*$||;
+   if ($rootdir !~ m|^/afs/cats.ucsc.edu/courses/[^/]*/*$|) {
+      print STDERR "$0: $rootdir: not a course root directory\n";
+      next;
+   }
+   unless (chdir $rootdir) {
+      print STDERR "$0: chdir $rootdir: $!\n";
+      next;
+   }
+   my $htaccess = ".htaccess";
+   unless (open HTACCESS, ">$htaccess") {
+      print STDERR "$0: $htaccess: $!";
+      next;
+   }
+   print "$0: $htaccess: OK\n";
+   print HTACCESS "# \$Id\$\n\n";
+   print HTACCESS "AuthUserFile \"$rootdir/.htpasswd\"\n";
+   print HTACCESS @data;
+   close HTACCESS;
+   system "mkheader";
+}
+
+__DATA__
+
+AuthType Basic
+AuthName "cats.ucsc.edu/courses"
+
+#<Limit GET POST PUT>
+Satisfy any
+Order Deny,Allow
+Deny from all
+Allow from ucsc.edu
+Require valid-user
+#</Limit>
+
+#Options +Includes
+#Options All
+AddIcon /icons/ball.red.gif ..
+DirectoryIndex index.html .index
+HeaderName HEADER.html
+ReadmeName README
+
+IndexOptions +DescriptionWidth=*
+IndexOptions +FancyIndexing
+IndexOptions +FoldersFirst
+IndexOptions +IconHeight=8
+IndexOptions +IconWidth=16
+IndexOptions +IconsAreLinks
+IndexOptions +NameWidth=40
+IndexOptions +ScanHTMLTitles
+IndexOptions +SuppressHTMLPreamble
+IndexOptions -IgnoreCase
+IndexOrderDefault Ascending Name
+
+AddDescription "ASCII text file"     .cat
+AddDescription "ASCII text file"     .tt
+AddDescription "ASCII text file"     .txt
+AddDescription "Bison grammar"       .y
+AddDescription "C code"              .c
+AddDescription "C header"            .h
+AddDescription "C++ code"            .cc
+AddDescription "C++ code"            .cpp
+AddDescription "C++ code"            .cxx
+AddDescription "C++ template code"   .tcc
+AddDescription "Flex scanner"        .l
+AddDescription "HTML file"           .html
+AddDescription "Java class file"     .class
+AddDescription "Java jar file"       .jar
+AddDescription "Java source code"    .java
+AddDescription "Makefile"            Makefile
+AddDescription "Object file"         .o
+AddDescription "Ocaml interface"     .mli
+AddDescription "Ocaml source"        .ml
+AddDescription "PDF document"        .pdf
+AddDescription "Perl program"        .perl
+AddDescription "Postscript document" .ps
+AddDescription "Postscript document" .psdoc
+AddDescription "Revision Control"    RCS
+AddDescription "Shell script"        .sh
+AddDescription "groff -mm markup"    .mm
+AddDescription "man page"            .man
+
+AddType text/html  .index
+AddType text/plain .man
+AddType text/plain .mm
+AddType text/plain .sh
+AddType text/plain .tt
+AddType text/plain HEADER
+AddType text/plain README
+
+DefaultType text/plain
+
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} ^.+/[0-9]+$
+RewriteRule .* - [T=text/plain]
+

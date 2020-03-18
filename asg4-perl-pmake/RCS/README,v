@@ -1,0 +1,46 @@
+head	1.1;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.1
+date	2018.10.18.20.47.32;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@-
+@
+text
+@
+Learning Perl.
+
+There are many Perl tutorials avalable on the web for free.
+
+You can read O'Reilly books for free online at:
+http://proquest.safaribooksonline.com/
+This works using a UCSC computer because the library has
+a subscription.
+
+Learning Perl is at:
+http://proquest.safaribooksonline.com/0596101058
+
+Another free books is available at:
+http://www.onyxneon.com/books/modern_perl/index.html
+http://www.onyxneon.com/books/modern_perl/modern_perl_letter.pdf
+
+Also see:
+courses/cmps012b-wm/Labs-cmps012m/Tutorials/modern-perl-book
+courses/cmps012b-wm/Labs-cmps012m/Tutorials/perl-tutorial
+courses/cmps012b-wm/bin
+
+$Id: README,v 1.1 2011-03-25 16:40:48-07 - - $
+@

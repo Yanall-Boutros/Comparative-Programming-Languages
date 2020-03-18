@@ -1,0 +1,14 @@
+================ make aok ================
+make: 'aok' is up to date.
+aok
+make aok.test status: 0
+================ make bad ================
+make: 'bad' is up to date.
+bad
+make: *** [Makefile:8: bad.test] Error 63
+make bad.test status: 2
+================ make segfault ================
+make: 'segfault' is up to date.
+segfault
+make: *** [Makefile:8: segfault.test] Segmentation fault
+make segfault.test status: 2

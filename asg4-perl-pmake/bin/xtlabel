@@ -1,0 +1,97 @@
+#!/usr/local/bin/perl
+use warnings;
+# $Id: xtlabel,v 1.1 2019-10-31 13:32:24-07 - - $
+$HELP = <<'__END_HELP__';
+#
+# NAME
+#    xtlabel - set the label on an xterm
+#
+# SYNOPSIS
+#    xtlabel -help
+#    xtlabel [string...]
+#
+# DESCRIPTION
+#    Echos the escape sequence to set the label on an xterm
+#    and its icon.  Does %-substitution for recognized codes.
+#    @ARGV is treated as a single string scanned once from
+#    left to right, joined with spaces.  Option (-) substitution
+#    is done only when the - is the first character of a word.
+#    Options with operands are shown with a *.
+#
+# SUBSTITUTIONS
+#    %-substitution is done à la printf or strftime.  If a word
+#    begins with a -, it is treated as a %.  Invalid %s represent
+#    themselves.  Recognized codes are:
+#    %h  - hostname
+#    %p  - pwd
+#    %t  - tty
+#    %u  - username
+#    %x  - result of executing the command with all characters
+#          up to a % followed by white space.
+#
+# DEFAULT
+#    %h:%t
+#    
+__END_HELP__
+
+$0 =~ s|.*/||;
+$DEFAULT = "%h:%t";
+
+if( @ARGV == 1 && $ARGV[0] eq '-help' ){
+   print $HELP;
+   exit;
+};
+
+sub cwd($){
+   my( $chop ) = @_;
+   my $pwd = `pwd`;
+   chomp $pwd;
+   1 while $chop-- > 0 and $pwd =~ s{^/*[^/]*/}{/};
+   return "^$pwd";
+};
+
+sub relhome(){
+   my $pwd = `pwd`;
+   chomp $pwd;
+   $pwd =~ s|^$ENV{HOME}|~|;
+   return $pwd;
+};
+
+sub strfsub($){
+   my ($arg) = @_;
+   my $result = "";
+   while ($arg =~ s/^([^%]*)%(.?)//s) {
+      my $sub = $SUBS{$2} || sub{$_[0]};
+      $result .= $1 . &$sub ($2, \$arg);
+   };
+   return $result . $arg;
+};
+
+sub qxchomp($){
+   my( $result ) = qx( $_[0] );
+   return strfsub $DEFAULT unless $result;
+   $result =~ s/\n/ /g;
+   $result =~ s/\s+$//g;
+   return $result;
+};
+
+%SUBS = (
+   '-' => sub{ '-'},
+   'h' => sub{ qxchomp 'hostname' },
+   'p' => sub{ relhome },
+   't' => sub{ my $t = qxchomp 'tty'; $t =~ s|^/dev|^|; $t },
+   'u' => sub{ $ENV{USER} || $ENV{LOGNAME} || scalar getpwuid $< },
+   'x' => sub{ ${$_[1]} =~ s/([^%]*)(%\s)?//; qxchomp $1 },
+);
+for my $num( 0..9 ){ $SUBS{ $num } = sub{ cwd $num }; };
+
+push @ARGV, $DEFAULT unless @ARGV;
+map{ s/^-/%/ } @ARGV;
+$argv = join ' ', @ARGV;
+
+eval $HELP;
+$argv = "%$argv" if $argv =~ m/^.$/;
+
+$echostring = "\033]0;" . (strfsub $argv) . "\007";
+print $echostring;
+

@@ -1,0 +1,93 @@
+head	1.1;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.1
+date	2019.10.31.20.32.24;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@-
+@
+text
+@" $Id: vimrc,v 1.5 2013-07-18 14:47:02-07 - - $
+
+highlight Directory none
+highlight ErrorMsg term=reverse
+highlight IncSearch none
+highlight LineNr none
+highlight LineNr none
+highlight ModeMsg none
+highlight MoreMsg none
+highlight NonText none
+highlight Normal none
+highlight Question none
+highlight Search none
+highlight SignColumn none
+highlight SpecialKey none
+highlight StatusLine none
+highlight StatusLineNC none
+highlight TabLine none
+highlight TabLineFill none
+highlight TabLineSel none
+highlight Title none
+highlight Visual term=reverse
+highlight VisualNOS term=reverse
+highlight WarningMsg term=reverse
+highlight WildMenu none
+
+filetype off
+syntax off
+
+autocmd FileType * setlocal formatoptions-=ro
+
+set compatible
+set fileformat=unix
+set noautoindent
+set nohlsearch
+set nomodeline
+set noshowmatch
+set numberwidth=8
+set t_Co=0
+set viminfo='0,n/dev/null
+
+map ;1 1G
+map ;I :set noignorecase
+map ;M :set noshowmatch
+map ;N :set nonumber
+map ;S {!}sort -f
+map ;W :set wrapmargin=0
+map ;a :set all
+map ;f {!}fmt -65 -c
+map ;g {!}fmt -50 -c
+map ;i :set ignorecase
+map ;m :set showmatch
+map ;n :set number
+map ;s {!}sort
+map ;u {!}uniq
+map ;w :set wrapmargin=1
+
+"set autoindent
+"set modeline
+"set showmatch
+
+set autoprint
+set ignorecase
+set noslowopen
+set number
+set report=1
+set shell=/bin/sh
+set showmode
+set wrapmargin=0
+
+@

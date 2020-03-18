@@ -1,0 +1,6 @@
+#!/bin/sh -x
+# $Id: mk.test,v 1.1 2020-02-03 15:27:08-08 - - $
+rm hello
+pmake       >hello1.log 2>&1
+pmake hello >hello2.log 2>&1
+pmake bad   >bad.log 2>&1

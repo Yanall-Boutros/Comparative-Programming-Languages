@@ -1,0 +1,16 @@
+#!/bin/sh -x
+# $Id: xvi,v 1.1 2019-10-31 13:32:24-07 - - $
+#
+# NAME
+#    xvi - Start a new xterm and run vi inside of it
+#
+# SYNOPSIS
+#    xvi [viopts...]
+#
+# DESCRIPTION
+#    Start a new xterm in the current directory and pass the
+#    options to vi.
+#
+geom="-geometry 80x72"
+misc="-ut -ls"
+xterm $misc $geom -n "$*" -T "$*" -e vi $* &

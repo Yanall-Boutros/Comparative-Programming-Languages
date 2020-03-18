@@ -1,0 +1,6 @@
+#!/bin/sh -x
+# $Id: mk.test,v 1.1 2020-02-03 15:28:34-08 - - $
+rm hello
+pmake spotless    >spotless.log 2>&1
+pmake ci          >ci.log 2>&1
+pmake             >all.log 2>&1

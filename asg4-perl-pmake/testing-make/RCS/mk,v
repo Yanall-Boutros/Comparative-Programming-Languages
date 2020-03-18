@@ -1,0 +1,64 @@
+head	1.2;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.2
+date	2018.11.07.02.04.21;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2018.11.07.02.03.44;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@-
+@
+text
+@#!/bin/sh
+# $Id: mk,v 1.1 2018-11-06 18:03:44-08 - - $
+
+cid + $0 Makefile *.cpp
+
+for target in $(ls *.cpp | sed 's/\.cpp$//')
+do
+   echo ================ make $target ================
+   make $target
+   make $target.test
+   echo make $target.test status: $?
+done >mktests.output 2>&1
+
+catnv $0 Makefile $(which catnv) >mktests.listing1
+catnv *.cpp mktests.output >mktests.listing2
+mkpspdf Listing.ps mktests.listing?
+@
+
+
+1.1
+log
+@-
+@
+text
+@d2 1
+a2 1
+# $Id: mk,v 1.5 2018-11-06 18:00:58-08 - - $
+d4 1
+a4 1
+cid + $0 Makefile *.c
+d6 1
+a6 1
+for target in $(ls *.c | sed 's/\.c$//')
+d15 1
+a15 1
+catnv *.c mktests.output >mktests.listing2
+@

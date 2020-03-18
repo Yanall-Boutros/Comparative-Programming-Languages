@@ -1,0 +1,6 @@
+#!/bin/sh -x
+# $Id: acro2ps,v 1.1 2019-10-31 13:32:24-07 - - $
+for pdf in $*
+do
+   acroread -toPostScript $pdf &
+done

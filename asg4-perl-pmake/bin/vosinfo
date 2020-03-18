@@ -1,0 +1,96 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use Getopt::Std;
+use POSIX qw (strftime);
+
+my $RCSID = '$Id: vosinfo,v 1.1 2019-10-31 13:32:24-07 - - $';
+my @LASTCHANGE = (split m/-/, (split m/\s+/, $RCSID)[3])[2,1,0];
+$LASTCHANGE[1] -= 1;
+$LASTCHANGE[2] -= 1900;
+my $LASTCHANGE = strftime "%e %B %Y", (0, 0, 0, @LASTCHANGE, 0, 0, 0);
+my $VERSION = "Perl $]";
+$0 =~ s{^.*/([^/]+)/*$}{$1};
+
+my $manpage = <<__END_MANPAGE__;
+
+NAME
+   ${0} \- print extracted information from vos examine
+
+SYNOPSIS
+   vosinfo [-v] [perlregex ...]
+
+DESCRIPTION
+   Looks up the \$HOME directory as well as all directories
+   under /afs/cats.ucsc.edu/{class,courses} and greps them with
+   the regexes given on the command line.  Prints information
+   about each volume so matched.
+
+OPTIONS
+   -v  Verbose option.  Print complete vos examine information.
+       Otherwise print only the volume name, quota, and server.
+
+OPERANDS
+   Each operand is a Perl pattern, all of which are joined
+   with the alternation operator | to form a regex to select
+   volume names.  If no patterns are given, prints this help
+   information.
+
+BUGS
+   Does not find any home directories other than that
+   specified in \$HOME.  Users can only look at their own
+   private directory, and those under class/ and courses/ .
+
+RCSID
+   ${RCSID}
+__END_MANPAGE__
+
+#my $vosbin = '/afs/cats.ucsc.edu/afsrelease/3.6/@sys/etc/vos';
+#my $vosbin = '/usr/afsws/etc/vos';
+my $vosbin = '/usr/sbin//vos';
+my %opts;
+getopts "v", \%opts;
+
+unless (@ARGV) {
+   print $manpage;
+   exit;
+}
+
+sub ls ($) {
+   my ($dirname) = @_;
+   opendir DIR, $dirname or die "$0: $dirname: $!";
+   my @volnames = sort readdir DIR;
+   closedir DIR;
+   return @volnames;
+}
+
+sub print_brief ($) {
+   my ($volname) = @_;
+   my $vosinfo = `$vosbin ex $volname`;
+   my $vosregex = qr(
+         ^(.+?)\s.*?
+         MaxQuota\s+(\d+)\sK.*?
+         server\s+(.+?)\s
+      )xism;
+   if ($vosinfo =~ m/$vosregex/) {
+      my ($volname1, $quota, $server) = ($1, $2, $3);
+      printf "%-18s %7dK %s\n", $volname1, $quota, $server;
+   }else {
+      warn "$0: $volname: unknown format\n$vosinfo\n";
+   }
+}
+
+my $volregex = qr{@{[join '|', @ARGV]}};
+printf "$0: volregex = \"%s\"\n", $volregex;;
+my @volnames = grep {m/$volregex/}
+               ($ENV{USER} || $ENV{LOGNAME},
+                `ls /afs/cats.ucsc.edu/courses`,
+                `ls /afs/cats.ucsc.edu/class`);
+
+if ($opts{"v"}) {
+   map {my $cmd = "$vosbin ex $_\n"; print $cmd, `$cmd`} @volnames;
+}else {
+   map {print_brief $_} @volnames;
+}
+
+__DATA__

@@ -1,0 +1,42 @@
+head	1.1;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.1
+date	2019.10.31.20.32.24;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@-
+@
+text
+@#!/usr/bin/perl -w
+# $Id: xtwid,v 1.1 2008-10-01 14:50:48-07 - - $
+#
+# NAME
+#    xtwid width
+#
+# DESCRIPTION
+#    Changes the width of an xterm.
+#
+# OPERANDS
+#    width - must be either 80 or 132.
+#    Missing argument assumes 132.
+#    Invalid argument assumes 80.
+
+%cols = (80=> "\e[?3l", 132=> "\e[?3h");
+$escseq = $cols{"@@ARGV"} || $cols{80};
+print "$escseq";
+print `stty -a`;
+print `stty -a`;
+@

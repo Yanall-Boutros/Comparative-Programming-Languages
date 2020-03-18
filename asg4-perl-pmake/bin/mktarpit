@@ -1,0 +1,191 @@
+#!/usr/bin/perl -w
+# $Id: mktarpit,v 1.1 2019-10-31 13:32:24-07 - - $
+
+$0 =~ s|.*/||;
+delete $ENV{LC_CTYPE};
+$GTAR = "gtar";
+use POSIX qw(strftime);
+
+#
+# Message strings.
+#
+
+$usage_message = <<'__END_HELP__';
+
+NAME
+   mktarpit - make a tar pit from a list of directories
+
+SYNOPSIS
+   mktarpit directory...
+
+DESCRIPTION
+   Given a list of directory names in @ARGV, each directory is
+   copied into a uuencoded gzipped gtar file in the subdirectory
+   .tarpit under the current directory.  Entire directories may
+   then be emailed to students.
+
+USAGE
+   1. cd asg1
+
+      Cd into the directory above the directory containing
+      student-usernamed directories.  Make sure that there are
+      no non-hidden files other than student-usernamed
+      directories in that directory.
+
+      Since the subject of the message created comes from `pwd`,
+      it is necessary for the cwd to be the directory one level
+      up from the directory owned by the student.
+
+   2. foreach student (*)
+         mailx -s asg1/SCORE $student <$student/SCORE
+         echo $student mailed.
+         sleep 2
+      end
+
+      Email the SCORE file in each directory in plain text to the
+      student.  The sleep is to avoid oveerwhelming the mail server.
+      We assume the score sheet is in a file called SCORE.  The
+      shell syntax used here is csh(1).  It will not work if you
+      use sh(1) as your shell, but sh(1) has equivalent commands.
+
+   3. mktarpit *
+      mktarpit foo bar
+
+      Will create a uuencoded gzipped gtar file for each directory
+      named in *.  Individual directories may be used instead of
+      the shell wildcard, as in the second example.
+
+   4. cd .tarpit
+
+      Note that .tarpit is a hidden directory, so that you need
+      to use -la of ls to see it, and it will also not be caught
+      by undotted wildcards.
+
+   5. foreach student (*@ucsc.edu)
+         mailx $student <$student
+         echo $student mailed.
+         sleep 2
+      end
+
+      The above shell script will iterate over each tgz.uu
+      (specify an individual file if necessary instead of the
+      wildcard) and email the file to each student.  The sleep is
+      in the loop to avoid overwhelming the mail server if the
+      class is large.
+
+__END_HELP__
+
+$email_message = <<'__END_EMAIL__';
+
+Following is a uuencoded gzipped gtar file (tgz.uu) file.  It
+was created from a Perl script with the command given later and
+appended to the end of this message.  It contains the entire
+contents of your submitted directory after the grader finished
+grading.  The SCORE sheet is embedded in the tar file.
+
+If you use /bin/mailx to read your email, you may extract it
+directly with the following command:
+
+   mail-% | 86 'uudecode -p | gtar zxvf -'
+
+assuming that the message number is 86.  Change the number as
+appropriate.  If you use another mailer, the pipe syntax will
+likely be different.  If your mailer does not have pipe
+capability, save this message into a separate text file (not
+your mbox).  Then do one of the following:
+
+   % uudecode -p <thisfile | gtar zxvf -
+
+Instead of ``thisfile'' use the name of the file that you
+actually used when you saved the file.  uudecode will read
+thisfile and write the tgz into a pipe.  gtar will then read
+the pipe and create a new subdirectory under the current
+directory and extract all files from it.  Note that /bin/tar
+does not understand the -z option, and so will not work.  You
+can, of course, gunzip the file separately.
+
+If you read mail with some kind of pointy clicky, it's might be
+possible that it has some pointy clicky way of extracting the
+following targz.  Note carefully the name of the file that was
+extracted.  If your browser saved a file with a name like
+thisfile.tgz, then it has already performed the uudecode,
+and you can decode it with:
+
+   % gtar zxvf thisfile.tgz
+
+Note that you should do this in a directory that does not
+contain any other files, as those other files could possibly be
+overwritten, in the case where a file in the tar has the same
+name as an already existing file.
+
+__END_EMAIL__
+
+#
+# First, check usage, and print help if needed:
+#
+
+unless( @ARGV ){
+   print STDERR $usage_message;
+   exit 1;
+};
+
+#
+# Make the tarpit.
+#
+
+$tarpit = ".tarpit";
+unless( -d $tarpit ){
+   if( mkdir $tarpit, 0777 ){
+      print STDERR "$0: $tarpit: created\n";
+   }else{
+      print STDERR "$0: mkdir $tarpit: $!";
+      exit 1;
+   };
+};
+
+#
+# Get the pwd.  Change, for example,
+# /afs/cats.ucsc.edu/class/cmps104b.w01/.LOCKED/asg1/
+# to cmps104b.w01/asg1/.
+#
+
+$asgname = `/bin/pwd`;
+chomp $asgname;
+$asgname =~ s|/.LOCKED/|/|;
+$asgname =~ s|/afs/cats.ucsc.edu/class/||;
+
+#
+# Make the tar.uu files.  This gets messy because the gtar|uuencode
+# pipe writes the uu output to stdout, while gtar writes the log
+# to stderr.  We want stderr to appear completely before stdout,
+# not intermixed, which may happen with 2>&1.  So we create the
+# uuencode output as a separate file and catch the stderr via 2>&1
+# from the parent process's stdout.  The uuencoded output is then
+# appended after the file is closed.
+#
+
+sub command($){
+   my( @command ) = @_;
+   print EMAIL "% @command", `@command`, "\n";
+};
+
+for $dir( @ARGV ){
+   $emailtar = "$tarpit/$dir\@ucsc.edu";
+   $targzuu = "$emailtar.uu";
+   if( ! -d $dir ){
+      print STDERR "$0: $dir: is not a directory\n";
+   }elsif( ! open EMAIL, ">$emailtar" ){
+      print STDERR "$0: $emailtar: $!";
+   }else{
+      print STDERR "$0: $emailtar: OK\n";
+      print EMAIL "~s $asgname/$dir\n";
+      print EMAIL $email_message;
+      command "/bin/date '+%Y-%m-%d %a %H:%M:%S %Z'\n";
+      command "/bin/ls -laR $dir\n";
+      command "( $GTAR zcvf - $dir \\\n"
+            . "| /bin/uuencode $dir.tgz >$targzuu ) 2>&1\n";
+      close EMAIL;
+      print STDERR `/bin/cat $targzuu >>$emailtar`;
+      print STDERR `/bin/rm $targzuu`;
+   };
+};

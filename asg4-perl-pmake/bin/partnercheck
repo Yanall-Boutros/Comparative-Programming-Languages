@@ -1,0 +1,85 @@
+#!/usr/bin/perl
+# $Id: partnercheck,v 1.1 2019-10-31 13:32:24-07 - - $
+use strict;
+use warnings;
+$0 =~ s|.*/||;
+
+my $usage = <<__END__;
+#
+# NAME
+#    partnercheck - check for formatting on PARTNER file
+#
+# SYNOPSIS
+#    partnercheck [-q] [directory...]
+#
+# DESCRIPTION
+#    Reads PARTNER files and checks for validity.  If no directories
+#    are specified, "." is used as the default.  Otherwise checks each
+#    directory/PARTNER file.  PARTNER file must contain a username
+#    followed by a newline and nothing else in the file.
+#
+# OPTIONS
+#    -e  error mode - only print error messages for bad PARTNER files
+#    -q  quiet mode - do not print message about no PARTNER file
+#
+__END__
+$usage =~ s/^#[ ]?//gm;
+
+use Getopt::Std;
+my %opts;
+getopts "eq", \%opts;
+my $error = $opts{'e'};
+my $quiet = $opts{'q'};
+
+my @directories = @ARGV ? @ARGV : qw(.);
+
+my $dir_errors = 0;
+for my $directory (@directories) {
+   next if -d $directory;
+   print STDERR "$0: $directory: not a directory\n";
+   $dir_errors = 1;
+}
+print STDERR $usage and exit 1 if $dir_errors;
+
+for my $directory (@directories) {
+
+   my $filename = "$directory/PARTNER";
+   unless (open PARTNER, "<$filename") {
+      next if $quiet or $error;
+      print "$0: $filename: $!\n";
+      print "This is not an error if this student is working alone.\n";
+      print "This *is* an error if working with a partner.\n";
+      next;
+   }
+
+   my $partner = join "", <PARTNER>;
+   close PARTNER;
+
+   $partner =~ s/\n$//;
+   print "$0: partner = \"$partner\"\n";
+
+   my ($username, $passwd, $uid, $gid, $quota, $comment, $gecos, $home,
+       $shell, $expire) = getpwnam $partner;
+
+   unless ($username) {
+      print "$0: $filename: no such username: \"$partner\"\n";
+      print `od -c $filename`;
+      print "error: invalid file format for partner file\n";
+      next;
+   }
+
+   next if $error;
+   print "$0: $filename: format OK:\n";
+   print "username = \"$username\"\n" if $username;
+   print "passwd   = \"$passwd\"\n"   if $passwd;
+   print "uid      = \"$uid\"\n"      if $uid;
+   print "gid      = \"$gid\"\n"      if $gid;
+   print "quota    = \"$quota\"\n"    if $quota;
+   print "comment  = \"$comment\"\n"  if $comment;
+   print "gecos    = \"$gecos\"\n"    if $gecos;
+   print "home     = \"$home\"\n"     if $home;
+   print "shell    = \"$shell\"\n"    if $shell;
+   print "expire   = \"$expire\"\n"   if $expire;
+
+}
+

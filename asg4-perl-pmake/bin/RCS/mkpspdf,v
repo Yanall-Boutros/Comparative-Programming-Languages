@@ -1,0 +1,285 @@
+head	1.9;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.9
+date	2020.01.13.21.49.03;	author -;	state -;
+branches;
+next	1.8;
+
+1.8
+date	2020.01.13.21.22.46;	author -;	state -;
+branches;
+next	1.7;
+
+1.7
+date	2020.01.03.20.45.13;	author -;	state -;
+branches;
+next	1.6;
+
+1.6
+date	2020.01.03.20.44.50;	author -;	state -;
+branches;
+next	1.5;
+
+1.5
+date	2020.01.03.20.42.53;	author -;	state -;
+branches;
+next	1.4;
+
+1.4
+date	2020.01.03.20.34.37;	author -;	state -;
+branches;
+next	1.3;
+
+1.3
+date	2020.01.03.00.35.04;	author -;	state -;
+branches;
+next	1.2;
+
+1.2
+date	2020.01.03.00.30.04;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2019.10.31.20.32.24;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.9
+log
+@-
+@
+text
+@#!/bin/bash
+# $Id: mkpspdf,v 1.8 2020-01-13 13:22:46-08 - - $
+
+SCRIPT=$(basename $0)
+MANPAGE="
+#
+# NAME
+#    $SCRIPT - create ps and pdf files from source code
+#
+# SYNOPSIS
+#    $SCRIPT [-2BFGHNTb:c:rs:t:u:] [dirname/]psfilename [filename...]
+#
+# DESCRIPTION
+#    From the [dirname/]psfilename specification, create a Postscript
+#    file of the filenames and bring it up in ghostview.  Also create
+#    a pdf.  If there are no filenames, use stdin.
+#
+# OPTIONS
+#    -2  Two column output
+#    -B  Suppress --borders
+#    -F  Suppress --fancy-header
+#    -G  Suppress calling gv to display the Postscript file
+#    -H  Suppress --header
+#    -N  Suppress the use of --line-numbers
+#    -T  Truncate long lines
+#    -b: Baseline skip in points
+#    -c: Number of columns in output
+#    -r  Rotate 90 degrees to landscape mode
+#    -s: Font size in points
+#    -t: Set header to argument $OPTARG
+#    -u: Font used instead of default
+#
+"
+
+function usage {
+   echo Usage: $(basename $0) [BFGHNrs:t:u:v] \
+        [dirname/]psfilename filename... 1>&2
+   echo "$MANPAGE" | sed -n -e 's/^# \?//' -e '/./p'
+   exit 1
+}
+
+BORDERS=--borders
+FANCY_HEADER=--fancy-header
+FONT=Courier-Bold
+FONT_SIZE=11
+HEADER=--header="$(pwd | sed -e 's|^/afs/cats.ucsc.edu/courses/|$$|' \
+                             -e 's|'$HOME'|~|')"
+LINE_NUMBERS=--line-numbers
+
+while getopts 2BFGHNTb:c:rs:t:u: opt; do
+   case $opt in
+      2) COLUMNS="--columns=2";;
+      B) BORDERS=;;
+      F) FANCY_HEADER=;;
+      G) SUPPRESS_GV=1;;
+      H) HEADER=;;
+      N) LINE_NUMBERS=;;
+      T) TRUNCATE_LINES="--truncate-lines --mark-wrapped-lines=box";;
+      b) BASELINESKIP="--baselineskip=$OPTARG";;
+      c) COLUMNS="--columns=$OPTARG";;
+      r) LANDSCAPE="--landscape";;
+      s) FONT_SIZE="$OPTARG";;
+      t) HEADER="--header='$OPTARG'";;
+      u) FONT="$OPTARG";;
+      *) usage;;
+   esac
+done
+shift $(($OPTIND-1))
+
+dirname=$(dirname $1)
+psfilename=$(basename $1)
+shift
+
+font=$FONT$FONT_SIZE
+psoutfile=$dirname/$psfilename
+
+command="enscript \
+   --media=Letter \
+   $LANDSCAPE \
+   $COLUMNS \
+   $BORDERS \
+   $LINE_NUMBERS \
+   --font=$font \
+   $BASELINESKIP \
+   $TRUNCATE_LINES \
+   $FANCY_HEADER \
+   $HEADER \
+   --output=$psoutfile \
+   $@@"
+
+echo $command
+$command
+
+perl -pi -e "s|(^%%Title: )Enscript Output|\$1$psoutfile|" $psoutfile
+
+[ "$SUPPRESS_GV" = "" ] && echo $0: gv $psoutfile && gv $psoutfile &
+
+(cd $dirname; ps2pdf $psfilename)
+
+@
+
+
+1.8
+log
+@-
+@
+text
+@d2 1
+a2 1
+# $Id: mkpspdf,v 1.7 2020-01-03 12:45:13-08 - - $
+d96 1
+a96 1
+[ "$SUPPRESS_GV" = "" ] && gv $psoutfile &
+@
+
+
+1.7
+log
+@-
+@
+text
+@d2 1
+a2 1
+# $Id: mkpspdf,v 1.6 2020-01-03 12:44:50-08 - - $
+d88 1
+a88 1
+   --output $psoutfile \
+@
+
+
+1.6
+log
+@-
+@
+text
+@d2 1
+a2 1
+# $Id: mkpspdf,v 1.5 2020-01-03 12:42:53-08 - - $
+a4 1
+
+@
+
+
+1.5
+log
+@-
+@
+text
+@d2 1
+a2 1
+# $Id: mkpspdf,v 1.4 2020-01-03 12:34:37-08 - - $
+d88 1
+a89 1
+   $HEADER \
+@
+
+
+1.4
+log
+@-
+@
+text
+@d2 1
+a2 1
+# $Id: mkpspdf,v 1.3 2020-01-02 16:35:04-08 - - $
+a4 1
+export PATH=$PATH:$(dirname $0)
+d64 1
+a64 1
+      t) HEADER="--header=$OPTARG";;
+@
+
+
+1.3
+log
+@-
+@
+text
+@d2 1
+a2 1
+# $Id: mkpspdf,v 1.2 2020-01-02 16:30:04-08 - - $
+d21 2
+a22 2
+#    -2  Two column output.
+#    -B  Suppress --borders.
+@
+
+
+1.2
+log
+@-
+@
+text
+@d2 1
+a2 1
+# $Id: mkpspdf,v 1.1 2019-10-31 13:32:24-07 - - $
+d40 1
+a70 5
+
+if [ $# -lt 1 ]; then
+   echo "$MANPAGE" | sed -n -e 's/^# \?//' -e '/./p'
+   exit 1
+fi
+@
+
+
+1.1
+log
+@-
+@
+text
+@d2 1
+a2 1
+# $Id: mkpspdf,v 1.46 2019-04-17 14:27:22-07 - - $
+d13 1
+a13 1
+#    $SCRIPT [-2BFGHNTb:rs:t:u:] [dirname/]psfilename [filename...]
+d29 1
+d51 1
+a51 1
+while getopts 2BFGHNTb:rs:t:u: opt; do
+d61 1
+@

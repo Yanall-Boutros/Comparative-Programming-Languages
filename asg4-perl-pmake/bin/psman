@@ -1,0 +1,17 @@
+#!/bin/sh -x
+# $Id: psman,v 1.1 2019-10-31 13:32:24-07 - - $
+#
+# NAME
+#    psman - convert man pages into postscript for printing
+#
+# SYNOPSIS
+#    psman [manopts] name...
+#
+# DESCRIPTION
+#    Options and arguments are passed to man(1) for formatting
+#    with the -t option.  Output is passed through dpost with
+#    a size reduction to 0.975.
+#
+
+DPOST=/usr/lib/lp/postscript/dpost
+TCAT=cat man -t "$@" | $DPOST -m 0.975

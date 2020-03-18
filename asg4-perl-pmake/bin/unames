@@ -1,0 +1,31 @@
+#!/usr/bin/perl
+# $Id: unames,v 1.1 2019-10-31 13:32:24-07 - - $
+#
+# Print out the values of various unames options.
+#
+
+
+
+@options = (
+  [qw (-a --all               )],
+  [qw (-s --kernel-name       )],
+  [qw (-n --nodename          )],
+  [qw (-r --kernel-release    )],
+  [qw (-v --kernel-version    )],
+  [qw (-m --machine           )],
+  [qw (-p --processor         )],
+  [qw (-i --hardware-platform )],
+  [qw (-o --operating-system  )],
+);
+
+for $opt (@options) {
+   $value = `uname $opt->[0]`;
+   chomp $value;
+   printf "uname %-22s = %s\n", "@$opt", $value;
+}
+
+for $release (qw (/etc/redhat-release
+                  /etc/lsb-release /etc/os-release)) {
+   print "$release:\n", `cat $release` if -r $release;
+}
+

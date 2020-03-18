@@ -1,0 +1,136 @@
+head	1.4;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.4
+date	2020.01.14.01.00.05;	author -;	state -;
+branches;
+next	1.3;
+
+1.3
+date	2020.01.14.00.59.37;	author -;	state -;
+branches;
+next	1.2;
+
+1.2
+date	2020.01.14.00.57.05;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2019.10.31.20.32.24;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@-
+@
+text
+@#!/usr/bin/perl
+# $Id: mkreadme,v 1.3 2020-01-13 16:59:37-08 - - $
+#
+# NAME
+#    mkreadme
+#
+# SYNOPSIS
+#    mkreadme Readme-all-txt
+#
+# DESCRIPTION
+#    Looks for a file matching "Readme.all.*.txt" and copies all
+#    non-comment lines into "Readme.new.*.txt", then calls
+#    txt2html to format the text file into html, and txthtpspdf
+#    to create Postcript and PDF files from each.
+#
+
+$0 =~ s|^(.*/)?([^/]+)/*$|$2|;
+@@ARGV == 1 and $all = $ARGV[0] or die "Usage: $0 Readme-all-txt\n";
+system "cid $all";
+
+$new = $all;
+$new =~ s/\.all\./\.new\./;
+open ALL, "<$all" or die "$0: $new: $!\n";
+open NEW, ">$new" or die "$0: $new: $!\n";
+
+while (<ALL>) {
+   if (m/^\s*#/) {$mark = "=="}
+            else {printf NEW "%6d%-2s%s", $., $mark, $_; $mark = ""}
+}
+
+close ALL;
+close NEW;
+
+for $file ($all, $new) {
+   system "txt2html $file";
+   $psfile = $file;
+   $psfile =~ s/\.txt$/.ps/;
+   $lines = $file =~ m/new/ ? "-N" : "";
+   system "mkpspdf $lines $psfile $file";
+}
+
+sub mklink ($$) {
+   my ($file, $link) = @@_;
+   @@glob = glob $file;
+   warn "$0: glob $file: not unique\n" and return unless @@glob == 1;
+   $file = $glob[0];
+   unlink $link;
+   symlink $file, $link or warn "$0: link $file, $link: $!\n";
+}
+
+mklink "Readme.new.*.html", "README.html";
+mklink "Readme.new.*.txt", "README.txt";
+
+system "cat $new";
+system "echo Post.* $new";
+
+@
+
+
+1.3
+log
+@-
+@
+text
+@d2 1
+a2 1
+# $Id: mkreadme,v 1.2 2020-01-13 16:57:05-08 - - $
+d38 1
+a38 1
+   $lines = $file =~ m/all/ ? "-N" : "";
+@
+
+
+1.2
+log
+@-
+@
+text
+@d2 1
+a2 1
+# $Id: mkreadme,v 1.1 2019-10-31 13:32:24-07 - - $
+d38 2
+a39 1
+   system "mkpspdf $psfile $file";
+@
+
+
+1.1
+log
+@-
+@
+text
+@d2 1
+a2 1
+# $Id: mkreadme,v 1.16 2019-08-20 13:41:16-07 - - $
+d38 1
+a38 1
+   system "mkpspdf -cg $psfile $file";
+@

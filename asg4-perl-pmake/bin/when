@@ -1,0 +1,91 @@
+#!/usr/bin/perl
+# $Id: when,v 1.1 2019-10-31 13:32:24-07 - - $
+#
+# NAME
+#    when - print out distances between dates
+#
+# SYNOPSIS
+#    when +-number [SHMdwym]
+#    when HTTP::Date formatted date
+#
+# DESCRIPTION
+#    Determines a particular date and prints it out in various
+#    ways.
+#
+
+use strict;
+use warnings;
+BEGIN {
+   push @INC, "/afs/cats.ucsc.edu/courses/cmps012b-wm/usr/share/perl5"
+}
+use HTTP::Date qw (str2time);
+use POSIX qw (strftime);
+
+$0 =~ s|^(.*/)?([^/]+)/*$|$2|;
+
+my %when;
+$when{"S"} =               1     ;
+$when{"M"} = $when{"S"} *  60     ;
+$when{"H"} = $when{"M"} *  60     ;
+$when{"d"} = $when{"H"} *  24     ;
+$when{"w"} = $when{"d"} *   7     ;
+$when{"y"} = $when{"d"} * 365.2425;
+$when{"m"} = $when{"y"} /  12     ;
+$when{""}  = $when{"d"}           ;
+
+sub usage () {
+   print STDERR "Usage: $0 [num SMHdwmy]\n";
+   exit 1;
+}
+
+sub sec_to_dHMS ($) {
+   my ($SS) = @_;
+   my $neg = $SS < 0;
+   $SS = - $SS if $neg;
+   my $MM = int ($SS / 60);
+   $SS -= $MM * 60;
+   my $HH = int ($MM / 60);
+   $MM -= $HH * 60;
+   my $dd = int ($HH / 24);
+   $HH -= $dd * 24;
+   return sprintf "%s %d days %02d:%02d:%02d",
+          $neg ? "past" : "future", $dd, $HH, $MM, $SS;
+}
+
+my $numpat = qr[^([+-]?)(\d+\.?\d*|\.\d+)([SMHdwmy]?)$];
+my $timepat = qr[^([+-]?)((\d+):)?(\d*):(\d*)$];
+push @ARGV, 0 unless @ARGV;
+push @ARGV, (localtime)[5] + 1900 if @ARGV == 2;
+
+my $when;
+my $duration = "";
+if (@ARGV == 1 && $ARGV[0] =~ m/$numpat/) {
+   $duration = "${1}1" * $2 * $when{$3};
+   $when = $^T + $duration;
+   my $maxrange = 0x7FFFFFFF;
+   die "$0: @ARGV: out of range\n"
+       unless - $maxrange - 1 <= $when && $when <= $maxrange;
+}elsif (@ARGV == 1 && $ARGV[0] =~ m/$timepat/) {
+   my ($HH, $MM, $SS) = ($3 ? $3 : 0, $4 ? $4 : 0, $5 ? $5 : 0);
+   $duration = "${1}1" * (($HH * 60 + $MM) * 60 + $SS);
+   $when = $^T + $duration;
+}else {
+   $when = str2time "@ARGV";
+   die "$0: @ARGV: unrecognized date\n" unless $when;
+   $duration = $when - $^T;
+}
+
+printf "%s: \@ARGV = \"%s\" = %s\n", $0, "@ARGV", sec_to_dHMS $duration;
+my $date = strftime "%a %b %e %H:%M:%S %Z %Y", localtime $when;
+my $time = strftime "%l:%M:%S %P", localtime $when;
+$time =~ s/^\s+//;
+print "$date = $when = $time\n";
+my $diff = $when - $^T;
+printf "%11.0f%9s seconds\n", $diff, "";
+printf "%14.2f%6s minutes\n", $diff / $when{"M"}, "";
+printf "%16.4f%4s hours\n", $diff / $when{"H"}, "";
+printf "%17.5f%3s days\n", $diff / $when{"d"}, "";
+printf "%18.6f%2s weeks\n", $diff / $when{"w"}, "";
+printf "%19.7f%1s months\n", $diff / $when{"m"}, "";
+printf "%20.8f%0s years\n", $diff / $when{"y"}, "";
+

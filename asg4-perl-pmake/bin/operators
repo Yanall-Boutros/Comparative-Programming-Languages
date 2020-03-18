@@ -1,0 +1,43 @@
+#!/bin/cat
+# $Id: operators,v 1.1 2019-10-31 13:32:24-07 - - $
+
+                                 !"#$%&'()*+,-./0123456789:;<=>?
+                                @ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_
+                                `abcdefghijklmnopqrstuvwxyz{|}~
+
+================================================================
+C++ Oper     Assoc C Oper
+================================================================
+c::m         L->R  (e)
+(*1)         L->R  f(x)  a[i]  p->f  s.f  u++  u--
+new  delete  R->L  ++u  --u  (type)  *u  &u  +u  -u  !u  ~u  sizeof
+s.*m  p->*m  L->R
+             L->R  u*v  u/v  u%v
+             L->R  u+v  u-v
+             L->R  u<<i  u>>i
+             L->R  u<v  u<=v  u>v  u>=v
+             L->R  u==v  u!=v
+             L->R  u&v
+             L->R  u^v
+             L->R  u|v
+             L->R  u&&v
+             L->R  u||v
+             R->L  b?u:v
+             R->L  =  *=  /=  %=  +=  -=  >>=  <<=  &=  ^=  |=
+throw        R->L
+             L->R  ,
+================================================================
+
+C reserved words:
+
+asm auto break case char const continue default do double else
+enum extern float for fortran goto if int long register return
+short signed sizeof static struct switch typedef union unsigned
+void volatile while
+
+C++ reserved words not in C:
+
+catch class delete friend inline new operator private protected
+public template this throw try virtual
+
+(*1) const_cast dynamic_cast reinterpret_cast static_cast typeid

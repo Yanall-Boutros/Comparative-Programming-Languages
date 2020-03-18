@@ -1,0 +1,55 @@
+head	1.2;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.2
+date	2019.02.11.20.54.52;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2019.02.02.01.05.03;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@-
+@
+text
+@#!/bin/sh
+# $Id: mk.tests,v 1.1 2019-02-01 17:05:03-08 - - $
+checksource hzip.st >checksource.log
+for file in test*.in
+do
+   ./hzip.st -c $file $file.hzipped
+   ./hzip.st -u $file.hzipped >$file.unzipped
+done
+./hzip.st -t test5.ps.in >test5.frequencies
+@
+
+
+1.1
+log
+@-
+@
+text
+@d2 1
+a2 1
+# $Id: mk.tests,v 1.1 2018-10-17 14:07:55-07 - - $
+d6 2
+a7 2
+   hzip.st -c $file $file.hzipped
+   hzip.st -u $file.hzipped >$file.unzipped
+d9 1
+a9 1
+hzip.st -t test5.ps.in >test5.frequencies
+@

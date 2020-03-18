@@ -1,0 +1,42 @@
+#!/bin/sh
+# $Id: touchsym,v 1.1 2019-10-31 13:32:24-07 - - $
+
+touch -h $*
+exit
+
+<<____END____
+#
+# NAME
+#    touchsym - touch a file or symbolic link
+#
+# SYNOPSIS
+#    touchsym file...
+#
+# DESCRIPTION
+#    Touches each file in @ARGV.  Uses utime(2) if it is a real 
+#    file or directory.  If it is a symlink, deletes and recreates
+#    the symlink.
+#
+
+use strict;
+use warnings;
+$0 =~ s|/+$||;
+$0 =~ s|^.*/||;
+my $status = 0;
+END {exit $status}
+$SIG{__WARN__} = sub {print STDERR "$0: @_"; $status = 1};
+$SIG{__DIE__} = sub {warn @_; exit};
+sub syswarn {warn "@_: $!\n"}
+
+for my $file (@ARGV) {
+   if (-l $file) {
+      my $link = readlink $file or do {syswarn "readlink $file"; next};
+      unlink $file or do {warn "unlink $link"; next};
+      symlink $link, $file or do {warn "symlink $link, $file"; next};
+   }else {
+      utime $^T, $^T, $file or do {warn "utime $file"; next};
+   }
+}
+system "ls -goad @ARGV";
+
+____END____

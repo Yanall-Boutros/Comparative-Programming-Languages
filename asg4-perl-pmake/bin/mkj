@@ -1,0 +1,23 @@
+#!/bin/sh -x
+# $Id: mkj,v 1.1 2019-10-31 13:32:24-07 - - $
+#
+# NAME
+#    mkj - compile a java program into a jar
+#
+# SYNOPSIS
+#    mkj program.java...
+#
+# DESCRIPTION
+#    Compiles a java program into a jar.  The jarname must be
+#    the name of the main class and is taken from the first
+#    java file.
+#
+
+jar=`echo $1 | sed 's/\.java//'`
+cid + $*
+javac $*
+if [ $? -ne 0 ] ; then exit $? ; fi
+echo Main-class: $jar >Manifest
+jar cfm $jar Manifest `echo $* | sed 's/\.java/*.class/g'`
+rm Manifest *.class
+chmod +x $jar

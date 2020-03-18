@@ -1,0 +1,28 @@
+#!/bin/sh
+# $Id: mkman,v 1.1 2019-10-31 13:32:24-07 - - $
+#
+# NAME
+#    mkman - convert man pages to text, ps, and pdf
+#
+# SYNOPSIS
+#    mkman outprefix [manoptsopnds]
+#
+# DESCRIPTION
+#    The first argument is an output prefix for filenames, to which
+#    the suffices .tt, .ps, and .pdf are added.  The other operands
+#    are passed directly to man(1).
+#
+
+if [ $# -eq 0 ] ; then
+   echo Usage: `basename $0` outprefix [manoptsopnds] >&2
+   exit 1
+fi
+
+prefix=$1
+shift
+psfile=$prefix.ps
+man "$@" | col -b >$prefix.tt
+man -t "$@" >$psfile
+letterbbox $psfile
+gv $psfile &
+mkpdf $psfile

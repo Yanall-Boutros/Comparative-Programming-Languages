@@ -1,0 +1,33 @@
+++ pwd
++ PATH=/usr/lib64/qt-3.3/bin:/opt/rh/llvm-toolset-7/root/usr/bin:/opt/rh/llvm-toolset-7/root/usr/sbin:/opt/rh/devtoolset-8/root/usr/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/usr/local/texlive/2017/bin/x86_64-linux:/usr/local/codebench/bin:/afs/cats.ucsc.edu/users/l/yboutros/bin:.:/afs/cats.ucsc.edu/courses/cse112-wm/usr/ocaml/bin:/afs/cats.ucsc.edu/courses/cse112-wm/bin/:/afs/cats.ucsc.edu/users/l/yboutros/asg4-perl-pmake/.score
++ export PATH
+++ pwd
++ for dir in '$(pwd)/test*'
++ cd /afs/cats.ucsc.edu/users/l/yboutros/asg4-perl-pmake/.score/test0
++ pwd
+/afs/cats.ucsc.edu/users/l/yboutros/asg4-perl-pmake/.score/test0
++ sh mk.test
+foo - command not echoed
+bar - command not echoed
+echo all - command 'IS' echoed
+all - command IS echoed
++ for dir in '$(pwd)/test*'
++ cd /afs/cats.ucsc.edu/users/l/yboutros/asg4-perl-pmake/.score/test1
++ pwd
+/afs/cats.ucsc.edu/users/l/yboutros/asg4-perl-pmake/.score/test1
++ sh mk.test
++ for dir in '$(pwd)/test*'
++ cd /afs/cats.ucsc.edu/users/l/yboutros/asg4-perl-pmake/.score/test2
++ pwd
+/afs/cats.ucsc.edu/users/l/yboutros/asg4-perl-pmake/.score/test2
++ sh mk.test
++ for dir in '$(pwd)/test*'
++ cd /afs/cats.ucsc.edu/users/l/yboutros/asg4-perl-pmake/.score/test3
++ pwd
+/afs/cats.ucsc.edu/users/l/yboutros/asg4-perl-pmake/.score/test3
++ sh mk.test
++ for dir in '$(pwd)/test*'
++ cd /afs/cats.ucsc.edu/users/l/yboutros/asg4-perl-pmake/.score/test4
++ pwd
+/afs/cats.ucsc.edu/users/l/yboutros/asg4-perl-pmake/.score/test4
++ sh mk.test

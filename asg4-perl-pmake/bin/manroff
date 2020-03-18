@@ -1,0 +1,30 @@
+#!/bin/sh
+# $Id: manroff,v 1.1 2019-10-31 13:32:24-07 - - $
+#
+# NAME
+#    manroff - format and display a man page
+#
+# SYNOPSIS
+#    manroff [-ps] [file...]
+#
+# DESCRIPTION
+#    Use groff to format and display a man page source file.
+#    For ASCII output multiple blank lines are squeezed out.
+#
+# OPTIONS
+#    -ps     Select Postscript output.  Default is ASCII output.
+#
+# OPERANDS
+#    file    The names of the files to be formatted.  If none,
+#            the standard input will be read.
+#
+case "$1" in
+   -ps )
+      shift
+      groff -Tps -man $*
+      ;;
+   * )
+      groff -Tascii -man $* \
+      | nawk 'BEGIN{RS="";ORS="\n\n"};/.*/'
+      ;;
+esac

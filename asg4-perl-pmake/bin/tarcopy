@@ -1,0 +1,21 @@
+#!/bin/sh
+# $Id: tarcopy,v 1.1 2019-10-31 13:32:24-07 - - $
+#
+# NAME
+#    tarcopy - copy a directory using tar
+#
+# SYNOPSIS
+#    tarcopy sourcedir destparent
+#
+# DESCRIPTION
+#    Uses gtar copy tar up a source directory into a pipe then
+#    untars it in the parent of the destination directory.
+#
+
+if [ $# -ne 2 ] ; then
+   echo Usage: `basename $0` sourcedir destparent 1>&2
+   exit 1
+fi
+
+tar cvf - $1 | (cd $2 ; tar xvf -)
+

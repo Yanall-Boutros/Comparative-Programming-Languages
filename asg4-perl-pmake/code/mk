@@ -1,0 +1,23 @@
+#!/bin/sh
+# $Id: mk,v 1.14 2020-02-14 17:11:15-08 - - $
+
+cid + $0
+
+cid + graph.perl
+graph.perl >graph.output 2>&1
+
+cid + mtime.perl
+cp /dev/null utime-zero.txt
+perl -e 'utime 0, 0, "utime-zero.txt"' 
+cp /dev/null utime-maxint.txt
+perl -e 'utime 0x7FFFFFFF, 0x7FFFFFFF, "utime-maxint.txt"' 
+mtime.perl * . /dev/null >mtime.output 2>&1
+
+cid + sigtoperl.cpp
+mkc sigtoperl.cpp
+sigtoperl >sigtoperl.output 2>&1
+
+mkpspdf graph.perl.ps graph.perl graph.output
+mkpspdf mtime.perl.ps mtime.perl mtime.output $0
+mkpspdf sigtoperl.cpp.ps sigtoperl.cpp sigtoperl.output
+

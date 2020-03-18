@@ -1,0 +1,67 @@
+head	1.1;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.1
+date	2019.10.31.20.32.24;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@-
+@
+text
+@#!/usr/bin/perl
+# $Id: cpdir,v 1.7 2009-06-11 18:01:48-07 - - $
+#
+# NAME
+#    cpdir - copy a directory using gtar
+#
+# SYNOPSIS
+#    cpdir [-v] fromdir... todir
+#
+# DESCRIPTION
+#    Copies a directory using two gtars and a pipe.  This is
+#    different from cp -R, in that symlinks themselves are
+#    copied, not the subdirectories they point at.
+#
+# OPTIONS
+#    -v   Sets the verbose option of gtar
+#
+# OPERANDS
+#    fromdir - specifies the directory to be copied.
+#    todir   - specifies the parent to be of copied directory.
+#
+# EXAMPLE
+#    cpdir foo/bar baz/qux
+#    will cause the directory foo/bar to be copied to baz/qux/bar
+#
+
+use strict;
+use warnings;
+
+$0 =~ s|^(.*/)?([^/]+)/*$|$2|;
+
+$SIG{'__DIE__'} = sub {print STDERR "$0: @@_"; exit 1};
+
+my $vopt = @@ARGV && $ARGV[0] eq "-v" ? (shift, "v") : "";
+
+die "Usage: $0 [-v] fromdir todir\n" unless @@ARGV >= 2;
+-d $_ or die "$0: $_: no such directory\n" for @@ARGV;
+my $todir = pop @@ARGV;
+
+for my $fromdir (@@ARGV) {
+   print "$0: copying dir from $fromdir to $todir\n";
+   system "gtar c${vopt}f - $fromdir | (cd $todir; gtar x${vopt}f -)";
+}
+
+@

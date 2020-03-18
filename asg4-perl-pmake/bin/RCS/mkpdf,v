@@ -1,0 +1,54 @@
+head	1.1;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.1
+date	2019.10.31.20.32.24;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@-
+@
+text
+@#!/bin/sh
+# $Id: mkpdf,v 1.3 2013-02-01 19:39:39-08 - - $
+#
+# NAME
+#    mkpdf - make PDF file from a Postscript file
+#
+# SYNOPSIS
+#    mkpdf postscriptfiles...
+#
+# DESCRIPTION
+#    For each Postscript file given as an argument, convert to PDF.
+#
+
+options='
+   -dPDFSETTINGS=/prepress
+   -dColorImageResolution=2400
+   -dGrayImageResolution=2400
+   -dMonoImageResolution=2400
+   -dASCII85EncodePages=true
+   -dCompressPages=false
+   -dMaxSubsetPct=99
+   -dSubsetFonts=true
+   -dEmbedAllFonts=true
+   -dPermissions=-44
+   '
+
+for file in $*
+do
+   ps2pdf $options $file
+done
+
+@

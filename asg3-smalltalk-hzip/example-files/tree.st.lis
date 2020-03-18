@@ -1,0 +1,41 @@
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+mkst.perl: tree.st
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+An instance of SortedCollection
+  firstIndex: 1
+  lastIndex: 6
+  lastOrdered: 6
+  sorted: true
+  sortBlock: a BlockClosure
+  contents: [
+    [1]: Leaf(a,10)
+    [2]: Leaf(b,20)
+    [3]: Leaf(x,20)
+    [4]: Tree(t,30,Leaf(a,10),Leaf(b,20))
+    [5]: Tree(u,50,Tree(t,30,Leaf(a,10),Leaf(b,20)),Leaf(c,15))
+    [6]: Tree(z,80,Tree(u,50,Tree(t,30,Leaf(a,10),Leaf(b,20)),Leaf(c,15)),Leaf(x,20))
+  ]
+
+Before vising z Tree
+[a]=000
+[b]=001
+[c]=01
+[x]=1
+
+Before sortcol do: loop
+Leaf(a,10)
+Leaf(b,20)
+Leaf(x,20)
+Tree(t,30,Leaf(a,10),Leaf(b,20))
+Tree(u,50,Tree(t,30,Leaf(a,10),Leaf(b,20)),Leaf(c,15))
+Tree(z,80,Tree(u,50,Tree(t,30,Leaf(a,10),Leaf(b,20)),Leaf(c,15)),Leaf(x,20))
+
+Before remove loop.
+Leaf(a,10)
+Leaf(b,20)
+Leaf(x,20)
+Tree(t,30,Leaf(a,10),Leaf(b,20))
+Tree(u,50,Tree(t,30,Leaf(a,10),Leaf(b,20)),Leaf(c,15))
+Tree(z,80,Tree(u,50,Tree(t,30,Leaf(a,10),Leaf(b,20)),Leaf(c,15)),Leaf(x,20))
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+Exit status 0

@@ -1,0 +1,22 @@
+#!/bin/sh
+# $Id: letterbbox,v 1.1 2019-10-31 13:32:24-07 - - $
+#
+# Edit a Postscript file created by groff, and add a %%BoundingBox
+# comment to make gv understand that it is Letter paper.
+# Also, set the Title of the document.
+#
+
+scriptname=$(basename $0)
+edit=/usr/bin/ed
+
+for file in $*
+do
+   echo $scriptname: $edit $file 1>&2
+   (echo 3a
+    echo %%Title: $file
+    echo %%BoundingBox: 0 0 612 792
+    echo .
+    echo w
+    echo q) | $edit $file
+done
+

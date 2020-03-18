@@ -1,0 +1,29 @@
+head	1.1;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.1
+date	2019.10.31.20.32.24;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@-
+@
+text
+@#!/bin/sh -x
+# $Id: acro2ps,v 1.1 2014-12-02 15:44:47-08 - - $
+for pdf in $*
+do
+   acroread -toPostScript $pdf &
+done
+@

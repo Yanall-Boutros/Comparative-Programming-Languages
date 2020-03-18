@@ -1,0 +1,4 @@
+#!/bin/sh
+# $Id: mk,v 1.2 2020-02-03 15:20:49-08 - - $
+cid $0
+mkpspdf pmake-Makefiles.ps .score/*/Makefile*

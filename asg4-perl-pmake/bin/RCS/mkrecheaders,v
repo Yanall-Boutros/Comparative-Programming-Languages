@@ -1,0 +1,40 @@
+head	1.1;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.1
+date	2019.10.31.20.32.24;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@-
+@
+text
+@#!/bin/sh
+# $Id: mkrecheaders,v 1.8 2019-04-03 16:36:05-07 - - $
+
+if [ $# -eq 0 ]
+then
+   set . $*
+fi
+
+for dir in $*
+do
+   for subdir in $(find $dir -type d -name RCS -prune \
+                          -o -type d -name '.?*' -prune \
+                          -o -type d -print)
+   do
+      (cd $subdir; mkheader)
+   done
+done
+@

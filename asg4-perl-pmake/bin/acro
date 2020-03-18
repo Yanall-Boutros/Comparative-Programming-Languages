@@ -1,0 +1,5 @@
+#!/bin/sh
+# $Id: acro,v 1.1 2019-10-31 13:32:24-07 - - $
+for f in $*; do
+   xpdf $f&
+done

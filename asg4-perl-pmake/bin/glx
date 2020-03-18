@@ -1,0 +1,17 @@
+#!/usr/bin/perl
+# $Id: glx,v 1.1 2019-10-31 13:32:24-07 - - $
+
+$0 =~ s|.*/||;
+
+print STDERR "Usage: $0 command [args...]\n" and exit 1
+      unless @ARGV;
+
+$LD_LIBRARY_PATH = $ENV{LD_LIBRARY_PATH};
+$mesalibdir = "/usr/local/android-sdk/emulator/lib64/gles_mesa";
+$LD_LIBRARY_PATH = $LD_LIBRARY_PATH
+                 ? "$LD_LIBRARY_PATH:$mesalibdir"
+                 : $mesalibdir;
+$ENV{LD_LIBRARY_PATH} = $LD_LIBRARY_PATH;
+
+exec @ARGV or print STDERR "$0: $ARGV[0]: $!\n" and exit 127;
+

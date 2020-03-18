@@ -1,0 +1,87 @@
+Copy this file into the student's directory:
+
+Student's name:
+
+Whenever a number in parens is given, assign a number between 0
+and that max.  If less than the max, show a negative nuber and a
+reason for the deduction.
+
+Grader please make sure checksource.perl, cid, cc, javac, are in
+your path.  Student's make is not responsible for fixing your path.
+
+In student's directory:
+   cp -R ../.score .
+
+*****************************************************************
+
+Program source code = 30 points.
+
+   (3) general considerations.  program was called `pmake' as
+       per specs the x bit was chmod'ed on
+
+   (3) program appearance - checksource.perl did not complain -
+       good choices for identifiers - readable indentation.
+
+   (3) Subroutines are used to break up the program into
+       manageable pieces.  Program is not one monolithic mess.
+
+   (3) Used Getopt::Std::getopts to analyze the options
+
+   (3) Proper use of open with error checking for failure when
+       opening the Makefile.
+
+   (3) (obsolete check... do not deduct points for this item)
+
+   (3) Good use of regular expressions to scan and parse input
+       lines
+
+   (3) Uses hashes to hold dependencies.  Also uses hashes to
+       hold variable names, builtin or otherwise.
+
+   (3) Uses array references to hold prerequisites
+
+   (3) Uses system() to run programs.  Checks $? after that
+       to find out about return code.
+
+   = program total /30
+   NOTE: minimum program total is 1/30 if anything was submitted,
+         and 5/30 if some junk that might be a start was submitted.
+
+*****************************************************************
+
+Testing the program = 30 points.
+
+For each test, make sure you capture the output in a file so
+students can see the result of testing.  Do a cp -R tests to
+copy the test directory hierarchy into the student's directory.
+If in doubt, check with gmake to see what is happening.
+
+   cd into each of the test[i] directories and run the Check script.
+   evaluate the results.
+
+   (6) test0 - echo works?
+
+   (6) test1 - 2 points for each test
+
+   (6) test2 - assign 2 points if any one of the targets work.
+               assign 4 points of two targets (log files) work.
+               6 points if all targets work.
+
+   (6) test3 - same comment as test2
+
+   (6) test4 - same comment as test2
+
+   = testing total /30
+
+*****************************************************************
+
+Add program + testing totals, giving:
+SUBTOTAL=
+
+If pair programming, TOTALSCORE = SUBTOTAL - TOTALPAIR
+If not, TOTALSCORE = SUBTOTAL.
+
+TOTALSCORE=
+min 1, max 60
+
+$Id: SCORE,v 1.11 2020-02-03 15:32:55-08 - - $

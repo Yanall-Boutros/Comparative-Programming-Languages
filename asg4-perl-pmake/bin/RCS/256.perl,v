@@ -1,0 +1,29 @@
+head	1.1;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.1
+date	2019.10.31.20.32.24;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@-
+@
+text
+@#!/bin/perl
+# $Id: 256.perl,v 1.1 2010-11-15 19:13:58-08 - - $
+for $char (0..255) {
+   printf "%c", $char;
+   print "\n" if $char % 16 == 15;
+}
+@

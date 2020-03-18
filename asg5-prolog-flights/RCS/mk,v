@@ -1,0 +1,49 @@
+head	1.2;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.2
+date	2018.03.01.00.42.22;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2018.03.01.00.40.57;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@-
+@
+text
+@#!/bin/sh -x
+# $Id: mk,v 1.1 2018-02-28 16:40:57-08 - - $
+cid + $0 haversine.perl
+cmd="haversine.perl lax sfo sjc nyc sfo sea"
+(echo COMMAND: $cmd; echo ''; $cmd) >haversine.output
+mkpspdf haversine.lis.ps haversine.perl haversine.output
+mkpspdf database.pl.ps .score/database.pl
+@
+
+
+1.1
+log
+@-
+@
+text
+@d2 1
+a2 1
+# $Id: mk.haversine,v 1.3 2018-02-28 16:40:07-08 - - $
+d6 2
+a7 1
+mkpspdf haversine.ps haversine.perl haversine.output
+@

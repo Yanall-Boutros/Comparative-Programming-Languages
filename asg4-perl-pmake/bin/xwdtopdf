@@ -1,0 +1,31 @@
+#!/bin/sh
+# $Id: xwdtopdf,v 1.1 2019-10-31 13:32:24-07 - - $
+#
+# NAME
+#    xwdtopdf - Dump an X window image into a PDF.
+#
+# SYNOPSIS
+#    xwdtopdf filename.pdf
+#
+# DESCRIPTION
+#    To dump an X-window image into a PDF, run this script.
+#    When the cursor changes into a cross, click on the window.
+#    The PDF with the name given as argument will be created.
+#    Windows larger than 8.5''x11'' will be shrunk to fit the
+#    page.  Run xwininfo to report a size no larger than
+#    611x791 points.
+#
+
+usage () {
+   echo "Usage: `basename $0` filename.pdf" 1>&2
+   exit 1
+}
+pdfname=$1
+case "$pdfname" in *.pdf) ;;
+                   *) usage ;;
+esac
+echo When the cursor changes, click on the window to dump.
+echo Be sure that it is fully exposed with nothing on top of it.
+set -x
+xwd | xwdtopnm | pnmtops -noturn | ps2pdf - $pdfname
+pdf2ps $pdfname

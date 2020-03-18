@@ -1,0 +1,361 @@
+head	1.11;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.11
+date	2020.02.03.23.32.55;	author -;	state -;
+branches;
+next	1.10;
+
+1.10
+date	2020.02.03.23.32.02;	author -;	state -;
+branches;
+next	1.9;
+
+1.9
+date	2020.02.03.23.24.07;	author -;	state -;
+branches;
+next	1.8;
+
+1.8
+date	2018.11.21.20.13.56;	author -;	state -;
+branches;
+next	1.7;
+
+1.7
+date	2018.11.02.23.37.05;	author -;	state -;
+branches;
+next	1.6;
+
+1.6
+date	2018.11.02.23.35.40;	author -;	state -;
+branches;
+next	1.5;
+
+1.5
+date	2018.09.28.22.37.55;	author -;	state -;
+branches;
+next	1.4;
+
+1.4
+date	2012.01.18.00.03.37;	author -;	state -;
+branches;
+next	1.3;
+
+1.3
+date	2011.04.07.21.29.59;	author -;	state -;
+branches;
+next	1.2;
+
+1.2
+date	2011.03.25.00.18.34;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2011.03.25.00.09.47;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.11
+log
+@-
+@
+text
+@Copy this file into the student's directory:
+
+Student's name:
+
+Whenever a number in parens is given, assign a number between 0
+and that max.  If less than the max, show a negative nuber and a
+reason for the deduction.
+
+Grader please make sure checksource.perl, cid, cc, javac, are in
+your path.  Student's make is not responsible for fixing your path.
+
+In student's directory:
+   cp -R ../.score .
+
+*****************************************************************
+
+Program source code = 30 points.
+
+   (3) general considerations.  program was called `pmake' as
+       per specs the x bit was chmod'ed on
+
+   (3) program appearance - checksource.perl did not complain -
+       good choices for identifiers - readable indentation.
+
+   (3) Subroutines are used to break up the program into
+       manageable pieces.  Program is not one monolithic mess.
+
+   (3) Used Getopt::Std::getopts to analyze the options
+
+   (3) Proper use of open with error checking for failure when
+       opening the Makefile.
+
+   (3) (obsolete check... do not deduct points for this item)
+
+   (3) Good use of regular expressions to scan and parse input
+       lines
+
+   (3) Uses hashes to hold dependencies.  Also uses hashes to
+       hold variable names, builtin or otherwise.
+
+   (3) Uses array references to hold prerequisites
+
+   (3) Uses system() to run programs.  Checks $? after that
+       to find out about return code.
+
+   = program total /30
+   NOTE: minimum program total is 1/30 if anything was submitted,
+         and 5/30 if some junk that might be a start was submitted.
+
+*****************************************************************
+
+Testing the program = 30 points.
+
+For each test, make sure you capture the output in a file so
+students can see the result of testing.  Do a cp -R tests to
+copy the test directory hierarchy into the student's directory.
+If in doubt, check with gmake to see what is happening.
+
+   cd into each of the test[i] directories and run the Check script.
+   evaluate the results.
+
+   (6) test0 - echo works?
+
+   (6) test1 - 2 points for each test
+
+   (6) test2 - assign 2 points if any one of the targets work.
+               assign 4 points of two targets (log files) work.
+               6 points if all targets work.
+
+   (6) test3 - same comment as test2
+
+   (6) test4 - same comment as test2
+
+   = testing total /30
+
+*****************************************************************
+
+Add program + testing totals, giving:
+SUBTOTAL=
+
+If pair programming, TOTALSCORE = SUBTOTAL - TOTALPAIR
+If not, TOTALSCORE = SUBTOTAL.
+
+TOTALSCORE=
+min 1, max 60
+
+$Id: SCORE,v 1.10 2020-02-03 15:32:02-08 - - $
+@
+
+
+1.10
+log
+@-
+@
+text
+@d62 1
+a62 1
+   (5) test0 - echo works?
+d64 1
+a64 1
+   (5) test1 - 2 points for each test
+d66 3
+a68 3
+   (5) test2 - assign 2 points if any one of the targets work.
+               assign 3 points of two targets (log files) work.
+               5 points if all targets work.
+d70 1
+a70 1
+   (5) test3 - same comment as test2
+d72 1
+a72 3
+   (5) test4 - same comment as test2
+
+   (5) test5 - same comment as test2
+d87 1
+a87 1
+$Id: SCORE,v 1.9 2020-02-03 15:24:07-08 - - $
+@
+
+
+1.9
+log
+@-
+@
+text
+@d68 1
+a68 1
+               4 points if all targets work.
+d89 1
+a89 1
+$Id: SCORE,v 1.8 2018-11-21 12:13:56-08 - - $
+@
+
+
+1.8
+log
+@-
+@
+text
+@d83 1
+a83 1
+If pair programming, TOTALSCORE = SUBTOTAL - TOTAL1.
+d89 1
+a89 1
+$Id: SCORE,v 1.7 2018-11-02 16:37:05-07 - - $
+@
+
+
+1.7
+log
+@-
+@
+text
+@d33 1
+a33 2
+   (3) Sequences through -f option file or default Makefile in a
+       reasonable manner.
+d89 1
+a89 1
+$Id: SCORE,v 1.6 2018-11-02 16:35:40-07 - - $
+@
+
+
+1.6
+log
+@-
+@
+text
+@d23 1
+a23 2
+       good choices for identifiers - decently readable
+       indentation
+d26 1
+a26 2
+       manageable pieces.  Program is not one monolithic
+       monster.
+a28 1
+       (or use GetOpt:Long:GetOptions instead, also OK)
+d44 1
+a44 1
+   (3) Uses system() to run programs.  Checks $?>>8 after that
+d90 1
+a90 1
+$Id: SCORE,v 1.5 2018-09-28 15:37:55-07 - - $
+@
+
+
+1.5
+log
+@-
+@
+text
+@d66 1
+a66 1
+   (2) test0 - echo works?
+d68 1
+a68 1
+   (4) test1 - 2 points for each test
+d70 1
+a70 1
+   (4) test2 - assign 2 points if any one of the targets work.
+d74 1
+a74 1
+   (4) test3 - same comment as test2
+d76 1
+a76 1
+   (4) test4 - same comment as test2
+d78 1
+a78 5
+   (4) test5 - same comment as test2
+
+   (4) test6 - Does the -f option work and output same as gmake?
+
+   (4) test7 - output correct?
+d93 1
+a93 1
+$Id: SCORE,v 1.4 2012-01-17 16:03:37-08 - - $
+@
+
+
+1.4
+log
+@-
+@
+text
+@d80 1
+a80 1
+   (4) test6 - output correct?
+d82 1
+a82 1
+   (4) test7 - Does the -f option work and output same as gmake?
+d97 1
+a97 1
+$Id: SCORE,v 1.3 2011-04-07 14:29:59-07 - - $
+@
+
+
+1.3
+log
+@-
+@
+text
+@d43 1
+a43 1
+       switch among builtin functions for shell, wildcard, etc.
+d97 1
+a97 1
+$Id: SCORE,v 1.2 2011-03-24 17:18:34-07 - - $
+@
+
+
+1.2
+log
+@-
+@
+text
+@d31 1
+d97 1
+a97 1
+$Id: SCORE,v 1.1 2011-03-24 17:09:47-07 - - $
+@
+
+
+1.1
+log
+@-
+@
+text
+@d12 2
+a13 11
+Check to see if they are working alone or doing pair
+programming.  If pair programming, they should have a symlink to
+their partner's directory.  If it is not there, you should make
+one.
+
+Make sure PARTNER is a symlink, not a file.  Example: charles
+and ada are working together.
+. dir charles/ should have a symlink PARTNER -> ../ada
+. dir ada/ should have a symlink PARTNER -> ../charles
+
+Grade only one partner's code and assign them the same score.
+d62 1
+a62 2
+   cp -R asg1-perl-pmake/tests/ .
+   cd into each of the testi directories and run the Check script.
+d96 1
+a96 1
+$Id: SCORE,v 1.2 2009-01-23 17:48:24-08 - - $
+@
